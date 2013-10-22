@@ -15,12 +15,14 @@
 #include "image.h"
 #include "drawScene.h"
 
-
-
 #include "program.h"
 #include "geomObjects.h"
 
 #include "MatStack.h"
+
+// My files
+#include "FPSCounter.h"
+#include "Scene.h"
 
 using glm::vec3 ;
 using glm::vec4 ;
@@ -37,22 +39,27 @@ static Cylinder *gCylinder ;
 static Cone *gCone ;
 static Sphere *gSphere ;
 
+static float gCurrentTime = 0.0f;
+static float gLastTime = 0.0f;
+static float gDeltaTime = 0.0f;
+
+static FPSCounter gFPSCounter;
+static Scene gScene;
+
 static bool gUsingLighting ;
 static bool gUsingTextures ;
 static glm::mat4 gProjMat(1.0f) ;
 static glm::mat4 gMVP(1.0f) ;
 
-
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 3;
-GLuint gTexIDs[gNumTex] ; // Three textures
-
+const GLuint gNumTex = 7;
+GLuint gTexIDs[gNumTex] ; // Six textures
 
 void loadTextures(void) ;
 
-
+void drawTemplateScene(float time);
 
 void printMat4(glm::mat4 &m)
 {
@@ -83,12 +90,11 @@ void setLight(glm::vec4 Position, glm::vec3 Ia, glm::vec3 Id, glm::vec3 Is)
 
 void setColour(float c1,float c2,float c3)
 {
-	// Ks always one for non metalic materials
-	vec3 ks = vec3(1.0f) ;
+    // Ks always one for non metalic materials
+    vec3 ks = vec3(1.0f) ;
     vec3 c(c1,c2,c3) ;
-	setMaterial(0.1f*c,c,ks ,20.0f) ;
+    setMaterial(0.1f*c,c,ks ,20.0f) ;
 }
-
 
 // Tells the fragment shader which of the 3 textures to use:
 // 0 means no texture
@@ -101,8 +107,7 @@ void useTexture(int v)
 {
     gShaders.setInt("useTex", v) ;
     if(v) gUsingTextures = true ;
-    else gUsingTextures = false ;
-    
+    else gUsingTextures = false ;   
 }
 
 void useLighting(int t) // should be 0 or 1
@@ -125,61 +130,50 @@ void setMatricesFromStack(ModelviewStack & mvs)
     glm::mat4 nm  = glm::inverseTranspose(m);
     gShaders.setMatrix4f("normalMat", nm);
     checkError();
-    
 }
-
 
 // Utility function that draws a 2x2x2 cube center at the origin
 // Sets the modelview matrix at the "modelviewMat" uniform of gProg1
 // and the corresponding "normalMat"
 void drawCube(ModelviewStack & mvs)
 {
-        setMatricesFromStack(mvs) ;
-        gCube->Draw() ;
+    setMatricesFromStack(mvs) ;
+    gCube->Draw() ;
 }
-
 
 // Utility function that draws a 1x1 quad center at the origin
 // Sets the modelview matrix and the normal matrix of gProg1
 void drawSquare(ModelviewStack & mvs)
 {
-    setMatricesFromStack(mvs) ;
-    gSquare->Draw() ;
-    
+    setMatricesFromStack(mvs);
+    gSquare->Draw();   
 }
 
 // Utility function that draws a cylinder along z of height 1 centered at the origin
 // and radius 0.5 ;
 // Sets the modelview matrix and the normal matrix of gProg1
 void drawCylinder(ModelviewStack & mvs)
-{
-    
-    setMatricesFromStack(mvs) ;
-    gCylinder->Draw() ;
-    
+{   
+    setMatricesFromStack(mvs);
+    gCylinder->Draw();
 }
 
 // Utility function that draws a cone along z of height 1 centered at the origin
 // and base radius 1.0 ;
 // Sets the modelview matrix and the normal matrix of gProg1
 void drawCone(ModelviewStack & mvs)
-{
-    
-    setMatricesFromStack(mvs) ;
-    gCone->Draw() ;
-    
+{   
+    setMatricesFromStack(mvs);
+    gCone->Draw();
 }
 
 // Draws a unit sphere centered at the origin of radius 1.0 ;
 // Sets the modelview matrix and the normal matrix of gProg1
 void drawSphere(ModelviewStack & mvs)
 {
-    
-    setMatricesFromStack(mvs) ;
-    gSphere->Draw() ;
-    
+    setMatricesFromStack(mvs);
+    gSphere->Draw();   
 }
-
 
 // Scene initialization -- Put here things that need to be done only once
 // before the scene is drawn
@@ -187,20 +181,19 @@ void initScene(int width, int height)
 {
     glViewport( 0, 0, width, height );
     // Clear color buffer to black
-    glClearColor( 0.5f, 0.5f, 0.2f, 1.0f );
-    
-    
+    glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
+        
     checkError() ;
     gShaders.setShaderDir(gShaderDir) ;
     
     // Load the shader pairs -- MUST BE DONE before the objects are loaded
     checkError() ;
-    
 
     gShaders.loadShaderPair("diffuse") ;
    // gShaders.loadShaderPair("simple") ;
     
     checkError() ;
+
     gShaders.use(0) ; // this number is the index in the list not the progam id
     
     checkError() ;
@@ -219,8 +212,8 @@ void initScene(int width, int height)
     gSphere = new Sphere("sphere1", 20, pid) ;
     
     // set the global projection matrix
-    //gProjMat = glm::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 100.0f);
-    gProjMat = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, -500.0f, 500.0f);
+    gProjMat = glm::frustum(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 2048.0f);
+    //gProjMat = glm::ortho(-6.0f, 6.0f, -6.0f, 6.0f, -500.0f, 500.0f);
     //printMat4(gProjMat) ;
     
     useLighting(1) ;
@@ -234,35 +227,169 @@ void initScene(int width, int height)
     setMaterial(vec3(0.2f,0.2f,0.2f), vec3(1.f,0.f,0.f),vec3(1.0f,1.0f,1.f), 20.0)  ;
     setLight(vec4(0.f,0.f,100.f,1.f), vec3(0.1f,0.1f,0.1f), vec3(1.0f,1.0f,1.0f),vec3(1.0f,1.0f,1.0f))  ;
 
-    
+    // Init some other variables
+    gFPSCounter = FPSCounter();
+    gScene = Scene();
+    gScene.Init();
 }
 
 // The main display function
 // Put your drawing code here  - Feel free to add functions as you see fit
 void drawScene(float time)
-{
+{   
+    // Calculate deltaTime
+    gCurrentTime = time;
+    gDeltaTime = gCurrentTime - gLastTime;
+    gLastTime = gCurrentTime;
     
+    //std::cout << "gDeltaTime = " << gDeltaTime << "\n";
+
+    // Print FPS to console output
+    gFPSCounter.update(gDeltaTime);
+
     gShaders.use(0) ;
     //gShaders.setFloat("time", time);
     
     //printf("Time = %f\n", time) ;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    
+       
     // Load an identity matrix on the modeling stack
     gMS.LoadIdentity();
     
     //------------ Set up a view --------------
     
-    //gMS.Rotate(10.0f,vec3(0.f,1.f,0.f)) ;
+    //gMS.Rotate(10.0f * time, vec3(0.f,1.f,0.f)) ;
     //gMS.Rotate(10.0f,vec3(1.f,0.f,0.f)) ;
-    gMS.SetViewMatrix(vec3(5,5,10),vec3(0,0,0), vec3(0,1,0));
-    
+    //gMS.SetViewMatrix(vec3(5, 5, 10), vec3(0, 0, 0), vec3(0, 1, 0));
     //------------- Draw your objects ----------
-  
-  
-   // setColour(1.0,0.0,0.0) ;
- 
+    
+    gScene.Update(gDeltaTime);
+    gScene.Draw(&gMS);
+}
+
+void initTexture()
+{
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                    GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+}
+
+void setTexture(GLuint prog, std::string uname, GLuint activeTexID)
+{
+    initTexture() ;
+    GLuint texUniform = glGetUniformLocation(prog, uname.c_str()) ;
+    if ((int) texUniform >=0) {
+        glUniform1i(texUniform, activeTexID) ;
+    }
+    else {
+        std::cerr << "Shader did not contain the uniform " << uname  << std::endl;
+    }
+}
+
+void loadTextures(void)
+{
+    
+    std::string fname = gProjectPath + "media/" + "Left.bmp" ;
+    char fname_char[200] ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img1(fname_char) ;
+    
+    fname = gProjectPath + "media/" + "Front.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img2(fname_char) ;
+
+    fname = gProjectPath + "media/" + "Right.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img3(fname_char) ;
+
+    fname = gProjectPath + "media/" + "Back.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img4(fname_char) ;
+
+    fname = gProjectPath + "media/" + "Top.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img5(fname_char) ;
+   
+    fname = gProjectPath + "media/" + "Road.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img6(fname_char) ;
+   
+    fname = gProjectPath + "media/" + "Tree.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img7(fname_char) ;
+   
+    glGenTextures(gNumTex,gTexIDs) ;
+    
+    glActiveTexture(GL_TEXTURE0) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[0]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img1.m_width,
+                 Img1.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img1.m_data);
+    setTexture(gShaders.getActiveID(),"texture1", 0) ;
+    
+    glActiveTexture(GL_TEXTURE1) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[1]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img2.m_width,
+                 Img2.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img2.m_data);
+    setTexture(gShaders.getActiveID(),"texture2", 1) ;
+    
+    glActiveTexture(GL_TEXTURE2) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[2]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img3.m_width,
+                 Img3.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img3.m_data);
+    setTexture(gShaders.getActiveID(),"texture3", 2) ;
+    
+    glActiveTexture(GL_TEXTURE3) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[3]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img4.m_width,
+                 Img4.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img4.m_data);
+    setTexture(gShaders.getActiveID(),"texture4", 3) ;
+    
+    glActiveTexture(GL_TEXTURE4) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[4]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img5.m_width,
+                 Img5.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img5.m_data);
+    setTexture(gShaders.getActiveID(),"texture5", 4) ;
+    
+    glActiveTexture(GL_TEXTURE5) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[5]) ;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img6.m_width,
+                 Img6.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img6.m_data);
+    setTexture(gShaders.getActiveID(),"texture6", 5) ;
+    
+    glActiveTexture(GL_TEXTURE6) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[6]) ;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img7.m_width,
+                 Img7.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img7.m_data);
+    setTexture(gShaders.getActiveID(),"texture7", 6) ;  
+}
+
+void drawTemplateScene(float time)
+{
     useTexture(1) ;
     setColour(1.0,1.0,1.0) ; // When using textures you may want to set the color to
                              // white cause the shader multiplies it with the texture
@@ -285,7 +412,6 @@ void drawScene(float time)
         drawSphere(gMS) ;
     }
     gMS.Pop() ;
-  
 
     useTexture(2) ;
     setColour(1.0,1.0,1.0) ;
@@ -317,84 +443,4 @@ void drawScene(float time)
         drawCylinder(gMS) ;
     }
     gMS.Pop() ;
-
-    
 }
-
-
-void initTexture()
-{
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                    GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                    GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    
-}
-
-void setTexture(GLuint prog, std::string uname, GLuint activeTexID)
-{
-    initTexture() ;
-    GLuint texUniform = glGetUniformLocation(prog, uname.c_str()) ;
-    if ((int) texUniform >=0) {
-        glUniform1i(texUniform, activeTexID) ;
-    }
-    else {
-        std::cerr << "Shader did not contain the uniform " << uname  << std::endl;
-	}
-}
-
-void loadTextures(void)
-{
-    
-    std::string fname = gProjectPath + "media/" + "sunset.bmp" ;
-    char fname_char[200] ;
-    strcpy(fname_char, fname.c_str()) ;
-    GL_Image2D Img1(fname_char) ;
-    fname = gProjectPath + "media/" + "floor.bmp" ;
-    strcpy(fname_char, fname.c_str()) ;
-    GL_Image2D Img2(fname_char) ;
-   
-    glGenTextures(gNumTex,gTexIDs) ;
-    
-    glActiveTexture(GL_TEXTURE0) ;
-    glBindTexture(GL_TEXTURE_2D,gTexIDs[0]) ;
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img1.m_width,
-                 Img1.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 Img1.m_data);
-    setTexture(gShaders.getActiveID(),"texture1", 0) ;
-    
-    
-    glActiveTexture(GL_TEXTURE1) ;
-    glBindTexture(GL_TEXTURE_2D,gTexIDs[1]) ;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img2.m_width,
-                 Img2.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 Img2.m_data);
-    setTexture(gShaders.getActiveID(),"texture2", 1) ;
-
-    
-    glActiveTexture(GL_TEXTURE2) ;
-    glBindTexture(GL_TEXTURE_2D,gTexIDs[2]) ;
-    int i, j, c;
-    GLubyte checkImage[64][64][4] ;
-    for (i = 0; i < 64; i++) {
-        for (j = 0; j < 64; j++) {
-            c = ((((i&0x8)==0)^((j&0x8))==0))*255;
-            checkImage[i][j][0] = (GLubyte) c;
-            checkImage[i][j][1] = (GLubyte) c;
-            checkImage[i][j][2] = (GLubyte) c;
-            checkImage[i][j][3] = (GLubyte) 255;
-        }
-    }
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 64,
-                 64, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 checkImage);
-    setTexture(gShaders.getActiveID(), "texture3", 2) ;
-    
-  
-}
-

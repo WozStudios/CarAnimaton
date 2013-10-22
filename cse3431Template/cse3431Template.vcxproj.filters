@@ -1,65 +1,167 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{e1bd8513-37da-4032-8f8e-96a0bf16b97f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{44af6365-13ac-42fc-a371-90d9bba4d390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{96f94af2-c869-41e9-90f0-07a130c1bfc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{a5660b42-cf27-43d0-b4b7-7bbff2b2df5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{258bdb66-e094-4592-84c9-e9467c226d5e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\diffuse.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\shaders\diffuse.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\drawScene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\FrameSaver.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\geomObjects.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\global.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\image.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\matStack.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\opengl.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\source\program.h">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\IDrawable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\IGameObject.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\IUpdateable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Building.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Person.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Skybox.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Ground.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Camera.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Transform.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Scene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\FPSCounter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\InputManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\BuildingGenerator.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Random.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Billboard.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\MathUtils.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\ForestGenerator.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\DummyCameraTarget.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Building.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Camera.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Ground.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Person.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Skybox.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
     <ClCompile Include="..\source\drawScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\source\FrameSaver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\geomObjects-back.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\source\geomObjects.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\source\image.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\source\main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\source\program.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\shaders\simple.vert" />
-    <None Include="..\shaders\diffuse.frag" />
-    <None Include="..\shaders\diffuse.vert" />
-    <None Include="..\shaders\simple.frag" />
+    <ClCompile Include="..\source\Scene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\InputManager.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\BuildingGenerator.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Billboard.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ForestGenerator.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

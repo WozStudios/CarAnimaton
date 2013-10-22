@@ -10,6 +10,7 @@
 #define cse3431Template_global_h
 
 #include <stdio.h>
+#include "FrameSaver.h"
 
 #ifndef __APPLE__
 #include <string>
@@ -28,5 +29,15 @@ const int MAX_STACK_SIZE = 100; // the maximum size of the modelview stack
 const std::string gShaderDir = gProjectPath + "shaders/";
 // Path for saving frames
 const std::string gFrameDir = gProjectPath + "frames/" ;
+
+// global variables -- In practice they would in a singlenton
+extern FrameSaver gFrameSaver;
+extern int gAnimate;
+extern int gRecording;
+extern int gWidth;
+extern int gHeight;
+extern float gTime;
+
+void instructions(void);
 
 #endif

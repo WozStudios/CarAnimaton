@@ -14,18 +14,21 @@
     <ProjectGuid>{B33C0DD6-B80D-4066-8D10-F5A9ECBC0BFE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>cse3431Template</RootNamespace>
+    <ProjectName>Assignment02</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -77,28 +80,57 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\drawScene.h" />
-    <ClInclude Include="..\source\FrameSaver.h" />
-    <ClInclude Include="..\source\geomObjects.h" />
-    <ClInclude Include="..\source\global.h" />
-    <ClInclude Include="..\source\image.h" />
-    <ClInclude Include="..\source\matStack.h" />
-    <ClInclude Include="..\source\opengl.h" />
-    <ClInclude Include="..\source\program.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\source\drawScene.cpp" />
-    <ClCompile Include="..\source\FrameSaver.cpp" />
-    <ClCompile Include="..\source\geomObjects.cpp" />
-    <ClCompile Include="..\source\image.cpp" />
-    <ClCompile Include="..\source\main.cpp" />
-    <ClCompile Include="..\source\program.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\shaders\diffuse.frag" />
     <None Include="..\shaders\diffuse.vert" />
     <None Include="..\shaders\simple.frag" />
     <None Include="..\shaders\simple.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\Billboard.h" />
+    <ClInclude Include="..\source\Building.h" />
+    <ClInclude Include="..\source\BuildingGenerator.h" />
+    <ClInclude Include="..\source\Camera.h" />
+    <ClInclude Include="..\source\drawScene.h" />
+    <ClInclude Include="..\source\DummyCameraTarget.h" />
+    <ClInclude Include="..\source\ForestGenerator.h" />
+    <ClInclude Include="..\source\FPSCounter.h" />
+    <ClInclude Include="..\source\FrameSaver.h" />
+    <ClInclude Include="..\source\IGameObject.h" />
+    <ClInclude Include="..\source\geomObjects.h" />
+    <ClInclude Include="..\source\global.h" />
+    <ClInclude Include="..\source\Ground.h" />
+    <ClInclude Include="..\source\IDrawable.h" />
+    <ClInclude Include="..\source\image.h" />
+    <ClInclude Include="..\source\InputManager.h" />
+    <ClInclude Include="..\source\IUpdateable.h" />
+    <ClInclude Include="..\source\MathUtils.h" />
+    <ClInclude Include="..\source\matStack.h" />
+    <ClInclude Include="..\source\opengl.h" />
+    <ClInclude Include="..\source\Person.h" />
+    <ClInclude Include="..\source\program.h" />
+    <ClInclude Include="..\source\Random.h" />
+    <ClInclude Include="..\source\Scene.h" />
+    <ClInclude Include="..\source\Skybox.h" />
+    <ClInclude Include="..\source\Transform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\Billboard.cpp" />
+    <ClCompile Include="..\source\Building.cpp" />
+    <ClCompile Include="..\source\Camera.cpp" />
+    <ClCompile Include="..\source\drawScene.cpp" />
+    <ClCompile Include="..\source\ForestGenerator.cpp" />
+    <ClCompile Include="..\source\FrameSaver.cpp" />
+    <ClCompile Include="..\source\geomObjects-back.cpp" />
+    <ClCompile Include="..\source\geomObjects.cpp" />
+    <ClCompile Include="..\source\Ground.cpp" />
+    <ClCompile Include="..\source\image.cpp" />
+    <ClCompile Include="..\source\InputManager.cpp" />
+    <ClCompile Include="..\source\main.cpp" />
+    <ClCompile Include="..\source\Person.cpp" />
+    <ClCompile Include="..\source\program.cpp" />
+    <ClCompile Include="..\source\Scene.cpp" />
+    <ClCompile Include="..\source\Skybox.cpp" />
+    <ClCompile Include="..\source\BuildingGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

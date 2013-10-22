@@ -26,17 +26,14 @@
 
 #include "geomObjects.h"
 
+#include "MathUtils.h"
+
 using std::stringstream;
 using std::cout;
 using std::endl;
 using std::ends;
 
 using namespace glm ;
-
-#ifndef M_PI
-#define M_PI 3.14159
-#endif
-
 
 struct VertexData {
     vec4 position ;
@@ -173,25 +170,25 @@ void Object::getAttributeLocations(GLuint prog,
 {
     // Get attribute locations
    
-	positionAttribute = glGetAttribLocation(prog, "VertexPosition");
-	if ((int) positionAttribute < 0) {
-		cerr << "Shader did not contain the 'VertexPosition' attribute." << endl;
-	}
+    positionAttribute = glGetAttribLocation(prog, "VertexPosition");
+    if ((int) positionAttribute < 0) {
+        cerr << "Shader did not contain the 'VertexPosition' attribute." << endl;
+    }
     
     colorAttribute = glGetAttribLocation(prog, "VertexColour");
-	if ((int) colorAttribute < 0) {
-		cerr << "Object::getAttributeLocations: Shader did not contain the 'VertexColour' attribute." << endl;
-	}
+    if ((int) colorAttribute < 0) {
+        cerr << "Object::getAttributeLocations: Shader did not contain the 'VertexColour' attribute." << endl;
+    }
     
     normalAttribute = glGetAttribLocation(prog, "VertexNormal");
-	if ((int) normalAttribute < 0) {
-		cerr << "Shader did not contain the 'VertexNormal' attribute." << endl;
-	}
+    if ((int) normalAttribute < 0) {
+        cerr << "Shader did not contain the 'VertexNormal' attribute." << endl;
+    }
     
     texCoordAttribute = glGetAttribLocation(prog, "VertexTexCoord");
-	if ((int) texCoordAttribute < 0) {
-		cerr << "Shader did not contain the 'VertexTexCoord' attribute." << endl;
-	}
+    if ((int) texCoordAttribute < 0) {
+        cerr << "Shader did not contain the 'VertexTexCoord' attribute." << endl;
+    }
     
 }
 
@@ -207,27 +204,27 @@ void Square::SetBuffers(GLuint prog){
  
     GLuint colourAttribute, positionAttribute, normalAttribute, texCoordAttribute;
 
-	checkError() ;
+    checkError() ;
     getAttributeLocations(prog, positionAttribute, normalAttribute, colourAttribute, texCoordAttribute) ;
-	checkError() ;
+    checkError() ;
     glGenBuffers(1, &_vbo);
-	checkError() ; 
+    checkError() ; 
     glBindBuffer(GL_ARRAY_BUFFER,_vbo);
     //populate the vertex buffer
     glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(VertexData), vertexData, GL_STATIC_DRAW);
     checkError() ;
     glGenVertexArrays(1, &_vao);
-	 checkError() ;
+     checkError() ;
     glBindVertexArray(_vao);
      checkError() ;
-	glEnableVertexAttribArray(positionAttribute);  
-	checkError() ;
+    glEnableVertexAttribArray(positionAttribute);  
+    checkError() ;
     glEnableVertexAttribArray(colourAttribute);  
-	checkError() ;
-	glEnableVertexAttribArray(normalAttribute);  
-	checkError() ;
+    checkError() ;
+    glEnableVertexAttribArray(normalAttribute);  
+    checkError() ;
     glEnableVertexAttribArray(texCoordAttribute);  
-	checkError() ;
+    checkError() ;
    
     
     glBindBuffer(GL_ARRAY_BUFFER, _vbo) ; // bind the vdo that contains the attributes
@@ -328,8 +325,8 @@ void Cube::SetBuffers(GLuint prog)
     glEnableVertexAttribArray(positionAttribute);
     glEnableVertexAttribArray(colourAttribute);
     glEnableVertexAttribArray(normalAttribute) ;
-	glEnableVertexAttribArray(texCoordAttribute) ;
-	checkError() ;
+    glEnableVertexAttribArray(texCoordAttribute) ;
+    checkError() ;
     
     glBindBuffer(GL_ARRAY_BUFFER, _vbo) ; // bind the vbo containing the attributes
     glVertexAttribPointer(positionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), (const GLvoid *)0);
