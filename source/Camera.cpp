@@ -23,9 +23,7 @@ Camera::Camera(double distance)
 	_inputManager = InputManager::GetInstance();
 	
 	_counterY = 0.0f;
-	_counterX = 0.0f;
-
-	
+	_counterX = 0.5f;
 }
 
 void Update2(float deltaTime)

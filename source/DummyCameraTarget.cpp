@@ -17,6 +17,7 @@ void DummyCameraTarget::Update(float deltaTime)
 	_movementVector = vec3();
 	vec3 direction = glm::normalize(_transform.position - _cameraPosition);
 	vec3 left = glm::normalize(glm::cross(vec3(0.0, 1.0, 0.0), direction));
+	vec3 up = glm::normalize(glm::cross(direction, left));
 	
 	if (_inputManager->IsKeyPressed(GLFW_KEY_W))
 	{
@@ -36,6 +37,16 @@ void DummyCameraTarget::Update(float deltaTime)
 	if (_inputManager->IsKeyPressed(GLFW_KEY_D))
 	{
 		_movementVector -= left;
+	}
+
+	if (_inputManager->IsKeyPressed(GLFW_KEY_E))
+	{
+		_movementVector += up;
+	}
+
+	if (_inputManager->IsKeyPressed(GLFW_KEY_Q))
+	{
+		_movementVector -= up;
 	}
 
 	if (_movementVector != vec3())
