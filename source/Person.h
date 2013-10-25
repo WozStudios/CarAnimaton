@@ -44,7 +44,7 @@ public:
 	void SetRotation(vec3 rotation) { _transform.rotation = rotation; }
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 	
-	void Update(float time);
+	void Update(float deltaTime);
 
 	void Draw(ModelviewStack* ms);
 

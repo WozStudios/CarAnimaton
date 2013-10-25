@@ -295,24 +295,24 @@ void setTexture(GLuint prog, std::string uname, GLuint activeTexID)
 void loadTextures(void)
 {
     
-    std::string fname = gProjectPath + "media/" + "Left.bmp" ;
+    std::string fname = gProjectPath + "media/" + "sky_left_large.bmp" ;
     char fname_char[200] ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img1(fname_char) ;
     
-    fname = gProjectPath + "media/" + "Front.bmp" ;
+    fname = gProjectPath + "media/" + "sky_front_large.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img2(fname_char) ;
 
-    fname = gProjectPath + "media/" + "Right.bmp" ;
+    fname = gProjectPath + "media/" + "sky_right_large.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img3(fname_char) ;
 
-    fname = gProjectPath + "media/" + "Back.bmp" ;
+    fname = gProjectPath + "media/" + "sky_back_large.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img4(fname_char) ;
 
-    fname = gProjectPath + "media/" + "Top.bmp" ;
+    fname = gProjectPath + "media/" + "sky_top_large.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img5(fname_char) ;
    

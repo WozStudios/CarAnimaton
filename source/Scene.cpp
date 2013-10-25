@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Camera.h"
+#include "DummyCameraTarget.h"
 #include "Ground.h"
 #include "Skybox.h"
 #include "Person.h"
@@ -7,6 +8,7 @@
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
+#include "QuaternionTest.h"
 #include "IDrawable.h"
 #include "IUpdateable.h"
 
@@ -24,11 +26,14 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	_gameObjects.push_back(new Skybox(2048.0, _camera.GetPositionPointer()));
+	vec3* cameraPosition = _camera.GetPositionPointer();
+
+	_gameObjects.push_back(new Skybox(2048.0, cameraPosition));
 	_gameObjects.push_back(new Ground(1024.0));
 	//_gameObjects.push_back(new Person());
-	
-	ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), _camera.GetPositionPointer(), 64);
+	_gameObjects.push_back(new QuaternionTest());
+
+	ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
 	vector<Billboard*> trees = forestGenerator.GetTrees();
 	for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
 	{
@@ -69,7 +74,7 @@ void drawTestBox(ModelviewStack* ms, double x, double scale)
 
 void Scene::Draw(ModelviewStack* ms)
 {
-    ms->SetViewMatrix(_camera.GetPosition(), _camera.GetTarget(), _camera.GetUpVector());
+    ms->SetViewMatrix(_camera.GetPosition(), *_camera.GetTarget(), _camera.GetUpVector());
 
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
 	{

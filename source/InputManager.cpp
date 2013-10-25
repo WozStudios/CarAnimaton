@@ -14,14 +14,23 @@ InputManager::InputManager()
 	
 	_isLeftClicked = false;
 	_isRightClicked = false;
+	
+	_wasSpacePressed = false;
+}
 
-	_isSpacePressed = false;
+void InputManager::Init()
+{
+	_mousePosX = 0.0;
+	_mousePosY = 0.0;
 }
 
 InputManager* InputManager::GetInstance()
 {
 	if (Instance == NULL)
+	{
 		Instance = new InputManager();
+		Instance->Init();
+	}
 
 	return Instance;
 }
@@ -33,6 +42,18 @@ void InputManager::DeleteInstance()
 		delete Instance;
 		Instance = NULL;
 	}
+}
+
+double InputManager::GetMouseDX()
+{
+	double dx = _mousePosX - _lastMousePosX;
+	return dx > DEAD_ZONE || dx < -DEAD_ZONE ? dx : 0.0;
+}
+
+double InputManager::GetMouseDY()
+{
+	double dy = _mousePosY - _lastMousePosY;
+	return dy > DEAD_ZONE || dy < -DEAD_ZONE ? dy : 0.0;
 }
 
 // Callback that handles mouse motion interaction
@@ -80,7 +101,9 @@ void InputManager::mouseButton_callback(GLFWwindow* window, int button, int acti
 // Callback that handles keyboard interaction
 void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	InputManager* inputManager = NULL;
+	InputManager* inputManager = InputManager::GetInstance();
+
+	//inputManager->ClearKeys();
 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
@@ -88,7 +111,7 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         return ;
     }
     
-    if( action == GLFW_PRESS)
+    if (action == GLFW_PRESS)
     {
         switch (key)
 		{
@@ -106,6 +129,8 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 		case GLFW_KEY_T:
             // reset time
             gTime = 0.0;
+			inputManager->SetTPressed(true);
+
             //reset your objects here (call a function)
             break;
 
@@ -150,5 +175,9 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 			inputManager->SetSpacePressed(false);
 			break;
         }
+    }
+
+	if(action == GLFW_REPEAT)
+    {
     }
 }

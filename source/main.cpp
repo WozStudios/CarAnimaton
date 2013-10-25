@@ -148,6 +148,12 @@ int main( void )
     
     // Initialize the scene (e.g. load primitives etc)
     initScene(gWidth, gHeight) ;
+
+	//Initialize Input Manager
+	InputManager* inputManager = InputManager::GetInstance();
+	inputManager->SetWindow(window);
+
+	//glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     // Set the recording directory
     gFrameSaver.SetDir(gFrameDir) ;
@@ -177,6 +183,7 @@ int main( void )
         glfwPollEvents() ;
     }
 
+	// Destroy Input Manager
     InputManager::DeleteInstance();
 
     // Destroy the window to free resources

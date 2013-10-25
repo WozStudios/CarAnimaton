@@ -1,0 +1,55 @@
+#include "DummyCameraTarget.h"
+#include "opengl.h"
+#include "drawScene.h"
+
+#include <iostream>
+
+DummyCameraTarget::DummyCameraTarget(vec3 position)
+{
+	_transform.position = position;
+	//_camera = camera;
+
+	_inputManager = InputManager::GetInstance();
+}
+
+void DummyCameraTarget::Update(float deltaTime)
+{
+	_movementVector = vec3();
+	vec3 direction = glm::normalize(_transform.position - _cameraPosition);
+	vec3 left = glm::normalize(glm::cross(vec3(0.0, 1.0, 0.0), direction));
+	
+	if (_inputManager->IsKeyPressed(GLFW_KEY_W))
+	{
+		_movementVector += direction;
+	}
+
+	if (_inputManager->IsKeyPressed(GLFW_KEY_S))
+	{
+		_movementVector -= direction;
+	}
+
+	if (_inputManager->IsKeyPressed(GLFW_KEY_A))
+	{
+		_movementVector += left;
+	}
+
+	if (_inputManager->IsKeyPressed(GLFW_KEY_D))
+	{
+		_movementVector -= left;
+	}
+
+	if (_movementVector != vec3())
+		_transform.position += glm::normalize(_movementVector);
+}
+
+void DummyCameraTarget::Draw(ModelviewStack* ms)
+{
+	useTexture(0);
+	setColour(1.0, 1.0, 1.0);
+	ms->Push();
+	{
+		ms->Translate(_transform.position);
+		drawSphere(*ms);
+	}
+	ms->Pop();
+}

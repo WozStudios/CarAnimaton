@@ -27,7 +27,7 @@ Person::Person()
 	_totalLegHeight = _footHeight + _calfHeight + _thighHeight;
 }
 
-void Person::Update(float time)
+void Person::Update(float deltaTime)
 {
 
 }

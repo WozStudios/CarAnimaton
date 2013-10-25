@@ -1,24 +1,26 @@
-#ifndef BILLBOARD_H
-#define BILLBOARD_H
+#ifndef QUATERNION_TEST
+#define QUATERNION_TEST
 
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include "IGameObject.h"
 #include "IDrawable.h"
 #include "IUpdateable.h"
 
-class Billboard : public IGameObject, public IDrawable, public IUpdateable
+using namespace glm;
+
+class QuaternionTest : public IGameObject, public IDrawable, public IUpdateable
 {
 private:
 	Transform _transform;
-	vec3 _normal;
-	vec3* _cameraPosition;
-
-	float _rotationAngle;
-
-	int _textureID;
+	quat _orientation;
+	
+	float _counterY;
+	float _counterX;
 
 public:
-	Billboard(Transform transform, vec3* cameraPosition, int textureID);
-	
+	QuaternionTest();
+
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
 	vec3 GetScale() { return _transform.scale; }
@@ -30,6 +32,7 @@ public:
 	void Update(float deltaTime);
 
 	void Draw(ModelviewStack* ms);
+
 };
 
 #endif

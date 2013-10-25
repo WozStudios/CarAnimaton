@@ -2,11 +2,18 @@
 #define INPUT_MANAGER_H
 
 #include "opengl.h"
+#include <map>
+
+using std::map;
+
+#define DEAD_ZONE 2.5
 
 class InputManager
 {
 private:
 	static InputManager* Instance;
+
+	map<int, bool> _keys;
 	
 	double _mousePosX;
 	double _mousePosY;
@@ -20,6 +27,11 @@ private:
 	bool _isSpacePressed;
 	bool _wasSpacePressed;
 
+	bool _isTPressed;
+	bool _wasTPressed;
+
+	GLFWwindow* _window;
+
 public:
 	double GetMousePosX() { return _mousePosX; }
 	double GetMousePosY() { return _mousePosY; }
@@ -27,8 +39,8 @@ public:
 	void SetMousePosX(double x) { _lastMousePosX = _mousePosX; _mousePosX = x; }
 	void SetMousePosY(double y) { _lastMousePosY = _mousePosY; _mousePosY = y; }
 	
-	double GetMouseDX() { return _mousePosX - _lastMousePosX; }
-	double GetMouseDY() { return _mousePosY - _lastMousePosY; }
+	double GetMouseDX();
+	double GetMouseDY();
 
 	bool IsLeftClicked() { return _isLeftClicked; }
 	void SetLeftClicked(bool isLeftClicked) { _isLeftClicked = isLeftClicked; }
@@ -36,11 +48,20 @@ public:
 	bool IsRightClicked() { return _isRightClicked; }
 	void SetRightClicked(bool isRightClicked) { _isRightClicked = isRightClicked; }
 	
-	bool IsSpacePressed() { return _isSpacePressed; }
-	void SetSpacePressed(bool isSpacePressed) { _isSpacePressed = isSpacePressed; }
-
 	bool WasSpacePressed() { return _wasSpacePressed; }
-	void WasSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
+	void SetSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
+	
+	bool WasTPressed() { return _isSpacePressed; }
+	void SetTPressed(bool isSpacePressed) { _isSpacePressed = isSpacePressed; }
+
+	//bool WasSpacePressed() { return _wasSpacePressed; }
+	//void WasSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
+	
+	bool IsKeyPressed(int key) { return glfwGetKey(_window, key) == GLFW_PRESS; }
+
+	void SetWindow(GLFWwindow* window) { _window = window; }
+
+	void ClearKeys() { _keys.clear(); }
 
 	static InputManager* GetInstance();
 	static void DeleteInstance();
@@ -52,6 +73,7 @@ public:
 
 private:
 	InputManager();
+	void Init();
 };
 
 #endif
