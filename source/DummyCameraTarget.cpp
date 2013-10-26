@@ -10,6 +10,7 @@ DummyCameraTarget::DummyCameraTarget(vec3 position)
 	//_camera = camera;
 
 	_inputManager = InputManager::GetInstance();
+	_movementSpeed = 0.5f;
 }
 
 void DummyCameraTarget::Update(float deltaTime)
@@ -50,7 +51,7 @@ void DummyCameraTarget::Update(float deltaTime)
 	}
 
 	if (_movementVector != vec3())
-		_transform.position += glm::normalize(_movementVector);
+		_transform.position += glm::normalize(_movementVector) * _movementSpeed;
 }
 
 void DummyCameraTarget::Draw(ModelviewStack* ms)

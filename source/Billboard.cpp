@@ -15,16 +15,16 @@ Billboard::Billboard(Transform transform, vec3* cameraPosition, int textureID)
 
 void Billboard::Update(float time)
 {
-	//vec3 idealNormal = *_cameraPosition - _transform.position;
-	//idealNormal.y = _transform.position.y;
-	//
-	//idealNormal = glm::normalize(idealNormal);
-	//
-	//vec3 crossProduct = glm::cross(_normal, idealNormal);
-	//if (crossProduct.y > 0)
-	//	_rotationAngle = acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
-	//else 
-	//	_rotationAngle = 360.0 - acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
+	vec3 idealNormal = *_cameraPosition - _transform.position;
+	idealNormal.y = _transform.position.y;
+	
+	idealNormal = glm::normalize(idealNormal);
+	
+	vec3 crossProduct = glm::cross(_normal, idealNormal);
+	if (crossProduct.y > 0)
+		_rotationAngle = acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
+	else 
+		_rotationAngle = 360.0 - acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
 }
 
 void Billboard::Draw(ModelviewStack* ms)

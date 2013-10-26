@@ -54,7 +54,7 @@ static glm::mat4 gMVP(1.0f) ;
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 7;
+const GLuint gNumTex = 8;
 GLuint gTexIDs[gNumTex] ; // Six textures
 
 void loadTextures(void) ;
@@ -277,6 +277,7 @@ void initTexture()
                     GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     
 }
 
@@ -319,10 +320,15 @@ void loadTextures(void)
     fname = gProjectPath + "media/" + "Road.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img6(fname_char) ;
+	
+    fname = gProjectPath + "media/" + "RoadIntersection.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img7(fname_char) ;
    
     fname = gProjectPath + "media/" + "Tree.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
-    GL_Image2D Img7(fname_char) ;
+    GL_Image2D Img8(fname_char) ;
+	Img7.m_hasAlpha = 1;
    
     glGenTextures(gNumTex,gTexIDs) ;
     
@@ -380,12 +386,17 @@ void loadTextures(void)
     
     glActiveTexture(GL_TEXTURE6) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[6]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img7.m_width,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img7.m_width,
                  Img7.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img7.m_data);
     setTexture(gShaders.getActiveID(),"texture7", 6) ;  
+    
+    glActiveTexture(GL_TEXTURE7) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[7]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img8.m_width,
+                 Img8.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img8.m_data);
+    setTexture(gShaders.getActiveID(),"texture8", 7) ;  
 }
 
 void drawTemplateScene(float time)

@@ -11,7 +11,7 @@ Ground::Ground(double size)
 
 void Ground::Draw(ModelviewStack* ms)
 {
-	useTexture(6);
+	useTexture(7);
 	useLighting(1);
 	setColour(1.0, 1.0, 1.0);
 

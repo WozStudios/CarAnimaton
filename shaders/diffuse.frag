@@ -7,6 +7,7 @@ uniform sampler2D texture4 ;
 uniform sampler2D texture5 ;
 uniform sampler2D texture6 ;
 uniform sampler2D texture7 ;
+uniform sampler2D texture8 ;
 
 
 uniform float time ;
@@ -38,6 +39,7 @@ void main(void)
     vec4 texColour5 = texture(texture5,TexCoord);
     vec4 texColour6 = texture(texture6,TexCoord);
     vec4 texColour7 = texture(texture7,TexCoord);
+    vec4 texColour8 = texture(texture8,TexCoord);
 
     vec4 texColour ;
     
@@ -49,11 +51,12 @@ void main(void)
         case 5: texColour = texColour5 ; break ;
         case 6: texColour = texColour6 ; break ;
         case 7: texColour = texColour7 ; break ;
+        case 8: texColour = texColour8 ; break ;
 
         default: texColour = vec4(1.f) ; break;
     } ;
 
-	if (useTex == 7 && isWhite(texColour))
+	if (useTex == 8 && isWhite(texColour))
 	{
 		texColour = vec4(1.0, 1.0, 1.0, 0.0f);
 	}
@@ -62,6 +65,6 @@ void main(void)
     else fragColour = texColour*Colour ;
  
     if( !gl_FrontFacing )
-        fragColour = vec4(0,1.0,1.0,1.0) ;
+        fragColour = vec4(0,0.0,0.0,1.0) ;
 
 }

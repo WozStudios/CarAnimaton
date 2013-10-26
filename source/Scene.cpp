@@ -1,16 +1,17 @@
 #include "Scene.h"
+#include "IDrawable.h"
+#include "IUpdateable.h"
 #include "Camera.h"
 #include "DummyCameraTarget.h"
 #include "Ground.h"
 #include "Skybox.h"
 #include "Person.h"
 #include "Billboard.h"
+#include "TrafficLight.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
 #include "QuaternionTest.h"
-#include "IDrawable.h"
-#include "IUpdateable.h"
 
 Scene::Scene()
 {
@@ -29,16 +30,20 @@ void Scene::Init()
 	vec3* cameraPosition = _camera.GetPositionPointer();
 
 	_gameObjects.push_back(new Skybox(2048.0, cameraPosition));
-	_gameObjects.push_back(new Ground(1024.0));
+	_gameObjects.push_back(new Ground(512.0));
 	//_gameObjects.push_back(new Person());
-	_gameObjects.push_back(new QuaternionTest());
+	//_gameObjects.push_back(new QuaternionTest());
+	_gameObjects.push_back(new TrafficLight(0));
+	_gameObjects.push_back(new TrafficLight(1));
+	_gameObjects.push_back(new TrafficLight(2));
+	_gameObjects.push_back(new TrafficLight(3));
 
-	ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
-	vector<Billboard*> trees = forestGenerator.GetTrees();
-	for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
-	{
-		_gameObjects.push_back(*i);
-	}
+	//ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
+	//vector<Billboard*> trees = forestGenerator.GetTrees();
+	//for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
+	//{
+	//	_gameObjects.push_back(*i);
+	//}
 
 
 	//BuildingGenerator buildingGenerator = BuildingGenerator(vec3(256, 0, -400), 32);

@@ -13,6 +13,7 @@ private:
 	vec3 _cameraPosition;
 	InputManager* _inputManager;
 	vec3 _movementVector;
+	float _movementSpeed;
 
 public:
 	DummyCameraTarget(vec3 position = vec3());

@@ -15,7 +15,7 @@ void ForestGenerator::Generate()
 {
 	int numTrees = sqrt(_numTrees);
 	
-	for (int j = 0; j < numTrees; j++)
+	for (int j = numTrees - 1; j >= 0; j--)
 	{
 		for (int i = 0; i < numTrees; i++)
 		{
@@ -24,9 +24,9 @@ void ForestGenerator::Generate()
 			transform.scale.y = 64 + Random(-16.0, 16.0);
 			transform.scale.x = transform.scale.y / 2.0;
 
-			transform.position = _position + vec3(i * transform.scale.x, 1.0, -j);
+			transform.position = _position + vec3(i * transform.scale.x, 1.0, -j * transform.scale.x);
 
-			_trees.push_back(new Billboard(transform, _cameraPosition, 7));
+			_trees.push_back(new Billboard(transform, _cameraPosition, 8));
 		}
 	}
 }
