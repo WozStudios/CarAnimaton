@@ -116,6 +116,9 @@
     <ClInclude Include="..\source\TrafficLight.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Car.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -176,6 +179,9 @@
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\source\TrafficLight.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Car.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>

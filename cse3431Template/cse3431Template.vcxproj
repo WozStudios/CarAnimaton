@@ -90,6 +90,7 @@
     <ClInclude Include="..\source\Building.h" />
     <ClInclude Include="..\source\BuildingGenerator.h" />
     <ClInclude Include="..\source\Camera.h" />
+    <ClInclude Include="..\source\Car.h" />
     <ClInclude Include="..\source\drawScene.h" />
     <ClInclude Include="..\source\DummyCameraTarget.h" />
     <ClInclude Include="..\source\ForestGenerator.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="..\source\Billboard.cpp" />
     <ClCompile Include="..\source\Building.cpp" />
     <ClCompile Include="..\source\Camera.cpp" />
+    <ClCompile Include="..\source\Car.cpp" />
     <ClCompile Include="..\source\drawScene.cpp" />
     <ClCompile Include="..\source\DummyCameraTarget.cpp" />
     <ClCompile Include="..\source\ForestGenerator.cpp" />

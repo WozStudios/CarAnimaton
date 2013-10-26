@@ -8,6 +8,7 @@
 #include "Person.h"
 #include "Billboard.h"
 #include "TrafficLight.h"
+#include "Car.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
@@ -37,6 +38,8 @@ void Scene::Init()
 	_gameObjects.push_back(new TrafficLight(1));
 	_gameObjects.push_back(new TrafficLight(2));
 	_gameObjects.push_back(new TrafficLight(3));
+
+	_gameObjects.push_back(new Car());
 
 	//ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
 	//vector<Billboard*> trees = forestGenerator.GetTrees();
