@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\Billboard.h" />
+    <ClInclude Include="..\source\Bird.h" />
+    <ClInclude Include="..\source\BirdGenerator.h" />
     <ClInclude Include="..\source\Building.h" />
     <ClInclude Include="..\source\BuildingGenerator.h" />
     <ClInclude Include="..\source\Camera.h" />
@@ -107,6 +109,7 @@
     <ClInclude Include="..\source\MathUtils.h" />
     <ClInclude Include="..\source\matStack.h" />
     <ClInclude Include="..\source\opengl.h" />
+    <ClInclude Include="..\source\Parametric.h" />
     <ClInclude Include="..\source\Person.h" />
     <ClInclude Include="..\source\program.h" />
     <ClInclude Include="..\source\QuaternionTest.h" />
@@ -118,6 +121,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Billboard.cpp" />
+    <ClCompile Include="..\source\Bird.cpp" />
+    <ClCompile Include="..\source\BirdGenerator.cpp" />
     <ClCompile Include="..\source\Building.cpp" />
     <ClCompile Include="..\source\Camera.cpp" />
     <ClCompile Include="..\source\Car.cpp" />

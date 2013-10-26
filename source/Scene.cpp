@@ -9,6 +9,8 @@
 #include "Billboard.h"
 #include "TrafficLight.h"
 #include "Car.h"
+#include "Bird.h"
+#include "BirdGenerator.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
@@ -38,8 +40,15 @@ void Scene::Init()
 	_gameObjects.push_back(new TrafficLight(1));
 	_gameObjects.push_back(new TrafficLight(2));
 	_gameObjects.push_back(new TrafficLight(3));
-
+	
 	_gameObjects.push_back(new Car());
+
+	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f));
+	vector<Bird*> birds = birdGenerator.GetBirds();
+	for (vector<Bird*>::iterator i = birds.begin(); i != birds.end(); i++)
+	{
+		_gameObjects.push_back(*i);
+	}
 
 	//ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
 	//vector<Billboard*> trees = forestGenerator.GetTrees();

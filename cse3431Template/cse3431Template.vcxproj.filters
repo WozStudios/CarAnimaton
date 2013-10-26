@@ -119,6 +119,15 @@
     <ClInclude Include="..\source\Car.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Bird.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\BirdGenerator.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Parametric.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -183,6 +192,12 @@
     </ClCompile>
     <ClCompile Include="..\source\Car.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Bird.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\BirdGenerator.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

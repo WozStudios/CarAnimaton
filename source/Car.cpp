@@ -3,7 +3,7 @@
 
 Car::Car()
 {
-	_transform.position = vec3(0.0, 0.0, 0.0);
+	_transform.position = vec3(-16.0, 0.0, -128.0);
 	_transform.scale = vec3(12.0f, 5.0f, 20.0f);
 
 	_tireRadius = 8.0f;
