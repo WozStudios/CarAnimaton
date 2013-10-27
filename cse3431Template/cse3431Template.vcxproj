@@ -116,6 +116,7 @@
     <ClInclude Include="..\source\Random.h" />
     <ClInclude Include="..\source\Scene.h" />
     <ClInclude Include="..\source\Skybox.h" />
+    <ClInclude Include="..\source\Store.h" />
     <ClInclude Include="..\source\TrafficLight.h" />
     <ClInclude Include="..\source\Transform.h" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClCompile Include="..\source\Scene.cpp" />
     <ClCompile Include="..\source\Skybox.cpp" />
     <ClCompile Include="..\source\BuildingGenerator.cpp" />
+    <ClCompile Include="..\source\Store.cpp" />
     <ClCompile Include="..\source\TrafficLight.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

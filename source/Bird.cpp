@@ -4,7 +4,7 @@
 #include "Parametric.h"
 #include "Random.h"
 
-Bird::Bird(Transform transform, float flightSpeed, int pathFunction)
+Bird::Bird(Transform transform, float flightSpeed, int pathFunction, float pathWidth)
 {
 	_transform = transform;
 	_transform.rotation = vec3(0.0, 1.0, 0.0);
@@ -13,6 +13,7 @@ Bird::Bird(Transform transform, float flightSpeed, int pathFunction)
 	_wingCounter = 0.0f;
 	_wingFlapSpeed = 2.0f;
 	_flightSpeed = flightSpeed;
+	_pathWidth = pathWidth;
 	_pathCounter = Random(0.0f, 2 * M_PI);
 	_rotationAngle = 0.0f;
 	_front = vec3(0.0f, 0.0f, 1.0f);
@@ -27,7 +28,7 @@ void Bird::Update(float deltaTime)
 	// Fly along path
 
 	_pathCounter += deltaTime * _flightSpeed;
-	(*PathFunction)(_transform.position.x, _transform.position.z, _pathCounter, 128.0f, 128.0f);
+	(*PathFunction)(_transform.position.x, _transform.position.z, _pathCounter, _pathWidth, _pathWidth);
 
 	// Rotate to get proper heading
 	vec3 heading = glm::normalize(_transform.position - _lastPosition);
@@ -48,6 +49,7 @@ void Bird::Update(float deltaTime)
 
 void Bird::Draw(ModelviewStack* ms)
 {
+	useTexture(0);
 	setColour(1.0f, 1.0f, 1.0f);
 	ms->Push();
 	{

@@ -128,6 +128,9 @@
     <ClInclude Include="..\source\Parametric.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Store.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -198,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="..\source\BirdGenerator.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Store.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

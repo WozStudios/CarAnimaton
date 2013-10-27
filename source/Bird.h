@@ -15,12 +15,13 @@ private:
 	float _wingFlapSpeed;
 	float _flightSpeed;
 	float _pathCounter;
+	float _pathWidth;
 	float _rotationAngle;
 	vec3 _front;
 	vec3 _lastPosition;
 
 public:
-	Bird(Transform transform, float flightSpeed, int pathFunction);
+	Bird(Transform transform, float flightSpeed, int pathFunction, float pathWidth);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }

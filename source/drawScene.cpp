@@ -54,8 +54,8 @@ static glm::mat4 gMVP(1.0f) ;
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 8;
-GLuint gTexIDs[gNumTex] ; // Six textures
+const GLuint gNumTex = 10;
+GLuint gTexIDs[gNumTex] ; // Ten textures
 
 void loadTextures(void) ;
 
@@ -330,6 +330,14 @@ void loadTextures(void)
     GL_Image2D Img8(fname_char) ;
 	Img7.m_hasAlpha = 1;
    
+    fname = gProjectPath + "media/" + "Bricks.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img9(fname_char) ;
+   
+    fname = gProjectPath + "media/" + "StoreSign.bmp" ;
+    strcpy(fname_char, fname.c_str()) ;
+    GL_Image2D Img10(fname_char) ;
+   
     glGenTextures(gNumTex,gTexIDs) ;
     
     glActiveTexture(GL_TEXTURE0) ;
@@ -396,7 +404,21 @@ void loadTextures(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img8.m_width,
                  Img8.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img8.m_data);
-    setTexture(gShaders.getActiveID(),"texture8", 7) ;  
+    setTexture(gShaders.getActiveID(),"texture8", 7) ; 
+    
+    glActiveTexture(GL_TEXTURE8) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[8]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img9.m_width,
+                 Img9.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img9.m_data);
+    setTexture(gShaders.getActiveID(),"texture9", 8) ;  
+    
+    glActiveTexture(GL_TEXTURE9) ;
+    glBindTexture(GL_TEXTURE_2D,gTexIDs[9]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img10.m_width,
+                 Img10.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 Img10.m_data);
+    setTexture(gShaders.getActiveID(),"texture10", 9) ;  
 }
 
 void drawTemplateScene(float time)
