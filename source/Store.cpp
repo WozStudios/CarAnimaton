@@ -1,9 +1,8 @@
 #include "Store.h"
 #include "drawScene.h"
 
-Store::Store(Transform transform)
+Store::Store()
 {
-	_transform = transform;
 	_transform.position = vec3(120.0f, 0.0f, -120.0f);
 	_transform.rotation = vec3(0.0f, 1.0f, 0.0f);
 	_transform.scale = vec3(128.0f, 40.0f, 128.0f);
@@ -20,6 +19,7 @@ void Store::Draw(ModelviewStack* ms)
 		ms->Translate(_transform.position);
 		ms->Rotate(90.0f, _transform.rotation);
 		
+		// Draw main building
 		ms->Push();
 		{
 			ms->Scale(vec3(_transform.scale.x / 2.0f,
@@ -47,6 +47,8 @@ void Store::Draw(ModelviewStack* ms)
 		
 		// Draw Sign
 		useTexture(10);
+		vec3 c(1.0f, 1.0f, 1.0f) ;
+		setMaterial(0.7f * c, c, vec3(1.0f), 60.0f) ;
 		ms->Push();
 		{
 			ms->Translate(vec3(0.0f, _transform.scale.y * 0.8f, -_transform.scale.z * 0.515f));

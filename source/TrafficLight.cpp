@@ -1,7 +1,6 @@
 #include "TrafficLight.h"
 #include "drawScene.h"
 
-
 TrafficLight::TrafficLight(int light)
 {
 	float radius = 2.0f;
@@ -22,15 +21,18 @@ void TrafficLight::Draw(ModelviewStack* ms)
 	{
 		ms->Rotate(90.0f * _lightNumber, _transform.rotation);
 		ms->Translate(_transform.position);
-
+		
 		DrawPost(ms);
-		//DrawLights(ms);
 	}
 	ms->Pop();
 }
 
 void TrafficLight::DrawPost(ModelviewStack* ms)
 {
+    vec3 ks = vec3(4.0f) ;
+    vec3 c(1.0f, 1.0f, 1.0f) ;
+    setMaterial(0.7f * c, 0.7f * c, ks, 40.0f) ;
+
 	// Draw main post
 	ms->Push();
 	{

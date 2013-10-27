@@ -1,17 +1,17 @@
-#ifndef STORE_H
-#define STORE_H
+#ifndef GAS_STATION_H
+#define GAS_STATION_H
 
 #include "IGameObject.h"
 #include "IDrawable.h"
 #include "Transform.h"
 
-class Store : public IGameObject, public IDrawable
+class GasStation : public IGameObject, public IDrawable
 {
 private:
 	Transform _transform;
 
 public:
-	Store();
+	GasStation();
 
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -22,6 +22,13 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 	
 	void Draw(ModelviewStack* ms);
+
+private:
+	void GasStation::DrawTrim(ModelviewStack* ms);
+	void GasStation::DrawPosts(ModelviewStack* ms);
+	void GasStation::DrawGasPumps(ModelviewStack* ms);
+	void GasStation::DrawGasPump(ModelviewStack* ms, float position);
+	void GasStation::DrawDoors(ModelviewStack* ms);
 };
 
 #endif

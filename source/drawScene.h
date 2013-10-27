@@ -10,7 +10,9 @@ extern float gDeltaTime;
 
 void drawScene(float time);
 void initScene(int width, int height);
+void deleteScene();
 void setColour(float c1,float c2,float c3);
+void setMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, float shininess);
 void useTexture(int v);
 void useLighting(int t);
 

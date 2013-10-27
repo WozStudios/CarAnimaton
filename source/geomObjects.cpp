@@ -35,16 +35,6 @@ using std::ends;
 
 using namespace glm ;
 
-struct VertexData {
-    vec4 position ;
-    vec4 colour ;
-    vec3 normal ;
-    vec2 texCoord ;
-} ;
-
-//GLuint porcupineTexture ;
-
-
 // cube ///////////////////////////////////////////////////////////////////////
 //    v6----- v5
 //   /|      /|
@@ -152,13 +142,7 @@ GLfloat colors2[]   = { 1, 1, 1,   1, 1, 0,   1, 0, 0,      // v0-v1-v2 (front)
     0, 0, 1,   0, 0, 0,   0, 1, 0,      // v4-v7-v6 (back)
     0, 1, 0,   0, 1, 1,   0, 0, 1 };    // v6-v5-v4
 
-
 using namespace std;
-
-
-
-
-
 
 // Retrieves the locations of the folloing attributes:
 // "position", "colour", "normal", "VertexTexCoord"
@@ -191,7 +175,6 @@ void Object::getAttributeLocations(GLuint prog,
     }
     
 }
-
 
 void Square::SetBuffers(GLuint prog){
     
@@ -237,9 +220,6 @@ void Square::SetBuffers(GLuint prog){
     glBindVertexArray(0) ;
     
 }
-
-
-
 
 Square::Square(std::string name, GLuint prog)
 {
@@ -366,10 +346,6 @@ Cylinder::Cylinder(std::string name, int n, GLuint prog)
     return ;
 }
 
-
-
-
-
 bool flip(const VertexData &vd1,const VertexData &vd2, const VertexData &vd3){
 
     // compute average normal
@@ -401,7 +377,6 @@ void GetVertexCylinder(VertexData &vd, float u, float v)
     
     return;
 }
-
 
 void Cylinder::SetBuffers(GLuint prog){ 
     
@@ -477,8 +452,6 @@ void Cylinder::SetBuffers(GLuint prog){
     }
 }
 
-
-
 void Cylinder::Draw() {
     
     glFrontFace(GL_CCW) ;
@@ -516,7 +489,6 @@ void Cone::Draw() {
     glBindVertexArray(0) ;
     
 }
-
 
 void GetVertexCone(VertexData &vd, float u, float v)
 {

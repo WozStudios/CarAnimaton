@@ -98,6 +98,7 @@
     <ClInclude Include="..\source\ForestGenerator.h" />
     <ClInclude Include="..\source\FPSCounter.h" />
     <ClInclude Include="..\source\FrameSaver.h" />
+    <ClInclude Include="..\source\GasStation.h" />
     <ClInclude Include="..\source\IGameObject.h" />
     <ClInclude Include="..\source\geomObjects.h" />
     <ClInclude Include="..\source\global.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="..\source\DummyCameraTarget.cpp" />
     <ClCompile Include="..\source\ForestGenerator.cpp" />
     <ClCompile Include="..\source\FrameSaver.cpp" />
+    <ClCompile Include="..\source\GasStation.cpp" />
     <ClCompile Include="..\source\geomObjects-back.cpp" />
     <ClCompile Include="..\source\geomObjects.cpp" />
     <ClCompile Include="..\source\Ground.cpp" />

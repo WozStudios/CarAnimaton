@@ -12,6 +12,7 @@
 #include "Bird.h"
 #include "BirdGenerator.h"
 #include "Store.h"
+#include "GasStation.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
@@ -42,7 +43,8 @@ void Scene::Init()
 	_gameObjects.push_back(new TrafficLight(2));
 	_gameObjects.push_back(new TrafficLight(3));
 	_gameObjects.push_back(new Car());
-	_gameObjects.push_back(new Store(Transform()));
+	_gameObjects.push_back(new Store());
+	_gameObjects.push_back(new GasStation());
 
 	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f));
 	vector<Bird*> birds = birdGenerator.GetBirds();

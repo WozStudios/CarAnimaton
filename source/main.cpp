@@ -185,6 +185,7 @@ int main( void )
 
 	// Destroy Input Manager
     InputManager::DeleteInstance();
+	deleteScene();
 
     // Destroy the window to free resources
     glfwDestroyWindow(window);

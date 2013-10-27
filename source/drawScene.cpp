@@ -42,6 +42,7 @@ static Sphere *gSphere ;
 static float gCurrentTime = 0.0f;
 static float gLastTime = 0.0f;
 static float gDeltaTime = 0.0f;
+static int gCubeCount = 0;
 
 static FPSCounter gFPSCounter;
 static Scene gScene;
@@ -96,13 +97,7 @@ void setColour(float c1,float c2,float c3)
     setMaterial(0.1f*c,c,ks ,20.0f) ;
 }
 
-// Tells the fragment shader which of the 3 textures to use:
-// 0 means no texture
-// 1,2,3 specifies the respective texture
-// 12 means 1 and 2
-// 23 means 2 and 3
-// 13 means 1 and 3
-// 123 means all three
+// Tells the fragment shader which texture to use:
 void useTexture(int v)
 {
     gShaders.setInt("useTex", v) ;
@@ -139,6 +134,7 @@ void drawCube(ModelviewStack & mvs)
 {
     setMatricesFromStack(mvs) ;
     gCube->Draw() ;
+	gCubeCount++;
 }
 
 // Utility function that draws a 1x1 quad center at the origin
@@ -218,7 +214,7 @@ void initScene(int width, int height)
     
     useLighting(1) ;
     useTexture(3) ;
-    glm:mat4 m(1.0f );
+    glm::mat4 m(1.0f );
     gShaders.setMatrix4f("modelviewMat", m);
     gShaders.setMatrix4f("normalMat", m);
    // gShaders.setMatrix4f("projMat", gProjMat);
@@ -242,6 +238,8 @@ void drawScene(float time)
     gDeltaTime = gCurrentTime - gLastTime;
     gLastTime = gCurrentTime;
     
+	gCubeCount = 0;
+
     //std::cout << "gDeltaTime = " << gDeltaTime << "\n";
 
     // Print FPS to console output
@@ -265,6 +263,8 @@ void drawScene(float time)
     
     gScene.Update(gDeltaTime);
     gScene.Draw(&gMS);
+
+	//std::cout << "Cube Count: " << gCubeCount << "\n";
 }
 
 void initTexture()
@@ -476,4 +476,13 @@ void drawTemplateScene(float time)
         drawCylinder(gMS) ;
     }
     gMS.Pop() ;
+}
+
+void deleteScene()
+{
+	delete gSquare;
+    delete gCube;
+    delete gCylinder;
+    delete gCone;
+    delete gSphere;
 }

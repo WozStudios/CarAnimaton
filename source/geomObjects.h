@@ -9,6 +9,11 @@
 #ifndef cse3431Template_geomObjects_h
 #define cse3431Template_geomObjects_h
 
+#include "glm\glm.hpp"
+
+using glm::vec2;
+using glm::vec3;
+using glm::vec4;
 
 class Object {
 public:
@@ -77,6 +82,17 @@ public:
 private:
     int _n ; // number of subdivision in each paramater
 };
-    
+
+struct VertexData {
+    vec4 position ;
+    vec4 colour ;
+    vec3 normal ;
+    vec2 texCoord ;
+} ;
+
+extern GLfloat vertices1[];
+extern GLfloat normals1[];
+extern GLfloat colors1[];
+extern GLfloat cubeTexCoord[];
 
 #endif
