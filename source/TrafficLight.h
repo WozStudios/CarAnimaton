@@ -10,9 +10,12 @@ class TrafficLight : public IGameObject, public IDrawable
 private:
 	Transform _transform;
 	int _lightNumber;
+	
+	vec3* _cameraPosition;
+	vec3* _cameraDirection;
 
 public:
-	TrafficLight(int lightNumber);
+	TrafficLight(int lightNumber, vec3* cameraPosition, vec3* cameraDirection);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }

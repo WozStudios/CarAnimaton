@@ -10,10 +10,12 @@ class BirdGenerator
 {
 private:
 	vec3 _position;
-	vector<Bird*> _birds;	 
+	vector<Bird*> _birds;
+	vec3* _cameraPosition;
+	vec3* _cameraDirection;
 
 public:
-	BirdGenerator(vec3 position);
+	BirdGenerator(vec3 position, vec3* cameraPosition, vec3* cameraDirection);
 
 	vector<Bird*> GetBirds() { return _birds; }
 

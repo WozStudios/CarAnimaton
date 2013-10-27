@@ -19,9 +19,13 @@ private:
 	float _rotationAngle;
 	vec3 _front;
 	vec3 _lastPosition;
+	
+	vec3* _cameraPosition;
+	vec3* _cameraDirection;
+	bool _visible;
 
 public:
-	Bird(Transform transform, float flightSpeed, int pathFunction, float pathWidth);
+	Bird(Transform transform, float flightSpeed, int pathFunction, float pathWidth, vec3* cameraPosition, vec3* cameraDirection);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }

@@ -1,7 +1,8 @@
 #include "TrafficLight.h"
 #include "drawScene.h"
+#include "MathUtils.h"
 
-TrafficLight::TrafficLight(int light)
+TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirection)
 {
 	float radius = 2.0f;
 	float height = 64.0f;;
@@ -10,10 +11,24 @@ TrafficLight::TrafficLight(int light)
 	_lightNumber = light;
 	_transform.rotation = vec3(0.0f, 1.0f, 0.0f);
 	_transform.scale = vec3(radius, height, radius);
+
+	_cameraPosition = cameraPosition;
+	_cameraDirection = cameraDirection;
+	bool _visible = true;
 }
 
 void TrafficLight::Draw(ModelviewStack* ms)
 {
+	vec3 cameraToPosition = _transform.position - *_cameraPosition;
+	float cameraDistance = glm::length(cameraToPosition);
+
+	if (cameraDistance > 100.0f)
+	{
+		float angle = acos(glm::dot(glm::normalize(cameraToPosition), *_cameraDirection));
+		if (angle > M_PI / 2.0f)
+			return;
+	}
+
 	useTexture(0);
 	float grey = 0.7f;
 	setColour(grey, grey, grey);

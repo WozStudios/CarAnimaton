@@ -175,4 +175,6 @@ void Camera::Update(float deltaTime)
 										  << _transform.position.y << ", "
 										  << _transform.position.z << ")\n";
 	}
+	
+	_direction = glm::normalize(_dummy.GetPosition() - _transform.position);
 }

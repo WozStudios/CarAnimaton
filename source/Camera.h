@@ -22,6 +22,8 @@ private:
 	vec3 _upVector;
 	vec3 _origin;
 
+	vec3 _direction;
+
 	DummyCameraTarget _dummy;
 
 	double _distance;
@@ -58,8 +60,9 @@ public:
 	
 	vec3* GetTarget() { return _dummy.GetPositionPointer(); }
 	vec3 GetUpVector() { return _upVector; }
-
+	
 	vec3* GetPositionPointer() { return &_transform.position; }
+	vec3* GetDirectionPointer() { return &_direction; }
 	
 	//void SetPosition(vec3 position) { _position = position; }
 	void SetTarget(vec3* target) { _dummy.SetPosition(target); }

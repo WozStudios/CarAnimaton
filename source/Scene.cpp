@@ -33,20 +33,21 @@ Scene::~Scene()
 void Scene::Init()
 {
 	vec3* cameraPosition = _camera.GetPositionPointer();
+	vec3* cameraDirection = _camera.GetDirectionPointer();
 
 	_gameObjects.push_back(new Skybox(2048.0, cameraPosition));
 	_gameObjects.push_back(new Ground(512.0));
 	//_gameObjects.push_back(new Person());
 	//_gameObjects.push_back(new QuaternionTest());
-	_gameObjects.push_back(new TrafficLight(0));
-	_gameObjects.push_back(new TrafficLight(1));
-	_gameObjects.push_back(new TrafficLight(2));
-	_gameObjects.push_back(new TrafficLight(3));
+	_gameObjects.push_back(new TrafficLight(0, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new TrafficLight(1, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new TrafficLight(2, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new Car());
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());
 
-	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f));
+	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f), cameraPosition, cameraDirection);
 	vector<Bird*> birds = birdGenerator.GetBirds();
 	for (vector<Bird*>::iterator i = birds.begin(); i != birds.end(); i++)
 	{
