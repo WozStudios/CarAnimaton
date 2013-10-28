@@ -13,6 +13,7 @@
 #include "BirdGenerator.h"
 #include "Store.h"
 #include "GasStation.h"
+#include "Metronome.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
@@ -21,6 +22,8 @@
 Scene::Scene()
 {
 	_camera = Camera(8);
+	//_soundtrack = new sf::Music();
+	//_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
 }
 Scene::~Scene()
 {
@@ -28,6 +31,8 @@ Scene::~Scene()
 	{
 		delete *i;
 	}
+
+	//delete _soundtrack;
 }
 
 void Scene::Init()
@@ -46,6 +51,7 @@ void Scene::Init()
 	_gameObjects.push_back(new Car());
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());
+	_gameObjects.push_back(new Metronome());
 
 	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f), cameraPosition, cameraDirection);
 	vector<Bird*> birds = birdGenerator.GetBirds();
@@ -68,6 +74,8 @@ void Scene::Init()
 	//{
 	//	_gameObjects.push_back(*i);
 	//}
+
+	//_soundtrack->play();
 }
 
 void Scene::Update(float deltaTime)

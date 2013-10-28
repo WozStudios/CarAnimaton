@@ -23,6 +23,7 @@
 // My files
 #include "FPSCounter.h"
 #include "Scene.h"
+#include <SFML\Audio.hpp>
 
 using glm::vec3 ;
 using glm::vec4 ;
@@ -46,6 +47,8 @@ static int gCubeCount = 0;
 
 static FPSCounter gFPSCounter;
 static Scene gScene;
+
+static sf::Music gSoundtrack;
 
 static bool gUsingLighting ;
 static bool gUsingTextures ;
@@ -224,6 +227,9 @@ void initScene(int width, int height)
     setLight(vec4(0.f,0.f,100.f,1.f), vec3(0.1f,0.1f,0.1f), vec3(1.0f,1.0f,1.0f),vec3(1.0f,1.0f,1.0f))  ;
 
     // Init some other variables
+	//gSoundtrack.openFromFile("../media/audio/Soundtrack.ogg");
+	//gSoundtrack.play();
+	//gSoundtrack.setLoop(true);
     gFPSCounter = FPSCounter();
     gScene = Scene();
     gScene.Init();
