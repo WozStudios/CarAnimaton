@@ -100,6 +100,7 @@
     <ClInclude Include="..\source\FPSCounter.h" />
     <ClInclude Include="..\source\FrameSaver.h" />
     <ClInclude Include="..\source\GasStation.h" />
+    <ClInclude Include="..\source\Bicycle.h" />
     <ClInclude Include="..\source\IGameObject.h" />
     <ClInclude Include="..\source\geomObjects.h" />
     <ClInclude Include="..\source\global.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="..\source\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Bicycle.cpp" />
     <ClCompile Include="..\source\Billboard.cpp" />
     <ClCompile Include="..\source\Bird.cpp" />
     <ClCompile Include="..\source\BirdGenerator.cpp" />

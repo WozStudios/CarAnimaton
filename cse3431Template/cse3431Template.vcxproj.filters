@@ -140,6 +140,9 @@
     <ClInclude Include="..\source\Metronome.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Bicycle.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -218,6 +221,9 @@
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Metronome.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Bicycle.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
