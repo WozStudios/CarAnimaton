@@ -11,6 +11,8 @@ InputManager::InputManager()
 {
 	_mousePosX = 0.0;
 	_mousePosY = 0.0;
+
+	_mouseScroll = 0.0;
 	
 	_isLeftClicked = false;
 	_isRightClicked = false;
@@ -180,4 +182,13 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 	if(action == GLFW_REPEAT)
     {
     }
+}
+
+void InputManager::mouseScroll_callback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	InputManager* inputManager = InputManager::GetInstance();
+
+	inputManager->SetMouseScroll(inputManager->GetMouseScroll() + yOffset);
+
+	std::cout << "yOffset: " << yOffset << "\n";
 }

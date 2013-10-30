@@ -15,7 +15,7 @@ class Scene
 private:
 	Camera _camera;
 	vector<IGameObject*> _gameObjects;
-	//sf::Music* _soundtrack;
+	sf::Music* _soundtrack;
 
 public:
 	Scene();

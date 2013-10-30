@@ -1,6 +1,7 @@
 #include "Bicycle.h"
 #include "drawScene.h"
 #include "MathUtils.h"
+#include "Utility.h"
 
 Bicycle::Bicycle(vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -15,8 +16,7 @@ Bicycle::Bicycle(vec3* cameraPosition, vec3* cameraDirection)
 
 void Bicycle::Draw(ModelviewStack* ms)
 {
-	float angle = acos(glm::dot(glm::normalize(_transform.position - *_cameraPosition), *_cameraDirection));
-	if (angle > M_PI / 2)
+	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 		return;
 
 	ms->Push();
@@ -28,6 +28,7 @@ void Bicycle::Draw(ModelviewStack* ms)
 		DrawWheels(ms);
 		DrawBody(ms);
 	}
+	ms->Pop();
 }
 
 void Bicycle::DrawWheels(ModelviewStack* ms)
@@ -71,6 +72,7 @@ void Bicycle::DrawWheels(ModelviewStack* ms)
 
 void Bicycle::DrawBody(ModelviewStack* ms)
 {
+	setColour(0.3f, 0.0f, 0.0f);
 	// Draw front axle;
 	ms->Push();
 	{
@@ -140,6 +142,8 @@ void Bicycle::DrawBody(ModelviewStack* ms)
 			drawSphere(*ms);
 		}
 		ms->Pop();
+
+		setColour(0.1f, 0.1f, 0.1f);
 		//Draw left handle bar
 		ms->Push();
 		{
@@ -161,6 +165,7 @@ void Bicycle::DrawBody(ModelviewStack* ms)
 	}
 	ms->Pop();
 
+	setColour(0.3f, 0.0f, 0.0f);
 	ms->Push();
 	{
 		ms->Translate(vec3(-4.5f, 2.8f, 0.0f));
@@ -253,25 +258,6 @@ void Bicycle::DrawBody(ModelviewStack* ms)
 	}
 	ms->Pop();
 
-	//Draw left pedal
-	ms->Push();
-	{
-		ms->Translate(vec3(1.6f, 2.7f, 1.5f));
-		ms->Rotate(30.0f, vec3(.0f, 0.0f, 1.0f));
-		ms->Scale(vec3(0.5f, 0.2f, 0.75f));
-		drawCube(*ms);
-	}
-	ms->Pop();
-	//Draw right pedal
-	ms->Push();
-	{
-		ms->Translate(vec3(-2.1f, 2.7f, -1.7f));
-		ms->Rotate(-30.0f, vec3(0.0f, 0.0f, 1.0f));
-		ms->Scale(vec3(0.5f, 0.2f, 0.75f));
-		drawCube(*ms);
-	}
-	ms->Pop();
-
 	// Draw main beam
 	ms->Push();
 	{
@@ -301,6 +287,26 @@ void Bicycle::DrawBody(ModelviewStack* ms)
 		ms->Scale(vec3(0.35f, 2.0f, 0.35f));
 		ms->Rotate(90.0f, vec3(1.0f, 0.0f, 0.0f));
 		drawCylinder(*ms);
+	}
+	ms->Pop();
+
+	setColour(0.1f, 0.1f, 0.1f);
+	//Draw left pedal
+	ms->Push();
+	{
+		ms->Translate(vec3(1.6f, 2.7f, 1.5f));
+		ms->Rotate(30.0f, vec3(.0f, 0.0f, 1.0f));
+		ms->Scale(vec3(0.5f, 0.2f, 0.75f));
+		drawCube(*ms);
+	}
+	ms->Pop();
+	//Draw right pedal
+	ms->Push();
+	{
+		ms->Translate(vec3(-2.1f, 2.7f, -1.7f));
+		ms->Rotate(-30.0f, vec3(0.0f, 0.0f, 1.0f));
+		ms->Scale(vec3(0.5f, 0.2f, 0.75f));
+		drawCube(*ms);
 	}
 	ms->Pop();
 

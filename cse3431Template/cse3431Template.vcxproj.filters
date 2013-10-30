@@ -143,6 +143,18 @@
     <ClInclude Include="..\source\Bicycle.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\ElectricalBox.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Decal.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\DecalGenerator.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Utility.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -225,6 +237,15 @@
     </ClCompile>
     <ClCompile Include="..\source\Bicycle.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ElectricalBox.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Decal.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\DecalGenerator.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

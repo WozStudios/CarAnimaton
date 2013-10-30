@@ -14,14 +14,18 @@
 #include "Store.h"
 #include "GasStation.h"
 #include "Metronome.h"
+#include "Bicycle.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
 #include "QuaternionTest.h"
+#include "ElectricalBox.h"
+#include "Decal.h"
+#include "DecalGenerator.h"
 
 Scene::Scene()
 {
-	_camera = Camera(8);
+	_camera = Camera(16);
 	//_soundtrack = new sf::Music();
 	//_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
 }
@@ -45,13 +49,24 @@ void Scene::Init()
 	//_gameObjects.push_back(new Person());
 	//_gameObjects.push_back(new QuaternionTest());
 	_gameObjects.push_back(new TrafficLight(0, cameraPosition, cameraDirection));
-	_gameObjects.push_back(new TrafficLight(1, cameraPosition, cameraDirection));
+	//_gameObjects.push_back(new TrafficLight(1, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new TrafficLight(2, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
-	_gameObjects.push_back(new Car());
+	Car* car = new Car(cameraPosition, cameraDirection);
+	_camera.SetTarget(car->GetPositionPointer());
+	_gameObjects.push_back(car);
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());
-	_gameObjects.push_back(new Metronome());
+	//_gameObjects.push_back(new Metronome());
+	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
+	//_gameObjects.push_back(new ElectricalBox(cameraPosition, cameraDirection));
+
+	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
+	vector<Decal*> decals = decalGenerator.GetDecals();
+	for (vector<Decal*>::iterator i = decals.begin(); i != decals.end(); i++)
+	{
+		_gameObjects.push_back(*i);
+	}
 
 	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f), cameraPosition, cameraDirection);
 	vector<Bird*> birds = birdGenerator.GetBirds();
@@ -80,13 +95,13 @@ void Scene::Init()
 
 void Scene::Update(float deltaTime)
 {
-	_camera.Update(deltaTime);
-
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
 	{
 		if (IUpdateable* updateable = dynamic_cast<IUpdateable*>(*i))
 			updateable->Update(deltaTime);
 	}
+
+	_camera.Update(deltaTime);
 }
 void drawTestBox(ModelviewStack* ms, double x, double scale)
 {

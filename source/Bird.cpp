@@ -3,6 +3,7 @@
 #include "MathUtils.h"
 #include "Parametric.h"
 #include "Random.h"
+#include "Utility.h"
 
 Bird::Bird(Transform transform, float flightSpeed, int pathFunction, float pathWidth, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -27,8 +28,7 @@ Bird::Bird(Transform transform, float flightSpeed, int pathFunction, float pathW
 
 void Bird::Update(float deltaTime)
 {
-	float angle = acos(glm::dot(glm::normalize(_transform.position - *_cameraPosition), *_cameraDirection));
-	if (angle > M_PI / 2)
+	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 	{
 		_visible = false;
 		return;

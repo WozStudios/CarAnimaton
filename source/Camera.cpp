@@ -7,7 +7,7 @@ Camera::Camera(double distance)
 	_distance = distance;
 	_transform.position = vec3(0.0f, 0.0f, distance);
 	_origin = vec3(0.0f, 0.0f, 0.0f);
-	_dummy = DummyCameraTarget(vec3(-100.0f, 10.0f, -120.0f));
+	_dummy = DummyCameraTarget(vec3(0.0f, 5.0f, 0.0f));
 	//_target = _dummy.GetPositionPointer();
 	_previousTargetPosition = _dummy.GetPosition();
 	_upVector = vec3(0, 1, 0);
@@ -22,7 +22,7 @@ Camera::Camera(double distance)
 
 	_inputManager = InputManager::GetInstance();
 	
-	_counterY = M_PI * 3 / 2;
+	_counterY = 0.0f;
 	_counterX = M_PI / 8.0f;
 }
 
@@ -164,6 +164,11 @@ void Camera::Update(float deltaTime)
 		if (_counterX < -M_PI / 2)
 			_counterX = -M_PI / 2;
 	}
+
+	double scroll = _inputManager->GetMouseScroll();
+
+	if (scroll > 0.0)
+		_distance = _inputManager->GetMouseScroll() + 5.0f;
 
 	_transform.position.x += cos(_counterY) * cos(_counterX) * _distance;
 	_transform.position.y += sin(_counterX) * _distance;

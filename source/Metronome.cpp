@@ -14,7 +14,7 @@ void Metronome::Update(float deltaTime)
 {
 	_counter += deltaTime;
 
-	_rotationAngle = cos(_counter * 1.2f) * 45.0f;
+	_rotationAngle = cos(_counter * 5.25f) * 45.0f;
 }
 
 void Metronome::Draw(ModelviewStack* ms)

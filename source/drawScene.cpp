@@ -58,8 +58,8 @@ static glm::mat4 gMVP(1.0f) ;
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 10;
-GLuint gTexIDs[gNumTex] ; // Ten textures
+const GLuint gNumTex = 13;
+GLuint gTexIDs[gNumTex] ; // 13 textures
 
 void loadTextures(void) ;
 
@@ -94,10 +94,10 @@ void setLight(glm::vec4 Position, glm::vec3 Ia, glm::vec3 Id, glm::vec3 Is)
 
 void setColour(float c1,float c2,float c3)
 {
-    // Ks always one for non metalic materials
+    // Ks always one for non metallic materials
     vec3 ks = vec3(1.0f) ;
     vec3 c(c1,c2,c3) ;
-    setMaterial(0.1f*c,c,ks ,20.0f) ;
+    setMaterial(0.3f*c,c,ks ,20.0f) ;
 }
 
 // Tells the fragment shader which texture to use:
@@ -224,12 +224,14 @@ void initScene(int width, int height)
    // gShaders.setFloat("time", time);
     
     setMaterial(vec3(0.2f,0.2f,0.2f), vec3(1.f,0.f,0.f),vec3(1.0f,1.0f,1.f), 20.0)  ;
-    setLight(vec4(0.f,0.f,100.f,1.f), vec3(0.1f,0.1f,0.1f), vec3(1.0f,1.0f,1.0f),vec3(1.0f,1.0f,1.0f))  ;
+    setLight(vec4(0.f,0.f,100.f,1.f), vec3(1.0f,1.0f,1.0f), vec3(1.0f,1.0f,1.0f),vec3(1.0f,1.0f,1.0f))  ;
 
-    // Init some other variables
-	//gSoundtrack.openFromFile("../media/audio/Soundtrack.ogg");
+    // Setup Music
+	gSoundtrack.openFromFile("../media/audio/Soundtrack.ogg");
 	//gSoundtrack.play();
-	//gSoundtrack.setLoop(true);
+	gSoundtrack.setLoop(true);
+
+	// Init some other variables
     gFPSCounter = FPSCounter();
     gScene = Scene();
     gScene.Init();
@@ -273,7 +275,7 @@ void drawScene(float time)
 	//std::cout << "Cube Count: " << gCubeCount << "\n";
 }
 
-void initTexture()
+void initTexture(GLuint wrapMode)
 {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -281,15 +283,15 @@ void initTexture()
                     GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                     GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     
 }
 
-void setTexture(GLuint prog, std::string uname, GLuint activeTexID)
+void setTexture(GLuint prog, std::string uname, GLuint activeTexID, GLuint wrapMode)
 {
-    initTexture() ;
+    initTexture(wrapMode) ;
     GLuint texUniform = glGetUniformLocation(prog, uname.c_str()) ;
     if ((int) texUniform >=0) {
         glUniform1i(texUniform, activeTexID) ;
@@ -339,92 +341,115 @@ void loadTextures(void)
     fname = gProjectPath + "media/" + "Bricks.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img9(fname_char) ;
-   
-    fname = gProjectPath + "media/" + "StoreSign.bmp" ;
-    strcpy(fname_char, fname.c_str()) ;
-    GL_Image2D Img10(fname_char) ;
+
+	fname = gProjectPath + "media/" + "StoreSign.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img10(fname_char) ;
+
+	fname = gProjectPath + "media/" + "Wood2.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img11(fname_char) ;
+
+	fname = gProjectPath + "media/" + "HoursSign.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img12(fname_char) ;
+
+	fname = gProjectPath + "media/" + "Cracks.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img13(fname_char) ;
    
     glGenTextures(gNumTex,gTexIDs) ;
     
     glActiveTexture(GL_TEXTURE0) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[0]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img1.m_width,
                  Img1.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img1.m_data);
-    setTexture(gShaders.getActiveID(),"texture1", 0) ;
+    setTexture(gShaders.getActiveID(),"texture1", 0, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE1) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[1]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img2.m_width,
                  Img2.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img2.m_data);
-    setTexture(gShaders.getActiveID(),"texture2", 1) ;
+    setTexture(gShaders.getActiveID(),"texture2", 1, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE2) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[2]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img3.m_width,
                  Img3.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img3.m_data);
-    setTexture(gShaders.getActiveID(),"texture3", 2) ;
+    setTexture(gShaders.getActiveID(),"texture3", 2, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE3) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[3]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img4.m_width,
                  Img4.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img4.m_data);
-    setTexture(gShaders.getActiveID(),"texture4", 3) ;
+    setTexture(gShaders.getActiveID(),"texture4", 3, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE4) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[4]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img5.m_width,
                  Img5.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img5.m_data);
-    setTexture(gShaders.getActiveID(),"texture5", 4) ;
+    setTexture(gShaders.getActiveID(),"texture5", 4, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE5) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[5]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img6.m_width,
                  Img6.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img6.m_data);
-    setTexture(gShaders.getActiveID(),"texture6", 5) ;
+    setTexture(gShaders.getActiveID(),"texture6", 5, GL_CLAMP_TO_EDGE) ;
     
     glActiveTexture(GL_TEXTURE6) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[6]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img7.m_width,
                  Img7.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img7.m_data);
-    setTexture(gShaders.getActiveID(),"texture7", 6) ;  
+    setTexture(gShaders.getActiveID(),"texture7", 6, GL_CLAMP_TO_EDGE) ;  
     
     glActiveTexture(GL_TEXTURE7) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[7]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img8.m_width,
                  Img8.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img8.m_data);
-    setTexture(gShaders.getActiveID(),"texture8", 7) ; 
+    setTexture(gShaders.getActiveID(),"texture8", 7, GL_CLAMP_TO_EDGE) ; 
     
     glActiveTexture(GL_TEXTURE8) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[8]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img9.m_width,
                  Img9.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img9.m_data);
-    setTexture(gShaders.getActiveID(),"texture9", 8) ;  
-    
-    glActiveTexture(GL_TEXTURE9) ;
-    glBindTexture(GL_TEXTURE_2D,gTexIDs[9]) ;
+	setTexture(gShaders.getActiveID(),"texture9", 8, GL_CLAMP_TO_EDGE) ;  
+
+	glActiveTexture(GL_TEXTURE9) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[9]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img10.m_width,
-                 Img10.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 Img10.m_data);
-    setTexture(gShaders.getActiveID(),"texture10", 9) ;  
+		Img10.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img10.m_data);
+	setTexture(gShaders.getActiveID(),"texture10", 9, GL_CLAMP_TO_EDGE) ;  
+
+	glActiveTexture(GL_TEXTURE10) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[10]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img11.m_width,
+		Img11.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img11.m_data);
+	setTexture(gShaders.getActiveID(),"texture11", 10, GL_REPEAT) ; 
+
+	glActiveTexture(GL_TEXTURE11) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[11]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img12.m_width,
+		Img12.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img12.m_data);
+	setTexture(gShaders.getActiveID(),"texture12", 11, GL_CLAMP_TO_EDGE) ;  
+
+	glActiveTexture(GL_TEXTURE12) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[12]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img13.m_width,
+		Img13.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img13.m_data);
+	setTexture(gShaders.getActiveID(),"texture13", 12, GL_CLAMP_TO_EDGE) ;  
 }
 
 void drawTemplateScene(float time)

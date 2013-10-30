@@ -10,11 +10,13 @@ uniform sampler2D texture7 ;
 uniform sampler2D texture8 ;
 uniform sampler2D texture9 ;
 uniform sampler2D texture10 ;
+uniform sampler2D texture11 ;
+uniform sampler2D texture12 ;
+uniform sampler2D texture13 ;
 
 uniform float time ;
 uniform int useTex ;
 uniform int useLighting ;
-
 
 out vec4 fragColour;
 
@@ -43,6 +45,9 @@ void main(void)
     vec4 texColour8 = texture(texture8,TexCoord);
     vec4 texColour9 = texture(texture9,TexCoord);
     vec4 texColour10 = texture(texture10,TexCoord);
+    vec4 texColour11 = texture(texture11,TexCoord);
+    vec4 texColour12 = texture(texture12,TexCoord);
+    vec4 texColour13 = texture(texture13,TexCoord);
 
     vec4 texColour ;
     
@@ -57,11 +62,19 @@ void main(void)
         case 8: texColour = texColour8 ; break ;
         case 9: texColour = texColour9 ; break ;
         case 10: texColour = texColour10 ; break ;
+        case 11: texColour = texColour11 ; break ;
+        case 12: texColour = texColour12 ; break ;
+        case 13: texColour = texColour13 ; break ;
 
         default: texColour = vec4(1.f) ; break;
     } ;
-
+	
 	if (useTex == 8 && isWhite(texColour))
+	{
+		texColour = vec4(1.0, 1.0, 1.0, 0.0f);
+	}
+
+	if (useTex == 13)
 	{
 		texColour = vec4(1.0, 1.0, 1.0, 0.0f);
 	}

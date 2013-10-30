@@ -18,6 +18,8 @@ private:
 	double _mousePosX;
 	double _mousePosY;
 
+	double _mouseScroll;
+
 	double _lastMousePosX;
 	double _lastMousePosY;
 	
@@ -38,6 +40,9 @@ public:
 
 	void SetMousePosX(double x) { _lastMousePosX = _mousePosX; _mousePosX = x; }
 	void SetMousePosY(double y) { _lastMousePosY = _mousePosY; _mousePosY = y; }
+
+	double GetMouseScroll() { return _mouseScroll; }
+	void SetMouseScroll(double mouseScroll) { _mouseScroll = mouseScroll; }
 	
 	double GetMouseDX();
 	double GetMouseDY();
@@ -70,6 +75,7 @@ public:
 	static void mouseMotion_callback(GLFWwindow* window, double x, double y);
 	static void mouseButton_callback(GLFWwindow* window, int button, int action, int mods);
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void mouseScroll_callback(GLFWwindow* window, double xOffset, double yOffset);
 
 private:
 	InputManager();

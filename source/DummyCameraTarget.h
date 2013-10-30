@@ -14,6 +14,7 @@ private:
 	InputManager* _inputManager;
 	vec3 _movementVector;
 	float _movementSpeed;
+	vec3* _targetPosition;
 
 public:
 	DummyCameraTarget(vec3 position = vec3());
@@ -29,7 +30,7 @@ public:
 	vec3* GetPositionPointer() { return &_transform.position; }
 
 	void SetPosition(vec3 position) { _transform.position = position; }
-	void SetPosition(vec3* position) { _transform.position = *position; }
+	void SetPosition(vec3* position) { _targetPosition = position; }
 	void SetRotation(vec3 rotation) { _transform.rotation = rotation; }
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 

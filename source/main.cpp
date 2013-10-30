@@ -17,7 +17,7 @@
 
 #include "InputManager.h"
 
-// global variables -- In practice they would in a singlenton
+// global variables -- In practice they would in a singleton
 FrameSaver gFrameSaver;
 int gAnimate = 0;
 int gRecording = 0;
@@ -52,17 +52,21 @@ void printOpenGLVersion(GLFWwindow *window)
     
     int major = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) ;
     int minor = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) ;
-        
-    GLint texSize;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texSize);
-    
+
+	GLint texSize;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &texSize);
+
+	GLint maxTextures;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextures);
+
     
     printf("OpenGL Vendor: %s\n", openGLvendor ) ;
     printf("Renderer: %s\n",  renderer) ;
     printf("OpenGL Version (string): %s\n",  openGLversion) ;
     printf("OpenGL Version (integer) : %d.%d\n", major, minor) ;
-    printf("GLSL Version: %s\n", glslVersion) ;
-    printf("Maximum Texture Size %d\n", texSize) ;
+	printf("GLSL Version: %s\n", glslVersion) ;
+	printf("Maximum Texture Size: %d\n", texSize) ;
+	printf("Maximum Number of Textures: %d\n", maxTextures) ;
 }
 
 // Callback that handles resizing of the OpenGL window
@@ -84,7 +88,7 @@ int main( void )
 
     glfwSetErrorCallback(error_callback) ;
 
-    // Initialise GLFW
+    // Initialize GLFW
     if( !glfwInit() )
     {
         std::cerr <<  "Failed to initialize GLFW\n" ;
@@ -100,7 +104,7 @@ int main( void )
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE) ;
 #else // 4.3 for windows and linux
 
-    glfwWindowHint(GLFW_SAMPLES, 8);
+    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,4) ;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3) ;
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE) ;
@@ -138,8 +142,9 @@ int main( void )
     // Set event callbacks so we can capture and handle user interaction
     glfwSetKeyCallback(window, InputManager::key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback) ;
-    glfwSetMouseButtonCallback(window, InputManager::mouseButton_callback) ;
-    glfwSetCursorPosCallback(window, InputManager::mouseMotion_callback) ;
+	glfwSetMouseButtonCallback(window, InputManager::mouseButton_callback) ;
+	glfwSetCursorPosCallback(window, InputManager::mouseMotion_callback) ;
+	glfwSetScrollCallback(window, InputManager::mouseScroll_callback);
     
     printOpenGLVersion(window) ;
     
@@ -158,7 +163,7 @@ int main( void )
     // Set the recording directory
     gFrameSaver.SetDir(gFrameDir) ;
     
-    // global variable that keems the master clock
+    // global variable that keeps the master clock
     gTime = 0.0 ;
     // Start the main loop until an event closes the window
     while (!glfwWindowShouldClose(window))

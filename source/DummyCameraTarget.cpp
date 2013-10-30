@@ -8,6 +8,7 @@ DummyCameraTarget::DummyCameraTarget(vec3 position)
 {
 	_transform.position = position;
 	//_camera = camera;
+	_targetPosition = NULL;
 
 	_inputManager = InputManager::GetInstance();
 	_movementSpeed = 0.5f;
@@ -15,43 +16,48 @@ DummyCameraTarget::DummyCameraTarget(vec3 position)
 
 void DummyCameraTarget::Update(float deltaTime)
 {
-	_movementVector = vec3();
-	vec3 direction = glm::normalize(_transform.position - _cameraPosition);
-	vec3 left = glm::normalize(glm::cross(vec3(0.0, 1.0, 0.0), direction));
-	vec3 up = glm::normalize(glm::cross(direction, left));
-	
-	if (_inputManager->IsKeyPressed(GLFW_KEY_W))
+	if (_targetPosition != NULL)
+		_transform.position = *_targetPosition;
+	else
 	{
-		_movementVector += direction;
-	}
+		_movementVector = vec3();
+		vec3 direction = glm::normalize(_transform.position - _cameraPosition);
+		vec3 left = glm::normalize(glm::cross(vec3(0.0, 1.0, 0.0), direction));
+		vec3 up = glm::normalize(glm::cross(direction, left));
 
-	if (_inputManager->IsKeyPressed(GLFW_KEY_S))
-	{
-		_movementVector -= direction;
-	}
+		if (_inputManager->IsKeyPressed(GLFW_KEY_W))
+		{
+			_movementVector += direction;
+		}
 
-	if (_inputManager->IsKeyPressed(GLFW_KEY_A))
-	{
-		_movementVector += left;
-	}
+		if (_inputManager->IsKeyPressed(GLFW_KEY_S))
+		{
+			_movementVector -= direction;
+		}
 
-	if (_inputManager->IsKeyPressed(GLFW_KEY_D))
-	{
-		_movementVector -= left;
-	}
+		if (_inputManager->IsKeyPressed(GLFW_KEY_A))
+		{
+			_movementVector += left;
+		}
 
-	if (_inputManager->IsKeyPressed(GLFW_KEY_E))
-	{
-		_movementVector += up;
-	}
+		if (_inputManager->IsKeyPressed(GLFW_KEY_D))
+		{
+			_movementVector -= left;
+		}
 
-	if (_inputManager->IsKeyPressed(GLFW_KEY_Q))
-	{
-		_movementVector -= up;
-	}
+		if (_inputManager->IsKeyPressed(GLFW_KEY_E))
+		{
+			_movementVector += up;
+		}
 
-	if (_movementVector != vec3())
-		_transform.position += glm::normalize(_movementVector) * _movementSpeed;
+		if (_inputManager->IsKeyPressed(GLFW_KEY_Q))
+		{
+			_movementVector -= up;
+		}
+
+		if (_movementVector != vec3())
+			_transform.position += glm::normalize(_movementVector) * _movementSpeed;
+	}
 }
 
 void DummyCameraTarget::Draw(ModelviewStack* ms)

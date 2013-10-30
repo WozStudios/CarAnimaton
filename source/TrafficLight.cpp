@@ -1,6 +1,7 @@
 #include "TrafficLight.h"
 #include "drawScene.h"
 #include "MathUtils.h"
+#include "Utility.h"
 
 TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -24,8 +25,7 @@ void TrafficLight::Draw(ModelviewStack* ms)
 
 	if (cameraDistance > 100.0f)
 	{
-		float angle = acos(glm::dot(glm::normalize(cameraToPosition), *_cameraDirection));
-		if (angle > M_PI / 2.0f)
+		if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 			return;
 	}
 
