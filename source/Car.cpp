@@ -24,7 +24,7 @@ void Car::Update(float deltaTime)
 	_transform.position += deltaTime * _velocity;
 	double distanceTravelled = glm::length(deltaTime * _velocity);
 	//_wheelSpeed = _velocity.z * 180.0f / 4.0f;
-	_wheelAngle += 360.0 * distanceTravelled / (2.0 * M_PI * _tireRadius);
+	_wheelAngle +=  (distanceTravelled / _tireRadius) * RADIANS_TO_DEGREES;
 }
 
 void Car::Draw(ModelviewStack* ms)

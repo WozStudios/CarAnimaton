@@ -53,7 +53,7 @@ void Scene::Init()
 	_gameObjects.push_back(new TrafficLight(2, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
 	Car* car = new Car(cameraPosition, cameraDirection);
-	_camera.SetTarget(car->GetPositionPointer());
+	//_camera.SetTarget(car->GetPositionPointer());
 	_gameObjects.push_back(car);
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());

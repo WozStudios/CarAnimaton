@@ -23,11 +23,8 @@ void TrafficLight::Draw(ModelviewStack* ms)
 	vec3 cameraToPosition = _transform.position - *_cameraPosition;
 	float cameraDistance = glm::length(cameraToPosition);
 
-	if (cameraDistance > 100.0f)
-	{
-		if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
-			return;
-	}
+	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
+		return;
 
 	useTexture(0);
 	float grey = 0.7f;
