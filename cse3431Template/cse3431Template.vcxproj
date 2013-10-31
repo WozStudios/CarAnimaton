@@ -115,8 +115,10 @@
     <ClInclude Include="..\source\MathUtils.h" />
     <ClInclude Include="..\source\matStack.h" />
     <ClInclude Include="..\source\Metronome.h" />
+    <ClInclude Include="..\source\Node.h" />
     <ClInclude Include="..\source\opengl.h" />
     <ClInclude Include="..\source\Parametric.h" />
+    <ClInclude Include="..\source\Path.h" />
     <ClInclude Include="..\source\Person.h" />
     <ClInclude Include="..\source\program.h" />
     <ClInclude Include="..\source\QuaternionTest.h" />
@@ -151,6 +153,7 @@
     <ClCompile Include="..\source\InputManager.cpp" />
     <ClCompile Include="..\source\main.cpp" />
     <ClCompile Include="..\source\Metronome.cpp" />
+    <ClCompile Include="..\source\Path.cpp" />
     <ClCompile Include="..\source\Person.cpp" />
     <ClCompile Include="..\source\program.cpp" />
     <ClCompile Include="..\source\QuaternionTest.cpp" />

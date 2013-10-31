@@ -22,10 +22,12 @@
 #include "ElectricalBox.h"
 #include "Decal.h"
 #include "DecalGenerator.h"
+#include "Path.h"
+#include "Node.h"
 
 Scene::Scene()
 {
-	_camera = Camera(16);
+	_camera = Camera(32);
 	//_soundtrack = new sf::Music();
 	//_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
 }
@@ -54,6 +56,7 @@ void Scene::Init()
 	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
 	Car* car = new Car(cameraPosition, cameraDirection);
 	//_camera.SetTarget(car->GetPositionPointer());
+
 	_gameObjects.push_back(car);
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());

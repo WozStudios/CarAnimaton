@@ -29,7 +29,8 @@ private:
 	double _distance;
 	double _heightSpeed;
 	double _zoomSpeed;
-	double _rotationSpeed;
+	double _rotationSpeedX;
+	double _rotationSpeedY;
 
 	double _angle;
 

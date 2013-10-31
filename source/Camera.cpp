@@ -7,14 +7,15 @@ Camera::Camera(double distance)
 	_distance = distance;
 	_transform.position = vec3(0.0f, 0.0f, distance);
 	_origin = vec3(0.0f, 0.0f, 0.0f);
-	_dummy = DummyCameraTarget(vec3(0.0f, 5.0f, 0.0f));
+	_dummy = DummyCameraTarget(vec3(-115.0f, 10.0f, -95.0f));
 	//_target = _dummy.GetPositionPointer();
 	_previousTargetPosition = _dummy.GetPosition();
 	_upVector = vec3(0, 1, 0);
 	
 	_heightSpeed = 10.0;
 	_zoomSpeed = 10.0;
-	_rotationSpeed = 1.0;
+	_rotationSpeedX = 0.5;
+	_rotationSpeedY = 0.5;
 
 	_angle = 0.0;
 
@@ -170,9 +171,13 @@ void Camera::Update(float deltaTime)
 	if (scroll > 0.0)
 		_distance = _inputManager->GetMouseScroll() + 5.0f;
 
-	_transform.position.x += cos(_counterY) * cos(_counterX) * _distance;
-	_transform.position.y += sin(_counterX) * _distance;
-	_transform.position.z += sin(_counterY) * cos(_counterX) * _distance;
+	_transform.position.x += cos(_counterY) * cos(_counterX) * _distance * _rotationSpeedX;
+	_transform.position.y += sin(_counterX) * _distance * _rotationSpeedY;
+	_transform.position.z += sin(_counterY) * cos(_counterX) * _distance * _rotationSpeedX;
+
+	// Keep camera from colliding with ground
+	if (_transform.position.y < 0)
+		_transform.position.y = 0;
 
 	if (_inputManager->IsRightClicked())
 	{

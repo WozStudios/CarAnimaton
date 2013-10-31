@@ -55,6 +55,15 @@ void DummyCameraTarget::Update(float deltaTime)
 			_movementVector -= up;
 		}
 
+		if (_inputManager->IsKeyPressed(GLFW_KEY_SPACE))
+		{
+			_movementSpeed = 1.0f;
+		}
+		else
+		{
+			_movementSpeed = 0.5f;
+		}
+
 		if (_movementVector != vec3())
 			_transform.position += glm::normalize(_movementVector) * _movementSpeed;
 	}

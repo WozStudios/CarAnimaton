@@ -155,6 +155,12 @@
     <ClInclude Include="..\source\Utility.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Path.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Node.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -245,6 +251,9 @@
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\source\DecalGenerator.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Path.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
