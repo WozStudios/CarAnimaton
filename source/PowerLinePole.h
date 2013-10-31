@@ -1,10 +1,10 @@
-#ifndef ELECTRICAL_BOX_H
-#define ELECTRICAL_BOX_H
+#ifndef POWER_LINE_POLE_H
+#define POWER_LINE_POLE_H
 
 #include "IGameObject.h"
 #include "IDrawable.h"
 
-class ElectricalBox : public IGameObject, public IDrawable
+class PowerLinePole : public IGameObject, public IDrawable
 {
 private:
 	Transform _transform;
@@ -13,7 +13,7 @@ private:
 	vec3* _cameraDirection;
 
 public:
-	ElectricalBox(vec3* cameraPosition, vec3* cameraDirection);
+	PowerLinePole(vec3 position, vec3* cameraPosition, vec3* cameraDirection);
 
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -24,9 +24,6 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 
 	void Draw(ModelviewStack* ms);
-
-private:
-	void DrawPole(ModelviewStack* ms);
 };
 
 #endif

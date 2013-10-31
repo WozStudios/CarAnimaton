@@ -9,6 +9,10 @@
 #define RADIANS_TO_DEGREES 57.2957795131
 #endif
 
+#ifndef DEGREES_TO_RADIANS
+#define DEGREES_TO_RADIANS 0.01745327778
+#endif
+
 static void lerp(double x0, double y0, double x1, double y1, double c, double* x, double* y)
 {
 	*x = (1 - c) * x0 + c * x1;

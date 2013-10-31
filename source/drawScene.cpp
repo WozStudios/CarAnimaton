@@ -499,7 +499,7 @@ void drawTemplateScene(float time)
     
     
     useTexture(0) ;
-    setColour(0.8,0.2,0.0) ;
+    setColour(0.8f, 0.2f, 0.0f) ;
     gMS.Push();
     {
         gMS.Translate((vec3(4.0f,0.0f,0.0f))) ;

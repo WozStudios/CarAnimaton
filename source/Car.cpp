@@ -13,9 +13,7 @@ Car::Car(vec3* cameraPosition, vec3* cameraDirection)
 
 	_lastPosition = _transform.position;
 
-	_velocity = vec3(0.0f, 0.0f, 0.0f);
-	_acceleration = 0.3f;
-	_carSpeed = 50.0f;
+	_carSpeed = 75.0f;
 
 	_carDirection = vec3(0.0f, 0.0f, -1.0f);
 	_carAngle = 180.0f;
@@ -23,24 +21,16 @@ Car::Car(vec3* cameraPosition, vec3* cameraDirection)
 
 	_tireRadius = 2.0f;
 	_wheelAngle = 0.0f;
-	_wheelSpeed = _velocity.z * 180.0f / 4.0f;
 
 	_cameraPosition = cameraPosition;
 	_cameraDirection = cameraDirection;
 
 	_path.AddNode(new Node(vec3(-109.0f, 0.0f, -60.0f)));
 	_path.AddNode(new Node(vec3(_transform.position.x, 0.0f, _transform.position.z)));
-	//_path.AddNode(new Node(vec3(-120.0f, 5.0f, -120.0f)));
 	_path.AddNode(new Node(vec3(-115.0f, 0.0f, -160.0f)));
-	//_path.AddNode(new Node(vec3(-138.0f, 5.0f, -190.0f)));
 	_path.AddNode(new Node(vec3(-82.0f, 0.0f, -210.0f)));
 	_path.AddNode(new Node(vec3(-22.0f, 0.0f, -168.0f)));
-	//_path.AddNode(new Node(vec3(-28.0f, 5.0f, -193.0f)));
-	//_path.AddNode(new Node(vec3(-16.0f, 5.0f, -143.0f)));
-	//_path.AddNode(new Node(vec3(-22.0f, 5.0f, -85.0f)));
-	//_path.AddNode(new Node(vec3(-12.0f, 5.0f, -45.0f)));
 	_path.AddNode(new Node(vec3(-8.0f, 0.0f, -10.0f)));
-	//_path.AddNode(new Node(vec3(9.0f, 5.0f, 4.0f)));
 	_path.AddNode(new Node(vec3(90.0f, 0.0f, 16.0f)));
 	_path.AddNode(new Node(vec3(150.0f, 0.0f, 16.0f)));
 
@@ -53,19 +43,19 @@ Car::Car(vec3* cameraPosition, vec3* cameraDirection)
 
 void Car::Update(float deltaTime)
 {
+	double x;
+	double z;
+
+	_currentC += deltaTime * _carSpeed;
+
+	while (_currentC > 1.0)
+	{
+		_currentNode++;
+		_currentC -= 1.0;
+	}
+
 	if (_currentNode < _points.size() - 2)
 	{
-		double x;
-		double z;
-
-		_currentC += deltaTime * _carSpeed;
-
-		while (_currentC > 1.0)
-		{
-			_currentNode++;
-			_currentC -= 1.0;
-		}
-
 		lerp(_points[_currentNode].x, 
 			_points[_currentNode].z, 
 			_points[_currentNode + 1].x, 
@@ -73,11 +63,11 @@ void Car::Update(float deltaTime)
 			_currentC,
 			&x, &z);
 
-		_transform.position.x = x;
-		_transform.position.z = z;
+		_transform.position.x = (float)x;
+		_transform.position.z = (float)z;
 		
 		double c = _currentC;
-		int node = _currentNode;
+		unsigned int node = _currentNode;
 		vec3 heading;
 
 		vec3 nextPosition = vec3();
@@ -91,15 +81,18 @@ void Car::Update(float deltaTime)
 				c -= 1.0;
 			}
 
-			lerp(_points[_currentNode].x, 
-				_points[_currentNode].z, 
-				_points[node + 1].x, 
-				_points[node + 1].z,
-				c,
-				&x, &z);
+			if (node < _points.size() - 2)
+			{
+				lerp(_points[_currentNode].x, 
+					_points[_currentNode].z, 
+					_points[node + 1].x, 
+					_points[node + 1].z,
+					c,
+					&x, &z);
 
-			nextPosition.x += x;
-			nextPosition.z += z;
+				nextPosition.x += (float)x;
+				nextPosition.z += (float)z;
+			}
 		}
 		nextPosition.x /= 10.0f;
 		nextPosition.z /= 10.0f;
@@ -109,24 +102,12 @@ void Car::Update(float deltaTime)
 			vec3 heading = glm::normalize(nextPosition - _transform.position);
 			_carAngle = acos(glm::dot(_carDirection, heading));
 
-			//std::cout << "Car Angle: " << _carAngle << "\n";
-
 			vec3 crossProduct = glm::cross(_carDirection, heading);
 			if (crossProduct.y > 0)
 				_carAngle *= -1.0f;
-
-			//vec3 crossProduct = glm::cross(_carDirection, heading);
-			//if (crossProduct.y > 0)
-			//	_carAngle = acos(glm::dot(_carDirection, heading)) * RADIANS_TO_DEGREES;
-			//else
-			//	_carAngle = 360.0 - acos(glm::dot(_carDirection, heading)) * RADIANS_TO_DEGREES;
 		}
 
-
-		// Animation test
-		//_rotationCounter += deltaTime * 0.5f;
-
-		_rotationCounter = _carAngle / M_PI;
+		_rotationCounter = _carAngle / (float) M_PI;
 
 		if (_rotationCounter > 2.0f)
 			_rotationCounter -= 2.0f;
@@ -135,15 +116,12 @@ void Car::Update(float deltaTime)
 
 		quat carDirection1 = quat(vec3(0.0f, M_PI, 0.0f));
 		quat carDirection2 = quat(vec3(0.0f, 0.0, 0.0f));
-		//vec3 heading = vec3(_points[_currentNode + 2].x - _transform.position.x, 0.0f,
-		//							_points[_currentNode + 2].z - _transform.position.z);
 		_heading = mix(carDirection1, carDirection2, _rotationCounter);
 	}
 	
 	// Calculate wheel spin
-	double distanceTravelled = glm::length(_transform.position - _lastPosition);
-	int spinDirection = 1; //_velocity.z < 0 ? 1 : -1;
-	_wheelAngle += spinDirection * (distanceTravelled / _tireRadius) * RADIANS_TO_DEGREES;
+	float distanceTravelled = glm::length(_transform.position - _lastPosition);
+	_wheelAngle += (distanceTravelled / _tireRadius) *  (float)RADIANS_TO_DEGREES;
 	_lastPosition = _transform.position;
 }
 
@@ -158,8 +136,8 @@ void Car::Draw(ModelviewStack* ms)
 	ms->Push();
 	{
 		ms->Translate(_transform.position);
-		//ms->Rotate(_carAngle * RADIANS_TO_DEGREES + 180.0, _transform.rotation);
 		ms->Mult(mat4_cast(_heading));
+
 		// Draw main body
 		ms->Push();
 		{

@@ -120,6 +120,8 @@
     <ClInclude Include="..\source\Parametric.h" />
     <ClInclude Include="..\source\Path.h" />
     <ClInclude Include="..\source\Person.h" />
+    <ClInclude Include="..\source\PowerLinePole.h" />
+    <ClInclude Include="..\source\PowerLines.h" />
     <ClInclude Include="..\source\program.h" />
     <ClInclude Include="..\source\QuaternionTest.h" />
     <ClInclude Include="..\source\Random.h" />
@@ -155,6 +157,8 @@
     <ClCompile Include="..\source\Metronome.cpp" />
     <ClCompile Include="..\source\Path.cpp" />
     <ClCompile Include="..\source\Person.cpp" />
+    <ClCompile Include="..\source\PowerLinePole.cpp" />
+    <ClCompile Include="..\source\PowerLines.cpp" />
     <ClCompile Include="..\source\program.cpp" />
     <ClCompile Include="..\source\QuaternionTest.cpp" />
     <ClCompile Include="..\source\Scene.cpp" />

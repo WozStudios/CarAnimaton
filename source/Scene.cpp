@@ -19,6 +19,7 @@
 #include "BuildingGenerator.h"
 #include "Building.h"
 #include "QuaternionTest.h"
+#include "PowerLines.h"
 #include "ElectricalBox.h"
 #include "Decal.h"
 #include "DecalGenerator.h"
@@ -62,7 +63,8 @@ void Scene::Init()
 	_gameObjects.push_back(new GasStation());
 	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
-	//_gameObjects.push_back(new ElectricalBox(cameraPosition, cameraDirection));
+	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
+	_gameObjects.push_back(new ElectricalBox(cameraPosition, cameraDirection));
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
 	vector<Decal*> decals = decalGenerator.GetDecals();

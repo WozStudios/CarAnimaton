@@ -7,7 +7,7 @@ Camera::Camera(double distance)
 	_distance = distance;
 	_transform.position = vec3(0.0f, 0.0f, distance);
 	_origin = vec3(0.0f, 0.0f, 0.0f);
-	_dummy = DummyCameraTarget(vec3(-115.0f, 10.0f, -95.0f));
+	_dummy = DummyCameraTarget(vec3(0.0f, 0.0f, 0.0f));
 	//_target = _dummy.GetPositionPointer();
 	_previousTargetPosition = _dummy.GetPosition();
 	_upVector = vec3(0, 1, 0);

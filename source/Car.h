@@ -17,25 +17,20 @@ private:
 	Transform _transform;
 
 	vec3 _lastPosition;
-
-	vec3 _velocity;
-	float _acceleration;
 	float _carSpeed;
 
 	vec3 _carDirection;
 	float _carAngle;
 	quat _heading;
 	float _rotationCounter;
-	//vec3 _nextPosition;
 
 	Path _path;
 	vector<vec3> _points;
-	int _currentNode;
+	unsigned int _currentNode;
 	double _currentC;
 
 	float _tireRadius;
 	float _wheelAngle;
-	float _wheelSpeed;
 
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;

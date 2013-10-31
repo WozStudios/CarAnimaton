@@ -11,12 +11,12 @@ class Utility
 public:
 	static bool isVisible(vec3 position, vec3 cameraPosition, vec3 cameraDirection)
 	{
-		float dotProduct = glm::dot(glm::normalize(position - cameraPosition), cameraDirection);
+		double dotProduct = glm::dot(glm::normalize(position - cameraPosition), cameraDirection);
 		if (dotProduct > 0.999 || dotProduct < 1.001)
 			return true;
 
-		float angle = acos(dotProduct);
-		float PI_2 = 2.0f * M_PI;
+		double angle = acos(dotProduct);
+		double PI_2 = 2.0 * M_PI;
 		return angle < PI_2 || angle > -PI_2;
 	}
 };

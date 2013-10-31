@@ -15,7 +15,7 @@ Bird::Bird(Transform transform, float flightSpeed, int pathFunction, float pathW
 	_wingFlapSpeed = 2.0f;
 	_flightSpeed = flightSpeed;
 	_pathWidth = pathWidth;
-	_pathCounter = Random(0.0f, 2 * M_PI);
+	_pathCounter = (float)Random(0.0, 2.0 * M_PI);
 	_rotationAngle = 0.0f;
 	_front = vec3(0.0f, 0.0f, 1.0f);
 	_lastPosition = _transform.position;
@@ -44,16 +44,14 @@ void Bird::Update(float deltaTime)
 	vec3 heading = glm::normalize(_transform.position - _lastPosition);
 	vec3 crossProduct = glm::cross(_front, heading);
 	if (crossProduct.y > 0)
-		_rotationAngle = acos(glm::dot(_front, heading)) * RADIANS_TO_DEGREES;
+		_rotationAngle =  (float)(acos(glm::dot(_front, heading)) * RADIANS_TO_DEGREES);
 	else
-		_rotationAngle = 360.0 - acos(glm::dot(_front, heading)) * RADIANS_TO_DEGREES;
+		_rotationAngle =  (float)(360.0 - acos(glm::dot(_front, heading)) * RADIANS_TO_DEGREES);
 
 	_lastPosition = _transform.position;
 
 	// Flap wings
 	_wingCounter += deltaTime * _wingFlapSpeed;
-	if (_wingCounter > 2 * M_PI);
-		_wingCounter -= 2 * M_PI;
 	_wingAngle = sin(_wingCounter) * 45.0f;
 }
 

@@ -64,8 +64,8 @@ void TrafficLight::DrawPost(ModelviewStack* ms)
 
 		ms->Push();
 		{
-			ms->Translate(vec3(0.0, 0.0, _transform.scale.y / 8.0));
-			ms->Scale(vec3(_transform.scale.x / 2.0, _transform.scale.z / 2.0, _transform.scale.y / 4.0));
+			ms->Translate(vec3(0.0, 0.0, _transform.scale.y / 4.0));
+			ms->Scale(vec3(_transform.scale.x / 2.0, _transform.scale.z / 2.0, _transform.scale.y / 2.0));
 			//ms->Rotate(90.0, vec3(1.0, 0.0, 0.0));
 			drawCylinder(*ms);
 		}
@@ -90,24 +90,30 @@ void TrafficLight::DrawJoint(ModelviewStack* ms)
 
 void TrafficLight::DrawLights(ModelviewStack* ms)
 {
-	setColour(0.9, 0.8, 0.1);
+	setColour(0.9f, 0.8f, 0.1f);
 	
 	ms->Push();
 	{
-		ms->Scale(vec3(1.5, 5.0, 2.5));
-		drawCube(*ms);
-	}
-	ms->Pop();
+		ms->Translate(vec3(0.0f, 0.0f, 16.0f));
+		ms->Rotate(180.0f, vec3(0.0f, 1.0f, 0.0f));
+		ms->Push();
+		{
+			ms->Scale(vec3(1.5, 5.0, 2.5));
+			drawCube(*ms);
+		}
+		ms->Pop();
 
-	ms->Push();
-	{
-		//Draw Red Light
-		DrawLight(ms, 3.0f, vec3(0.3, 0.0, 0.0));
-		//Draw Yellow Light
-		DrawLight(ms, 0.0f, vec3(0.3, 0.3, 0.0));
-		//Draw Green Light
-		DrawLight(ms, -3.0f, vec3(0.0, 1.0, 0.0));
+		ms->Push();
+		{
+			//Draw Red Light
+			DrawLight(ms, 3.0f, vec3(0.3, 0.0, 0.0));
+			//Draw Yellow Light
+			DrawLight(ms, 0.0f, vec3(0.3, 0.3, 0.0));
+			//Draw Green Light
+			DrawLight(ms, -3.0f, vec3(0.0, 1.0, 0.0));
 
+		}
+		ms->Pop();
 	}
 	ms->Pop();
 }
@@ -121,8 +127,8 @@ void TrafficLight::DrawLight(ModelviewStack* ms, float height, vec3 colour)
 		setColour(colour.x, colour.y, colour.z);
 		drawSphere(*ms);
 		
-		setColour(0.9, 0.8, 0.1);
-		ms->Translate(vec3(0.0f, 0.0, 0.0));
+		setColour(0.9f, 0.8f, 0.1f);
+		//ms->Translate(vec3(0.0f, 0.0, 0.0));
 		ms->Rotate(90.0, vec3(0.0f, 1.0, 0.0));
 		ms->Scale(vec3(2.4f, 2.4f, 2.4f));
 

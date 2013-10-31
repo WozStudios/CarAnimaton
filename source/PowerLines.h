@@ -1,10 +1,14 @@
-#ifndef ELECTRICAL_BOX_H
-#define ELECTRICAL_BOX_H
+#ifndef POWER_LINES_H
+#define POWER_LINES_H
 
+#include "PowerLinePole.h"
+#include <vector>
 #include "IGameObject.h"
 #include "IDrawable.h"
 
-class ElectricalBox : public IGameObject, public IDrawable
+using std::vector;
+
+class PowerLines : public IGameObject, public IDrawable
 {
 private:
 	Transform _transform;
@@ -12,8 +16,11 @@ private:
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;
 
+	vector<PowerLinePole*> _poles;
+
 public:
-	ElectricalBox(vec3* cameraPosition, vec3* cameraDirection);
+	PowerLines(vec3* cameraPosition, vec3* cameraDirection);
+	~PowerLines();
 
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -26,7 +33,8 @@ public:
 	void Draw(ModelviewStack* ms);
 
 private:
-	void DrawPole(ModelviewStack* ms);
+	void SetupPoles();
+	void DrawLine(ModelviewStack* ms, vec3 position);
 };
 
 #endif
