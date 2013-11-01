@@ -162,15 +162,19 @@ void Path::DrawDebugSpheres(ModelviewStack* ms)
 	//}
 
 	setColour(0.0f, 1.0f, 0.0f);
-	for (vector<vec3>::iterator i = _finalPoints.begin(); i != _finalPoints.end(); i++)
+	int index = 0;
+	for (vector<vec3>::iterator i = _finalPoints.begin(); i != _finalPoints.end(); i++, index++)
 	{
-		ms->Push();
+		if (index % 10 == 0)
 		{
-			ms->Translate((*i));
-			ms->Scale(vec3(0.35f, 0.35f, 0.35f));
+			ms->Push();
+			{
+				ms->Translate((*i));
+				ms->Scale(vec3(0.35f, 0.35f, 0.35f));
 
-			drawSphere(*ms);
+				drawSphere(*ms);
+			}
+			ms->Pop();
 		}
-		ms->Pop();
 	}
 }

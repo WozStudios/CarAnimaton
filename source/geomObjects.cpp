@@ -210,7 +210,7 @@ void Square::SetBuffers(GLuint prog){
     checkError() ;
    
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo) ; // bind the vdo that contains the attributes
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo) ; // bind the vbo that contains the attributes
    
     
     glVertexAttribPointer(positionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), (const GLvoid *)0);
@@ -228,18 +228,18 @@ Square::Square(std::string name, GLuint prog)
 }
 
 void Square::Draw(void) {
-    checkError() ;
+    //checkError() ;
     glFrontFace(GL_CCW) ;
-    checkError() ;
+    //checkError() ;
     glDisable(GL_CULL_FACE) ;
-    checkError() ;
+    //checkError() ;
     glBindVertexArray(_vao);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    checkError() ;
+    //checkError() ;
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    checkError() ;
+    //checkError() ;
     glBindVertexArray(0) ;
-    checkError() ;
+    //checkError() ;
 }
 
 Cube::Cube(std::string name, GLuint prog)
@@ -462,7 +462,7 @@ void Cylinder::Draw() {
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays(GL_TRIANGLES, 0,_n*_n*6 );
-    checkError() ;
+    //checkError() ;
     glBindVertexArray(0) ;
     
 }
@@ -600,7 +600,7 @@ void Sphere::Draw() {
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays(GL_TRIANGLES, 0,_n*_n*6 );
-    checkError() ;
+    //checkError() ;
     glBindVertexArray(0) ;
     
 }

@@ -2,6 +2,7 @@
 #include "MathUtils.h"
 #include "drawScene.h"
 #include "Utility.h"
+#include "Random.h"
 
 PowerLinePole::PowerLinePole(vec3 position, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -9,6 +10,9 @@ PowerLinePole::PowerLinePole(vec3 position, vec3* cameraPosition, vec3* cameraDi
 	_transform.position = position;
 	_transform.rotation = vec3(1.0f, 0.0f, 0.0f);
 	_transform.scale = vec3(8.0f, 100.0f, 8.0f);
+	
+	// Give each pole a random rotation
+	_rotationAngle = (float)Random(0.0, 360.0);
 
 	_cameraPosition = cameraPosition;
 	_cameraDirection = cameraDirection;
@@ -26,6 +30,7 @@ void PowerLinePole::Draw(ModelviewStack* ms)
 		setMaterial(colour, colour, colour, 60.0f);
 
 		ms->Translate(_transform.position);
+		ms->Rotate(_rotationAngle, vec3(0.0f, 1.0f, 0.0f));
 		ms->Scale(vec3(0.5f * _transform.scale));
 		ms->Translate(vec3(0.0f, 0.5f, 0.0f));
 		ms->Rotate(90.0f, _transform.rotation);

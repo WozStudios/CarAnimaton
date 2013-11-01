@@ -44,6 +44,8 @@ Scene::~Scene()
 
 void Scene::Init()
 {
+	//_frameBuffer.Init(gWidth, gHeight);
+
 	vec3* cameraPosition = _camera.GetPositionPointer();
 	vec3* cameraDirection = _camera.GetDirectionPointer();
 
@@ -55,16 +57,31 @@ void Scene::Init()
 	//_gameObjects.push_back(new TrafficLight(1, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new TrafficLight(2, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
-	Car* car = new Car(cameraPosition, cameraDirection);
+
+	SetupCarPaths();
+
+	Transform transform;
+	transform.position = vec3(-109.0f, 0.0f, -95.0f);
+	transform.rotation = vec3(0.0f, 1.0f, 0.0f);
+	transform.scale = vec3(8.0f, 4.0f, 20.0f);
+	SmallCar* smallCar = new SmallCar(transform, vec3(0.0f, 0.0f, -1.0f), vec3(0.25f, 0.4f, 0.3f), cameraPosition, cameraDirection, &_firstCarPath);
 	//_camera.SetTarget(car->GetPositionPointer());
 
-	_gameObjects.push_back(car);
+	transform.position = vec3(220.0f, 0.0f, -14.0f);
+	transform.rotation = vec3(0.0f, 1.0f, 0.0f);
+	transform.scale = vec3(5.0f, 4.0f, 12.0f);
+	SportsCar* sportsCar = new SportsCar(transform, vec3(-1.0f, 0.0f, 0.0f), vec3(0.6f, 0.15f, 0.1f), cameraPosition, cameraDirection, &_secondCarPath);
+
+	_gameObjects.push_back(smallCar);
+	_gameObjects.push_back(sportsCar);
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());
 	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
 	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
 	_gameObjects.push_back(new ElectricalBox(cameraPosition, cameraDirection));
+
+	_animationManager.Init(&_camera, smallCar, sportsCar);
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
 	vector<Decal*> decals = decalGenerator.GetDecals();
@@ -98,8 +115,31 @@ void Scene::Init()
 	//_soundtrack->play();
 }
 
+void Scene::SetupCarPaths()
+{
+	_firstCarPath.AddNode(new Node(vec3(-109.0f, 0.0f, -60.0f)));
+	_firstCarPath.AddNode(new Node(vec3(-109.0f, 0.0f, -95.0f)));
+	_firstCarPath.AddNode(new Node(vec3(-115.0f, 0.0f, -160.0f)));
+	_firstCarPath.AddNode(new Node(vec3(-82.0f, 0.0f, -210.0f)));
+	_firstCarPath.AddNode(new Node(vec3(-22.0f, 0.0f, -168.0f)));
+	_firstCarPath.AddNode(new Node(vec3(-8.0f, 0.0f, -10.0f)));
+	_firstCarPath.AddNode(new Node(vec3(90.0f, 0.0f, 16.0f)));
+	_firstCarPath.AddNode(new Node(vec3(150.0f, 0.0f, 16.0f)));
+	_firstCarPath.CalculatePath();
+
+	_secondCarPath.AddNode(new Node(vec3(210.0f, 0.0f, -14.0f)));
+	_secondCarPath.AddNode(new Node(vec3(220.0f, 0.0f, -14.0f)));
+	_secondCarPath.AddNode(new Node(vec3(100.0f, 0.0f, -14.0f)));
+	_secondCarPath.AddNode(new Node(vec3(-14.0f, 0.0f, -14.0f)));
+	_secondCarPath.AddNode(new Node(vec3(-20.0f, 0.0f, -30.0f)));
+	_secondCarPath.AddNode(new Node(vec3(-25.0f, 0.0f, -40.0f)));
+	_secondCarPath.CalculatePath();
+}
+
 void Scene::Update(float deltaTime)
 {
+	_animationManager.Update(deltaTime);
+
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
 	{
 		if (IUpdateable* updateable = dynamic_cast<IUpdateable*>(*i))
@@ -108,21 +148,14 @@ void Scene::Update(float deltaTime)
 
 	_camera.Update(deltaTime);
 }
-void drawTestBox(ModelviewStack* ms, double x, double scale)
-{
-	setColour(1.0, 0.0, 0.0);
-
-	ms->Push();
-	{
-		ms->Translate(vec3(x, 1.0 * scale, 0.0));
-		ms->Scale(vec3(scale, scale, scale));
-		drawCube(*ms);
-	}
-	ms->Pop();
-}
 
 void Scene::Draw(ModelviewStack* ms)
 {
+	//FrameBuffer::UseFrameBuffer(_frameBuffer.GetId());
+	//gShaders.use(0);
+	//
+	//glEnable(GL_DEPTH_TEST);
+
     ms->SetViewMatrix(_camera.GetPosition(), *_camera.GetTarget(), _camera.GetUpVector());
 
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
@@ -130,7 +163,9 @@ void Scene::Draw(ModelviewStack* ms)
 		if (IDrawable* drawable = dynamic_cast<IDrawable*>(*i))
 			drawable->Draw(ms);
 	}
-	
-	//drawTestBox(ms, 0.0, 1.0);
-	//drawTestBox(ms, 3.0, 0.5);
+
+	//FrameBuffer::UseFrameBuffer(0);
+	//gShaders.use(1);
+	//_frameBuffer.Draw();
+
 }

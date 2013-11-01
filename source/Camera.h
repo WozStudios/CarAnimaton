@@ -6,7 +6,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include "DummyCameraTarget.h"
 #include "InputManager.h"
-#include "IGameObject.h""
+#include "IGameObject.h"
 #include "IDrawable.h"
 #include "IUpdateable.h"
 #include "QuaternionTest.h"

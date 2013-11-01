@@ -13,12 +13,14 @@ uniform sampler2D texture10 ;
 uniform sampler2D texture11 ;
 uniform sampler2D texture12 ;
 uniform sampler2D texture13 ;
+uniform sampler2D texture14 ;
+uniform sampler2D texture15 ;
 
 uniform float time ;
 uniform int useTex ;
 uniform int useLighting ;
 
-out vec4 fragColour;
+layout(location = 0) out vec4 fragColour;
 
 in vec4 Colour;
 in vec4 VColour ;
@@ -48,11 +50,12 @@ void main(void)
     vec4 texColour11 = texture(texture11,TexCoord);
     vec4 texColour12 = texture(texture12,TexCoord);
     vec4 texColour13 = texture(texture13,TexCoord);
+    vec4 texColour14 = texture(texture14,TexCoord);
+    vec4 texColour15 = texture(texture15,TexCoord);
 
     vec4 texColour ;
     
     switch( useTex ) {
-        case 1: texColour = texColour1 ; break ;
         case 2: texColour = texColour2 ; break ;
         case 3: texColour = texColour3 ; break ;
         case 4: texColour = texColour4 ; break ;
@@ -65,6 +68,8 @@ void main(void)
         case 11: texColour = texColour11 ; break ;
         case 12: texColour = texColour12 ; break ;
         case 13: texColour = texColour13 ; break ;
+        case 14: texColour = texColour14 ; break ;
+        case 15: texColour = texColour15 ; break ;
 
         default: texColour = vec4(1.f) ; break;
     } ;

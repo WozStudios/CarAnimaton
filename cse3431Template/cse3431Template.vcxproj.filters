@@ -27,7 +27,10 @@
     <None Include="..\shaders\simple.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="..\shaders\simple.vert">
+    <None Include="..\shaders\blur.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\shaders\blur.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -167,6 +170,18 @@
     <ClInclude Include="..\source\PowerLinePole.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\FrameBuffer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\SmallCar.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\SportsCar.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\AnimationManager.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -267,6 +282,18 @@
     </ClCompile>
     <ClCompile Include="..\source\PowerLinePole.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\FrameBuffer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\SmallCar.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\SportsCar.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\AnimationManager.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -24,9 +24,6 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 
 	void Draw(ModelviewStack* ms);
-
-private:
-	void DrawPole(ModelviewStack* ms);
 };
 
 #endif

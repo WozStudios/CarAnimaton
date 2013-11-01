@@ -80,12 +80,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\shaders\blur.frag" />
     <None Include="..\shaders\diffuse.frag" />
     <None Include="..\shaders\diffuse.vert" />
     <None Include="..\shaders\simple.frag" />
-    <None Include="..\shaders\simple.vert" />
+    <None Include="..\shaders\blur.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\AnimationManager.h" />
     <ClInclude Include="..\source\AudioManager.h" />
     <ClInclude Include="..\source\Billboard.h" />
     <ClInclude Include="..\source\Bird.h" />
@@ -101,6 +103,7 @@
     <ClInclude Include="..\source\ElectricalBox.h" />
     <ClInclude Include="..\source\ForestGenerator.h" />
     <ClInclude Include="..\source\FPSCounter.h" />
+    <ClInclude Include="..\source\FrameBuffer.h" />
     <ClInclude Include="..\source\FrameSaver.h" />
     <ClInclude Include="..\source\GasStation.h" />
     <ClInclude Include="..\source\Bicycle.h" />
@@ -127,12 +130,15 @@
     <ClInclude Include="..\source\Random.h" />
     <ClInclude Include="..\source\Scene.h" />
     <ClInclude Include="..\source\Skybox.h" />
+    <ClInclude Include="..\source\SmallCar.h" />
+    <ClInclude Include="..\source\SportsCar.h" />
     <ClInclude Include="..\source\Store.h" />
     <ClInclude Include="..\source\TrafficLight.h" />
     <ClInclude Include="..\source\Transform.h" />
     <ClInclude Include="..\source\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\AnimationManager.cpp" />
     <ClCompile Include="..\source\Bicycle.cpp" />
     <ClCompile Include="..\source\Billboard.cpp" />
     <ClCompile Include="..\source\Bird.cpp" />
@@ -146,6 +152,7 @@
     <ClCompile Include="..\source\DummyCameraTarget.cpp" />
     <ClCompile Include="..\source\ElectricalBox.cpp" />
     <ClCompile Include="..\source\ForestGenerator.cpp" />
+    <ClCompile Include="..\source\FrameBuffer.cpp" />
     <ClCompile Include="..\source\FrameSaver.cpp" />
     <ClCompile Include="..\source\GasStation.cpp" />
     <ClCompile Include="..\source\geomObjects-back.cpp" />
@@ -164,6 +171,8 @@
     <ClCompile Include="..\source\Scene.cpp" />
     <ClCompile Include="..\source\Skybox.cpp" />
     <ClCompile Include="..\source\BuildingGenerator.cpp" />
+    <ClCompile Include="..\source\SmallCar.cpp" />
+    <ClCompile Include="..\source\SportsCar.cpp" />
     <ClCompile Include="..\source\Store.cpp" />
     <ClCompile Include="..\source\TrafficLight.cpp" />
   </ItemGroup>

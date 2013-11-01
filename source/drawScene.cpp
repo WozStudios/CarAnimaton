@@ -32,7 +32,7 @@ using glm::mat4 ;
 // -------- global variables -- Normally they should be in a singleton or namespace
 
 // The shader list
-static Shaders gShaders ;
+Shaders gShaders;
 // The canonical objects (primitives) ;
 static Square *gSquare;
 static Cube *gCube ;
@@ -58,8 +58,8 @@ static glm::mat4 gMVP(1.0f) ;
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 13;
-GLuint gTexIDs[gNumTex] ; // 13 textures
+const GLuint gNumTex = 15;
+GLuint gTexIDs[gNumTex] ; // 15 textures
 
 void loadTextures(void) ;
 
@@ -179,7 +179,7 @@ void drawSphere(ModelviewStack & mvs)
 void initScene(int width, int height)
 {
     glViewport( 0, 0, width, height );
-    // Clear color buffer to black
+    // Clear color buffer to blue
     glClearColor( 0.0f, 0.0f, 1.0f, 1.0f );
         
     checkError() ;
@@ -188,12 +188,13 @@ void initScene(int width, int height)
     // Load the shader pairs -- MUST BE DONE before the objects are loaded
     checkError() ;
 
-    gShaders.loadShaderPair("diffuse") ;
+	gShaders.loadShaderPair("diffuse") ;
+	gShaders.loadShaderPair("blur") ;
    // gShaders.loadShaderPair("simple") ;
     
     checkError() ;
 
-    gShaders.use(0) ; // this number is the index in the list not the progam id
+    gShaders.use(0) ; // this number is the index in the list not the program id
     
     checkError() ;
     loadTextures() ;
@@ -277,28 +278,27 @@ void drawScene(float time)
 
 void initTexture(GLuint wrapMode)
 {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                    GL_NEAREST);
+		GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                    GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-    
+		GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 }
 
 void setTexture(GLuint prog, std::string uname, GLuint activeTexID, GLuint wrapMode)
 {
-    initTexture(wrapMode) ;
-    GLuint texUniform = glGetUniformLocation(prog, uname.c_str()) ;
+	initTexture(wrapMode) ;
+	GLuint texUniform = glGetUniformLocation(prog, uname.c_str()) ;
     if ((int) texUniform >=0) {
         glUniform1i(texUniform, activeTexID) ;
     }
     else {
         std::cerr << "Shader did not contain the uniform " << uname  << std::endl;
-    }
+	}
 }
 
 void loadTextures(void)
@@ -357,99 +357,111 @@ void loadTextures(void)
 	fname = gProjectPath + "media/" + "Cracks.bmp" ;
 	strcpy(fname_char, fname.c_str()) ;
 	GL_Image2D Img13(fname_char) ;
-   
-    glGenTextures(gNumTex,gTexIDs) ;
-    
-    glActiveTexture(GL_TEXTURE0) ;
+
+	fname = gProjectPath + "media/" + "WarningSign.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img14(fname_char) ;
+
+	glGenTextures(gNumTex,gTexIDs) ;
+
+    glActiveTexture(GL_TEXTURE0 + 5) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[0]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img1.m_width,
                  Img1.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img1.m_data);
-    setTexture(gShaders.getActiveID(),"texture1", 0, GL_CLAMP_TO_EDGE) ;
-    
-    glActiveTexture(GL_TEXTURE1) ;
+    setTexture(gShaders.getActiveID(),"texture6", 5, GL_CLAMP_TO_EDGE) ;
+
+
+    glActiveTexture(GL_TEXTURE0 + 1) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[1]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img2.m_width,
                  Img2.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img2.m_data);
     setTexture(gShaders.getActiveID(),"texture2", 1, GL_CLAMP_TO_EDGE) ;
     
-    glActiveTexture(GL_TEXTURE2) ;
+    glActiveTexture(GL_TEXTURE0 + 2) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[2]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img3.m_width,
                  Img3.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img3.m_data);
     setTexture(gShaders.getActiveID(),"texture3", 2, GL_CLAMP_TO_EDGE) ;
     
-    glActiveTexture(GL_TEXTURE3) ;
+    glActiveTexture(GL_TEXTURE0 + 3) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[3]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img4.m_width,
                  Img4.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img4.m_data);
     setTexture(gShaders.getActiveID(),"texture4", 3, GL_CLAMP_TO_EDGE) ;
     
-    glActiveTexture(GL_TEXTURE4) ;
+    glActiveTexture(GL_TEXTURE0 + 4) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[4]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img5.m_width,
                  Img5.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img5.m_data);
     setTexture(gShaders.getActiveID(),"texture5", 4, GL_CLAMP_TO_EDGE) ;
     
-    glActiveTexture(GL_TEXTURE5) ;
+    glActiveTexture(GL_TEXTURE0 + 14) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[5]) ;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img6.m_width,
                  Img6.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img6.m_data);
-    setTexture(gShaders.getActiveID(),"texture6", 5, GL_CLAMP_TO_EDGE) ;
+    setTexture(gShaders.getActiveID(),"texture15", 14, GL_CLAMP_TO_EDGE) ;
     
-    glActiveTexture(GL_TEXTURE6) ;
+    glActiveTexture(GL_TEXTURE0 + 6) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[6]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img7.m_width,
                  Img7.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img7.m_data);
     setTexture(gShaders.getActiveID(),"texture7", 6, GL_CLAMP_TO_EDGE) ;  
     
-    glActiveTexture(GL_TEXTURE7) ;
+    glActiveTexture(GL_TEXTURE0 + 7) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[7]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img8.m_width,
                  Img8.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img8.m_data);
     setTexture(gShaders.getActiveID(),"texture8", 7, GL_CLAMP_TO_EDGE) ; 
     
-    glActiveTexture(GL_TEXTURE8) ;
+    glActiveTexture(GL_TEXTURE0 + 8) ;
     glBindTexture(GL_TEXTURE_2D,gTexIDs[8]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img9.m_width,
                  Img9.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                  Img9.m_data);
 	setTexture(gShaders.getActiveID(),"texture9", 8, GL_CLAMP_TO_EDGE) ;  
 
-	glActiveTexture(GL_TEXTURE9) ;
+	glActiveTexture(GL_TEXTURE0 + 9) ;
 	glBindTexture(GL_TEXTURE_2D,gTexIDs[9]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img10.m_width,
 		Img10.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		Img10.m_data);
 	setTexture(gShaders.getActiveID(),"texture10", 9, GL_CLAMP_TO_EDGE) ;  
 
-	glActiveTexture(GL_TEXTURE10) ;
+	glActiveTexture(GL_TEXTURE0 + 10) ;
 	glBindTexture(GL_TEXTURE_2D,gTexIDs[10]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img11.m_width,
 		Img11.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		Img11.m_data);
 	setTexture(gShaders.getActiveID(),"texture11", 10, GL_REPEAT) ; 
 
-	glActiveTexture(GL_TEXTURE11) ;
+	glActiveTexture(GL_TEXTURE0 + 11) ;
 	glBindTexture(GL_TEXTURE_2D,gTexIDs[11]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img12.m_width,
 		Img12.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		Img12.m_data);
 	setTexture(gShaders.getActiveID(),"texture12", 11, GL_CLAMP_TO_EDGE) ;  
 
-	glActiveTexture(GL_TEXTURE12) ;
+	glActiveTexture(GL_TEXTURE0 + 12) ;
 	glBindTexture(GL_TEXTURE_2D,gTexIDs[12]) ;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img13.m_width,
 		Img13.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		Img13.m_data);
-	setTexture(gShaders.getActiveID(),"texture13", 12, GL_CLAMP_TO_EDGE) ;  
+	setTexture(gShaders.getActiveID(),"texture13", 12, GL_CLAMP_TO_EDGE) ;
+
+	glActiveTexture(GL_TEXTURE0 + 13) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[13]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img14.m_width,
+		Img14.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img14.m_data);
+	setTexture(gShaders.getActiveID(),"texture14", 13, GL_CLAMP_TO_EDGE) ;
 }
 
 void drawTemplateScene(float time)

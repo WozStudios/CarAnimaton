@@ -37,7 +37,7 @@ void Skybox::DrawWalls(ModelviewStack* ms)
 		ms->Rotate(_rotationAngle, vec3(0.0, 1.0, 0.0));
 	
 		//Draw Left Wall
-		useTexture(1);
+		useTexture(6);
 		DrawWall(ms, vec3(_size / 2.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0), 270.0);
 	
 		//Draw Front Wall

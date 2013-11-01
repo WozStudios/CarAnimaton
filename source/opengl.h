@@ -54,7 +54,7 @@ void _CheckError(const char* file, int line)
             continue ;
             
         }
-        fprintf( stderr, "File %s line %d: OpenGL Error: %s\n", file, line, ErrorString(error) );
+        //fprintf( stderr, "File %s line %d: OpenGL Error: %s\n", file, line, ErrorString(error) );
     }
     
 }

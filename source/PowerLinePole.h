@@ -9,6 +9,8 @@ class PowerLinePole : public IGameObject, public IDrawable
 private:
 	Transform _transform;
 
+	float _rotationAngle;
+
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;
 

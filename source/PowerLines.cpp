@@ -6,7 +6,7 @@
 PowerLines::PowerLines(vec3* cameraPosition, vec3* cameraDirection)
 {
 	_transform = Transform();
-	_transform.position = vec3(220.0f, 0.0f, 50.0f);
+	_transform.position = vec3(200.0f, 0.0f, 50.0f);
 	_transform.rotation = vec3(1.0f, 0.0f, 0.0f);
 	_transform.scale = vec3(8.0f, 100.0f, 8.0f);
 

@@ -177,7 +177,7 @@ void Camera::Update(float deltaTime)
 
 	// Keep camera from colliding with ground
 	if (_transform.position.y < 0)
-		_transform.position.y = 0;
+		_transform.position.y = 0.1f;
 
 	if (_inputManager->IsRightClicked())
 	{

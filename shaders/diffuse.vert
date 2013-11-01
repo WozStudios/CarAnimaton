@@ -3,10 +3,10 @@
 // Implement ADS per vertex lighting with a single light
 
 // Vertex Attributes
-in vec4 VertexPosition ;
-in vec4 VertexColour ;
-in vec3 VertexNormal ;
-in vec2 VertexTexCoord ;
+layout(location = 0) in vec4 VertexPosition ;
+layout(location = 1) in vec4 VertexColour ;
+layout(location = 2) in vec3 VertexNormal ;
+layout(location = 3) in vec2 VertexTexCoord ;
 
 // Output variables to be interpolated by the rasterizer
 out vec4 Colour ;

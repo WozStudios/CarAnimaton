@@ -13,10 +13,12 @@ using namespace glm;
 
 class Car : public IGameObject, public IUpdateable, public IDrawable
 {
-private:
+protected:
 	Transform _transform;
-
 	vec3 _lastPosition;
+
+	vec3 _colour;
+
 	float _carSpeed;
 
 	vec3 _carDirection;
@@ -24,7 +26,7 @@ private:
 	quat _heading;
 	float _rotationCounter;
 
-	Path _path;
+	Path* _path;
 	vector<vec3> _points;
 	unsigned int _currentNode;
 	double _currentC;
@@ -35,8 +37,10 @@ private:
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;
 
+	bool _isAnimating;
+
 public:
-	Car(vec3* cameraPosition, vec3* cameraDirection);
+	Car(Transform transform, vec3 direction, vec3 colour, vec3* cameraPosition, vec3* cameraDirection, Path* path);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -47,12 +51,14 @@ public:
 	void SetPosition(vec3 position) { _transform.position = position; }
 	void SetRotation(vec3 rotation) { _transform.rotation = rotation; }
 	void SetScale(vec3 scale) { _transform.scale = scale; }
+
+	void SetCarSpeed(float carSpeed) {_carSpeed = carSpeed; }
+
+	bool IsAnimating() { return _isAnimating; }
+	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; }
 	
 	void Update(float deltaTime);
-	void Draw(ModelviewStack* ms);
-
-private:
-	void DrawWheel(ModelviewStack* ms, int frontBack, int rightLeft);
+	virtual void Draw(ModelviewStack* ms) = 0;
 };
 
 #endif

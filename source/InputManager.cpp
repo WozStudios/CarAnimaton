@@ -18,6 +18,8 @@ InputManager::InputManager()
 	_isRightClicked = false;
 	
 	_wasSpacePressed = false;
+
+	_wasPPressed = false;
 }
 
 void InputManager::Init()
@@ -44,6 +46,13 @@ void InputManager::DeleteInstance()
 		delete Instance;
 		Instance = NULL;
 	}
+}
+
+void InputManager::Clear()
+{
+	_wasPPressed = false;
+	_wasSpacePressed = false;
+
 }
 
 double InputManager::GetMouseDX()
@@ -131,7 +140,7 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 		case GLFW_KEY_T:
             // reset time
             gTime = 0.0;
-			inputManager->SetTPressed(true);
+			//inputManager->SetTPressed(true);
 
             //reset your objects here (call a function)
             break;
@@ -159,11 +168,16 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 
         case GLFW_KEY_H:
             instructions();
-            break;
+			break;
 
 		case GLFW_KEY_SPACE:
 			inputManager = InputManager::GetInstance();
 			inputManager->SetSpacePressed(true);
+			break;
+
+		case GLFW_KEY_P:
+			inputManager = InputManager::GetInstance();
+			inputManager->SetPPressed(true);
 			break;
         }
     }

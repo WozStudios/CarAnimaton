@@ -29,6 +29,8 @@ private:
 	bool _isSpacePressed;
 	bool _wasSpacePressed;
 
+	bool _wasPPressed;
+
 	bool _isTPressed;
 	bool _wasTPressed;
 
@@ -55,9 +57,9 @@ public:
 	
 	bool WasSpacePressed() { return _wasSpacePressed; }
 	void SetSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
-	
-	bool WasTPressed() { return _isSpacePressed; }
-	void SetTPressed(bool isSpacePressed) { _isSpacePressed = isSpacePressed; }
+
+	bool WasPPressed() { return _wasPPressed; }
+	void SetPPressed(bool wasPPressed) { _wasPPressed = wasPPressed; }
 
 	//bool WasSpacePressed() { return _wasSpacePressed; }
 	//void WasSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
@@ -66,6 +68,7 @@ public:
 
 	void SetWindow(GLFWwindow* window) { _window = window; }
 
+	void Clear();
 	void ClearKeys() { _keys.clear(); }
 
 	static InputManager* GetInstance();

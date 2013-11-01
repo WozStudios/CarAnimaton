@@ -84,7 +84,7 @@ void error_callback(int error, const char* description)
 // The main entry point of the program
 int main( void )
 {
-    srand((unsigned)time(0));
+    srand((unsigned)time(NULL));
 
     glfwSetErrorCallback(error_callback) ;
 
@@ -137,8 +137,10 @@ int main( void )
         exit( EXIT_FAILURE );
     }
     fprintf(stderr, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
-    
-    
+
+	// Clear INVALID_ENUM error casued by glewInit()
+    glGetError();
+
     // Set event callbacks so we can capture and handle user interaction
     glfwSetKeyCallback(window, InputManager::key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback) ;
@@ -147,9 +149,9 @@ int main( void )
 	glfwSetScrollCallback(window, InputManager::mouseScroll_callback);
     
     printOpenGLVersion(window) ;
-    
+
     // Initialize OpenGL
-    initOpenGL() ;
+	initOpenGL() ;
     
     // Initialize the scene (e.g. load primitives etc)
     initScene(gWidth, gHeight) ;
@@ -184,6 +186,8 @@ int main( void )
       
         // store time in a global variable
         gTime = glfwGetTime();
+
+		inputManager->Clear();
 
         glfwPollEvents() ;
     }
