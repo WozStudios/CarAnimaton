@@ -230,12 +230,12 @@ void initScene(int width, int height)
     // Setup Music
 	gSoundtrack.openFromFile("../media/audio/Soundtrack.ogg");
 	//gSoundtrack.play();
-	gSoundtrack.setLoop(true);
+	//gSoundtrack.setLoop(true);
 
 	// Init some other variables
     gFPSCounter = FPSCounter();
     gScene = Scene();
-    gScene.Init();
+    gScene.Init(&gSoundtrack);
 }
 
 // The main display function

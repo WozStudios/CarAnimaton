@@ -225,5 +225,22 @@ void SmallCar::DrawWheel(ModelviewStack* ms, int frontBack, int rightLeft)
 
 void SmallCar::Crash(float deltaTime)
 {
+	if (_crashVelocity.x < 0.0f)
+		_transform.position.x = _crashPosition.x + _crashVelocity.x * _timeSinceCrash;
+	if (_crashVelocity.z > 0.0f)
+		_transform.position.z = _crashPosition.z + _crashVelocity.z * _timeSinceCrash;
 
+	if (_transform.position.y > 0.0f)
+	{
+		_transform.position.y = _crashPosition.y +
+								_crashVelocity.y * _timeSinceCrash +
+								0.5 * -10.0f * _timeSinceCrash *_timeSinceCrash;
+	}
+	else
+	{
+		_crashVelocity *= 1.1f * deltaTime;
+		
+	}
+
+	_timeSinceCrash += deltaTime;
 }

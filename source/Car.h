@@ -20,6 +20,7 @@ protected:
 	vec3 _colour;
 
 	float _carSpeed;
+	float _acceleration;
 
 	vec3 _carDirection;
 	float _carAngle;
@@ -53,6 +54,7 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 
 	void SetCarSpeed(float carSpeed) {_carSpeed = carSpeed; }
+	void SetAcceleration(float acceleration) {_acceleration = acceleration; }
 
 	bool IsAnimating() { return _isAnimating; }
 	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; }

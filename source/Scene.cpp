@@ -42,7 +42,7 @@ Scene::~Scene()
 	//delete _soundtrack;
 }
 
-void Scene::Init()
+void Scene::Init(sf::Music* soundtrack)
 {
 	//_frameBuffer.Init(gWidth, gHeight);
 
@@ -53,10 +53,12 @@ void Scene::Init()
 	_gameObjects.push_back(new Ground(512.0));
 	//_gameObjects.push_back(new Person());
 	//_gameObjects.push_back(new QuaternionTest());
-	_gameObjects.push_back(new TrafficLight(0, cameraPosition, cameraDirection));
-	//_gameObjects.push_back(new TrafficLight(1, cameraPosition, cameraDirection));
-	_gameObjects.push_back(new TrafficLight(2, cameraPosition, cameraDirection));
-	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection));
+
+	TrafficLight* rightTrafficLight = new TrafficLight(0, cameraPosition, cameraDirection, false);
+	_gameObjects.push_back(rightTrafficLight);
+	TrafficLight* leftTrafficLight = new TrafficLight(2, cameraPosition, cameraDirection, false);
+	_gameObjects.push_back(leftTrafficLight);
+	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection, true));
 
 	SetupCarPaths();
 
@@ -65,7 +67,7 @@ void Scene::Init()
 	transform.rotation = vec3(0.0f, 1.0f, 0.0f);
 	transform.scale = vec3(8.0f, 4.0f, 20.0f);
 	SmallCar* smallCar = new SmallCar(transform, vec3(0.0f, 0.0f, -1.0f), vec3(0.25f, 0.4f, 0.3f), cameraPosition, cameraDirection, &_firstCarPath);
-	//_camera.SetTarget(car->GetPositionPointer());
+	//_camera.SetTarget(smallCar->GetPositionPointer());
 
 	transform.position = vec3(220.0f, 0.0f, -14.0f);
 	transform.rotation = vec3(0.0f, 1.0f, 0.0f);
@@ -79,9 +81,11 @@ void Scene::Init()
 	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
 	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
-	_gameObjects.push_back(new ElectricalBox(cameraPosition, cameraDirection));
 
-	_animationManager.Init(&_camera, smallCar, sportsCar);
+	ElectricalBox* electricalBox = new ElectricalBox(cameraPosition, cameraDirection);
+	_gameObjects.push_back(electricalBox);
+
+	_animationManager.Init(&_camera, smallCar, sportsCar, electricalBox, rightTrafficLight, leftTrafficLight, soundtrack);
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
 	vector<Decal*> decals = decalGenerator.GetDecals();

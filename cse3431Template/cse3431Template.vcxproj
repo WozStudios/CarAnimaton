@@ -131,6 +131,7 @@
     <ClInclude Include="..\source\Scene.h" />
     <ClInclude Include="..\source\Skybox.h" />
     <ClInclude Include="..\source\SmallCar.h" />
+    <ClInclude Include="..\source\Spark.h" />
     <ClInclude Include="..\source\SportsCar.h" />
     <ClInclude Include="..\source\Store.h" />
     <ClInclude Include="..\source\TrafficLight.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="..\source\Skybox.cpp" />
     <ClCompile Include="..\source\BuildingGenerator.cpp" />
     <ClCompile Include="..\source\SmallCar.cpp" />
+    <ClCompile Include="..\source\Spark.cpp" />
     <ClCompile Include="..\source\SportsCar.cpp" />
     <ClCompile Include="..\source\Store.cpp" />
     <ClCompile Include="..\source\TrafficLight.cpp" />

@@ -57,22 +57,50 @@ void SportsCar::Draw(ModelviewStack* ms)
 			ms->Translate(vec3(-_transform.scale.x * 0.75f, 0.8f * _transform.scale.y, 0.3f * _transform.scale.z));
 			ms->Rotate(-5.0f, vec3(0.0f, 1.0f, 0.0f));
 			ms->Rotate(-5.0f, vec3(1.0f, 0.0f, 0.0f));
-			ms->Scale(vec3(0.25f * _transform.scale.x,
-				0.3f * _transform.scale.y,
-				0.3f * _transform.scale.z));
-			drawSphere(*ms);
+			
+			ms->Push();
+			{
+				ms->Translate(vec3(0.0f, 0.0f, 0.25f * _transform.scale.z));
+				ms->Scale(vec3(0.15f * _transform.scale.x,
+					0.25f * _transform.scale.y,
+					0.1f * _transform.scale.z));
+				drawSphere(*ms);
+			}
+			ms->Pop();
+			ms->Push();
+			{
+				ms->Scale(vec3(0.3f * _transform.scale.x,
+					0.5f * _transform.scale.y,
+					0.5f * _transform.scale.z));
+				drawCylinder(*ms);
+			}
+			ms->Pop();
 		}
 		ms->Pop();
-		// Draw right left wheel cover
+
 		ms->Push();
 		{
 			ms->Translate(vec3(_transform.scale.x * 0.75f, 0.8f * _transform.scale.y, 0.3f * _transform.scale.z));
 			ms->Rotate(5.0f, vec3(0.0f, 1.0f, 0.0f));
 			ms->Rotate(-5.0f, vec3(1.0f, 0.0f, 0.0f));
-			ms->Scale(vec3(0.25f * _transform.scale.x,
-				0.3f * _transform.scale.y,
-				0.3f * _transform.scale.z));
-			drawSphere(*ms);
+
+			ms->Push();
+			{
+				ms->Translate(vec3(0.0f, 0.0f, 0.25f * _transform.scale.z));
+				ms->Scale(vec3(0.15f * _transform.scale.x,
+					0.25f * _transform.scale.y,
+					0.1f * _transform.scale.z));
+				drawSphere(*ms);
+			}
+			ms->Pop();
+			ms->Push();
+			{
+				ms->Scale(vec3(0.3f * _transform.scale.x,
+					0.5f * _transform.scale.y,
+					0.5f * _transform.scale.z));
+				drawCylinder(*ms);
+			}
+			ms->Pop();
 		}
 		ms->Pop();
 

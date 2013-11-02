@@ -4,7 +4,10 @@
 #include "Camera.h"
 #include "SmallCar.h"
 #include "SportsCar.h"
+#include "TrafficLight.h"
+#include "ElectricalBox.h"
 #include "InputManager.h"
+#include "SFML/Audio.hpp"
 
 class AnimationManager
 {
@@ -17,6 +20,12 @@ private:
 	Camera* _camera;
 	SmallCar* _smallCar;
 	SportsCar* _sportsCar;
+	ElectricalBox* _electricalBox;
+	TrafficLight* _rightTrafficLight;
+	TrafficLight* _leftTrafficLight;
+
+
+	sf::Music* _soundtrack;
 
 	InputManager* _inputManager;
 
@@ -25,9 +34,8 @@ private:
 	bool _crashed;
 
 public:
-	void Init(Camera* camera, SmallCar* smallCar, SportsCar* sportsCar);
+	void Init(Camera* camera, SmallCar* smallCar, SportsCar* sportsCar, TrafficLight* right, TrafficLight* left, ElectricalBox* electricalBox, sf::Music* soundtrack);
 	void Update(float deltaTime);
 };
-
 
 #endif

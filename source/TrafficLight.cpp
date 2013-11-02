@@ -3,7 +3,7 @@
 #include "MathUtils.h"
 #include "Utility.h"
 
-TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirection)
+TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirection, bool isGreen)
 {
 	float radius = 2.0f;
 	float height = 64.0f;;
@@ -15,7 +15,9 @@ TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirectio
 
 	_cameraPosition = cameraPosition;
 	_cameraDirection = cameraDirection;
-	bool _visible = true;
+
+	_isGreen = isGreen;
+	_isRed = !_isGreen;
 }
 
 void TrafficLight::Draw(ModelviewStack* ms)
@@ -48,9 +50,9 @@ void TrafficLight::DrawPost(ModelviewStack* ms)
 	// Draw main post
 	ms->Push();
 	{
-		ms->Translate(vec3(0.0, _transform.scale.y / 4.0, 0.0));
-		ms->Scale(vec3(_transform.scale.x / 2, _transform.scale.y / 2, _transform.scale.z / 2));
-		ms->Rotate(90.0, vec3(1.0, 0.0, 0.0));
+		ms->Translate(vec3(0.0f, _transform.scale.y / 4.0f, 0.0f));
+		ms->Scale(vec3(0.5f * _transform.scale));
+		ms->Rotate(90.0f, vec3(1.0f, 0.0f, 0.0f));
 
 		drawCylinder(*ms);
 	}
@@ -59,19 +61,19 @@ void TrafficLight::DrawPost(ModelviewStack* ms)
 	// Draw top post
 	ms->Push();
 	{
-		ms->Translate(vec3(0.0, _transform.scale.y / 2.0, 0.0));
+		ms->Translate(vec3(0.0f, _transform.scale.y / 2.0f, 0.0f));
 		DrawJoint(ms);
 
 		ms->Push();
 		{
-			ms->Translate(vec3(0.0, 0.0, _transform.scale.y / 4.0));
-			ms->Scale(vec3(_transform.scale.x / 2.0, _transform.scale.z / 2.0, _transform.scale.y / 2.0));
+			ms->Translate(vec3(0.0f, 0.0f, _transform.scale.y / 4.0f));
+			ms->Scale(vec3(_transform.scale.x / 2.0f, _transform.scale.z / 2.0f, _transform.scale.y / 2.0f));
 			//ms->Rotate(90.0, vec3(1.0, 0.0, 0.0));
 			drawCylinder(*ms);
 		}
 		ms->Pop();
 
-		ms->Translate(vec3(0.0, 0.0, _transform.scale.y / 4.0));
+		ms->Translate(vec3(0.0f, 0.0f, _transform.scale.y / 4.0f));
 		DrawJoint(ms);
 		DrawLights(ms);
 	}
@@ -98,7 +100,7 @@ void TrafficLight::DrawLights(ModelviewStack* ms)
 		ms->Rotate(180.0f, vec3(0.0f, 1.0f, 0.0f));
 		ms->Push();
 		{
-			ms->Scale(vec3(1.5, 5.0, 2.5));
+			ms->Scale(vec3(1.5f, 5.0f, 2.5f));
 			drawCube(*ms);
 		}
 		ms->Pop();
@@ -106,12 +108,19 @@ void TrafficLight::DrawLights(ModelviewStack* ms)
 		ms->Push();
 		{
 			//Draw Red Light
-			DrawLight(ms, 3.0f, vec3(0.3, 0.0, 0.0));
-			//Draw Yellow Light
-			DrawLight(ms, 0.0f, vec3(0.3, 0.3, 0.0));
-			//Draw Green Light
-			DrawLight(ms, -3.0f, vec3(0.0, 1.0, 0.0));
+			if (_isRed)
+				DrawLight(ms, 3.0f, vec3(1.0f, 0.0f, 0.0f));
+			else
+				DrawLight(ms, 3.0f, vec3(0.3f, 0.0f, 0.0f));
 
+			//Draw Yellow Light
+			DrawLight(ms, 0.0f, vec3(0.3f, 0.3f, 0.0f));
+
+			//Draw Green Light
+			if (_isGreen)
+				DrawLight(ms, -3.0f, vec3(0.0f, 1.0f, 0.0f));
+			else
+				DrawLight(ms, -3.0f, vec3(0.0f, 0.3f, 0.0f));
 		}
 		ms->Pop();
 	}

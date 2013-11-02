@@ -28,7 +28,7 @@ public:
 	Scene();
 	~Scene();
 	
-	void Init();
+	void Init(sf::Music* soundtrack);
 
 	void Update(float deltaTime);
 	void Draw(ModelviewStack* ms);

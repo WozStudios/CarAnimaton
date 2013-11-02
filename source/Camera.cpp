@@ -179,7 +179,7 @@ void Camera::Update(float deltaTime)
 	if (_transform.position.y < 0)
 		_transform.position.y = 0.1f;
 
-	if (_inputManager->IsRightClicked())
+	if (_inputManager->WasRightClicked())
 	{
 		std::cout << "Camera Position: (" << _transform.position.x << ", "
 										  << _transform.position.y << ", "

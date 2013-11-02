@@ -25,6 +25,8 @@ private:
 	
 	bool _isLeftClicked;
 	bool _isRightClicked;
+
+	bool _wasRightClicked;
 	
 	bool _isSpacePressed;
 	bool _wasSpacePressed;
@@ -54,7 +56,10 @@ public:
 	
 	bool IsRightClicked() { return _isRightClicked; }
 	void SetRightClicked(bool isRightClicked) { _isRightClicked = isRightClicked; }
-	
+
+	bool WasRightClicked() { return _wasRightClicked; }
+	void SetRightWasClicked(bool wasRightClicked) { _wasRightClicked = wasRightClicked; }
+
 	bool WasSpacePressed() { return _wasSpacePressed; }
 	void SetSpacePressed(bool wasSpacePressed) { _wasSpacePressed = wasSpacePressed; }
 

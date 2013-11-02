@@ -14,8 +14,11 @@ private:
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;
 
+	bool _isGreen;
+	bool _isRed;
+
 public:
-	TrafficLight(int lightNumber, vec3* cameraPosition, vec3* cameraDirection);
+	TrafficLight(int lightNumber, vec3* cameraPosition, vec3* cameraDirection, bool isGreen);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -26,6 +29,9 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 	
 	void Draw(ModelviewStack* ms);
+
+	void SetRed(bool isRed) { _isRed = isRed; }
+	void SetGreen(bool isGreen) { _isGreen = isGreen; }
 
 private:
 	void DrawPost(ModelviewStack* ms);

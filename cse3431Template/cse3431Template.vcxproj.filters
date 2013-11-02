@@ -182,6 +182,9 @@
     <ClInclude Include="..\source\AnimationManager.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\Spark.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -294,6 +297,9 @@
     </ClCompile>
     <ClCompile Include="..\source\AnimationManager.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Spark.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

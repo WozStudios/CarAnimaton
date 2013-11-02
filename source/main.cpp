@@ -82,8 +82,7 @@ void error_callback(int error, const char* description)
 }
 
 // The main entry point of the program
-int main( void )
-{
+int main( void ){
     srand((unsigned)time(NULL));
 
     glfwSetErrorCallback(error_callback) ;

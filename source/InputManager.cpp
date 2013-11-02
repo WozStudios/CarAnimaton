@@ -16,6 +16,8 @@ InputManager::InputManager()
 	
 	_isLeftClicked = false;
 	_isRightClicked = false;
+
+	_wasRightClicked = false;
 	
 	_wasSpacePressed = false;
 
@@ -52,6 +54,7 @@ void InputManager::Clear()
 {
 	_wasPPressed = false;
 	_wasSpacePressed = false;
+	_wasRightClicked = false;
 
 }
 
@@ -100,6 +103,7 @@ void InputManager::mouseButton_callback(GLFWwindow* window, int button, int acti
 	{
 		inputManager = InputManager::GetInstance();
 		inputManager->SetRightClicked(true);
+		inputManager->SetRightWasClicked(true);
     }
 
     if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)

@@ -13,6 +13,7 @@ Car::Car(Transform transform, vec3 direction, vec3 colour, vec3* cameraPosition,
 	_colour = colour;
 
 	_carSpeed = 75.0f;
+	_acceleration = 0.0f;
 
 	_carDirection = vec3(0.0f, 0.0f, -1.0f);
 	_carAngle = 180.0f;
@@ -42,6 +43,7 @@ void Car::Update(float deltaTime)
 		double x;
 		double z;
 
+		_carSpeed += _acceleration * deltaTime;
 		_currentC += deltaTime * _carSpeed;
 
 		while (_currentC > 1.0)
