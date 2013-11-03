@@ -56,11 +56,11 @@ void Scene::Init(sf::Music* soundtrack)
 	//_gameObjects.push_back(new Person());
 	//_gameObjects.push_back(new QuaternionTest());
 
-	TrafficLight* rightTrafficLight = new TrafficLight(0, cameraPosition, cameraDirection, false);
+	TrafficLight* rightTrafficLight = new TrafficLight(-1, 1, 180.0f, cameraPosition, cameraDirection, false);
 	_gameObjects.push_back(rightTrafficLight);
-	TrafficLight* leftTrafficLight = new TrafficLight(2, cameraPosition, cameraDirection, false);
+	TrafficLight* leftTrafficLight = new TrafficLight(1, 1, 270.0f,cameraPosition, cameraDirection, true);
 	_gameObjects.push_back(leftTrafficLight);
-	_gameObjects.push_back(new TrafficLight(3, cameraPosition, cameraDirection, true));
+	_gameObjects.push_back(new TrafficLight(1, -1, 0.0f, cameraPosition, cameraDirection, false));
 
 	SetupCarPaths();
 

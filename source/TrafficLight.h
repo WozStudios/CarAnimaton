@@ -9,7 +9,8 @@ class TrafficLight : public IGameObject, public IDrawable
 {
 private:
 	Transform _transform;
-	int _lightNumber;
+
+	float _rotationAngle;
 	
 	vec3* _cameraPosition;
 	vec3* _cameraDirection;
@@ -18,7 +19,7 @@ private:
 	bool _isRed;
 
 public:
-	TrafficLight(int lightNumber, vec3* cameraPosition, vec3* cameraDirection, bool isGreen);
+	TrafficLight(int leftRight, int frontBack, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection, bool isGreen);
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }

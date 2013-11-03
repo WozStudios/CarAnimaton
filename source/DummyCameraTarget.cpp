@@ -11,7 +11,7 @@ DummyCameraTarget::DummyCameraTarget(vec3 position)
 	_targetPosition = NULL;
 
 	_inputManager = InputManager::GetInstance();
-	_movementSpeed = 0.5f;
+	_movementSpeed =75.0f;
 }
 
 void DummyCameraTarget::Update(float deltaTime)
@@ -55,17 +55,14 @@ void DummyCameraTarget::Update(float deltaTime)
 			_movementVector -= up;
 		}
 
+		float currentSpeed;
 		if (_inputManager->IsKeyPressed(GLFW_KEY_SPACE))
-		{
-			_movementSpeed = 1.0f;
-		}
+			currentSpeed = 2 * _movementSpeed;
 		else
-		{
-			_movementSpeed = 0.5f;
-		}
+			currentSpeed = _movementSpeed;
 
 		if (_movementVector != vec3())
-			_transform.position += glm::normalize(_movementVector) * _movementSpeed;
+			_transform.position += glm::normalize(_movementVector) * currentSpeed * deltaTime;
 	}
 }
 

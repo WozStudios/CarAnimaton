@@ -9,6 +9,7 @@ void SmallCar::Draw(ModelviewStack* ms)
 	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 		return;
 
+	useTexture(0);
 	setColour(_colour.x, _colour.y, _colour.z);
 	ms->Push();
 	{

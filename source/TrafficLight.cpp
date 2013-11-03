@@ -3,13 +3,13 @@
 #include "MathUtils.h"
 #include "Utility.h"
 
-TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirection, bool isGreen)
+TrafficLight::TrafficLight(int leftRight, int frontBack, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection, bool isGreen)
 {
 	float radius = 2.0f;
 	float height = 64.0f;;
 	
-	_transform.position = vec3(32.0f, 0.0f, -30.0f);
-	_lightNumber = light;
+	_transform.position = vec3(leftRight * 32.0f, 0.0f, frontBack * 30.0f);
+	_rotationAngle = rotationAngle;
 	_transform.rotation = vec3(0.0f, 1.0f, 0.0f);
 	_transform.scale = vec3(radius, height, radius);
 
@@ -23,7 +23,7 @@ TrafficLight::TrafficLight(int light, vec3* cameraPosition, vec3* cameraDirectio
 void TrafficLight::Draw(ModelviewStack* ms)
 {
 	vec3 cameraToPosition = _transform.position - *_cameraPosition;
-	float cameraDistance = glm::length(cameraToPosition);
+	//float cameraDistance = glm::length(cameraToPosition);
 
 	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 		return;
@@ -33,8 +33,8 @@ void TrafficLight::Draw(ModelviewStack* ms)
 	setColour(grey, grey, grey);
 	ms->Push();
 	{
-		ms->Rotate(90.0f * _lightNumber, _transform.rotation);
 		ms->Translate(_transform.position);
+		ms->Rotate(_rotationAngle, _transform.rotation);
 		
 		DrawPost(ms);
 	}

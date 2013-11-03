@@ -20,11 +20,11 @@ Fence::Fence(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cam
 
 void Fence::Draw(ModelviewStack* ms)
 {
-	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
-		return;
-
 	useTexture(16);
 	setColour(1.0f, 1.0f, 1.0f);
+	//vec3 c = vec3(1.0f, 1.0f, 1.0f);
+	//setMaterial(0.4f * c, c, c, 60.0f);
+	useLighting(0);
 	ms->Push();
 	{
 		ms->Translate(_transform.position);
@@ -33,4 +33,5 @@ void Fence::Draw(ModelviewStack* ms)
 		drawSquare(*ms);
 	}
 	ms->Pop();
+	useLighting(1);
 }

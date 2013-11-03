@@ -346,7 +346,7 @@ void loadTextures(void)
 	strcpy(fname_char, fname.c_str()) ;
 	GL_Image2D Img10(fname_char) ;
 
-	fname = gProjectPath + "media/" + "Wood2.bmp" ;
+	fname = gProjectPath + "media/" + "Wood3.bmp" ;
 	strcpy(fname_char, fname.c_str()) ;
 	GL_Image2D Img11(fname_char) ;
 

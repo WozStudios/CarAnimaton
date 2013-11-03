@@ -29,11 +29,11 @@ in vec2 TexCoord ;
 in vec3 AmbientDiffuseIntensity ;
 in vec3 SpecularIntensity ;
 
-bool isWhite(vec4 vector)
+bool isBlue(vec4 vector)
 {
-	float WHITE = 0.6f;
+	float threshold = 0.2f;
 
-	return  vector.x > WHITE && vector.y > WHITE && vector.z > WHITE;
+	return  vector.z > threshold;
 }
 
 void main(void)
@@ -77,9 +77,10 @@ void main(void)
         default: texColour = vec4(1.f) ; break;
     } ;
 	
-	if (useTex == 8 && isWhite(texColour))
+	if (useTex == 8)
 	{
-		texColour = vec4(1.0, 1.0, 1.0, 0.0f);
+		texColour.a = 1.0 - texColour.b;
+		texColour.b = 0.0;
 	}
 
 	if (useTex == 13)

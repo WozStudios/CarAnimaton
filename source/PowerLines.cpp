@@ -38,9 +38,6 @@ void PowerLines::SetupPoles()
 
 void PowerLines::Draw(ModelviewStack* ms)
 {
-	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
-		return;
-
 	ms->Push();
 	{
 		unsigned int index = 0;
