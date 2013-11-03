@@ -1,5 +1,6 @@
 #include "Spark.h"
 #include "drawScene.h"
+#include "Random.h"
 
 Spark::Spark(vec3 position, vec3 velocity)
 {
@@ -10,6 +11,8 @@ Spark::Spark(vec3 position, vec3 velocity)
 	_velocity = velocity;
 	_timeSinceCreated = 0.0f;
 	_isAlive = true;
+
+	_colour = vec3(1.0f, 0.9f, (float)Random(0.0, 0.8));
 }
 
 void Spark::Update(float deltaTime)
@@ -32,7 +35,7 @@ void Spark::Update(float deltaTime)
 
 void Spark::Draw(ModelviewStack* ms)
 {
-	setColour(0.5f, 0.4f, 0.0f);
+	setColour(_colour.x, _colour.y, _colour.z);
 	ms->Push();
 	{
 		ms->Translate(_transform.position);

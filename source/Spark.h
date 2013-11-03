@@ -11,6 +11,7 @@ private:
 	vec3 _velocity;
 	float _timeSinceCreated;
 	bool _isAlive;
+	vec3 _colour;
 
 public:
 	Spark(vec3 position, vec3 velocity);
