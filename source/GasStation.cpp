@@ -1,5 +1,6 @@
 #include "GasStation.h"
 #include "drawScene.h"
+#include "..\cse3431Template\Textures.h"
 
 GasStation::GasStation()
 {
@@ -10,7 +11,7 @@ GasStation::GasStation()
 
 void GasStation::Draw(ModelviewStack* ms)
 {
-	useTexture(9);
+	useTexture(BRICKS_TEXTURE);
 	setColour(1.0f, 1.0f, 1.0f);
 	
 	// Draw Building
@@ -52,6 +53,65 @@ void GasStation::Draw(ModelviewStack* ms)
 		DrawDoors(ms);
 	}
 	ms->Pop();
+
+	// Draw main building shadow
+	useLighting(0);
+	useTexture(SQUARE_SHADOW_TEXTURE);
+	ms->Push();
+	{
+		ms->Translate(vec3(_transform.position.x, 0.003f, _transform.position.z));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(_transform.scale.z * 1.3f, _transform.scale.x * 1.3f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+
+	//Draw gas pump shadows
+	ms->Push();
+	{
+		ms->Translate(vec3(-71.9f, 0.003f, -94.4f));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(10.8f, 10.8f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+	ms->Push();
+	{
+		ms->Translate(vec3(-71.9f, 0.003f, -145.7f));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(10.8f, 10.8f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+
+	//Draw pole shadows
+	useTexture(CIRCLE_SHADOW_TEXTURE);
+	ms->Push();
+	{
+		ms->Translate(vec3(-71.9f, 0.003f, -61.8f));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(7.5f, 7.5f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+	ms->Push();
+	{
+		ms->Translate(vec3(-71.9f, 0.003f, -120.0f));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(7.5f, 7.5f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+	ms->Push();
+	{
+		ms->Translate(vec3(-71.9f, 0.003f, -178.15f));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(7.5f, 7.5f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+
+	useLighting(1);
 }
 
 void GasStation::DrawTrim(ModelviewStack* ms)

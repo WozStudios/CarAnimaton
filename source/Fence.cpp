@@ -1,6 +1,7 @@
 #include "Fence.h"
 #include "Utility.h"
 #include "drawScene.h"
+#include "..\cse3431Template\Textures.h"
 
 Fence::Fence(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -20,7 +21,7 @@ Fence::Fence(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cam
 
 void Fence::Draw(ModelviewStack* ms)
 {
-	useTexture(16);
+	useTexture(FENCE_TEXTURE);
 	setColour(1.0f, 1.0f, 1.0f);
 	//vec3 c = vec3(1.0f, 1.0f, 1.0f);
 	//setMaterial(0.4f * c, c, c, 60.0f);

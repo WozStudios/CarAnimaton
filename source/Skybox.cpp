@@ -1,5 +1,6 @@
 #include "Skybox.h"
 #include "drawScene.h"
+#include "..\cse3431Template\Textures.h"
 
 Skybox::Skybox(double size, vec3* cameraPos)
 {
@@ -37,23 +38,23 @@ void Skybox::DrawWalls(ModelviewStack* ms)
 		ms->Rotate(_rotationAngle, vec3(0.0, 1.0, 0.0));
 	
 		//Draw Left Wall
-		useTexture(6);
+		useTexture(SKY_LEFT_TEXTURE);
 		DrawWall(ms, vec3(_size / 2.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0), 270.0);
 	
 		//Draw Front Wall
-		useTexture(2);
+		useTexture(SKY_FRONT_TEXTURE);
 		DrawWall(ms, vec3(0.0, 0.0, _size / 2.0), vec3(0.0, 1.0, 0.0), 180.0);
 	
 		//Draw Right Wall
-		useTexture(3);
+		useTexture(SKY_RIGHT_TEXTURE);
 		DrawWall(ms, vec3(-_size / 2.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0), 90.0);
 	
 		//Draw Back Wall
-		useTexture(4);
+		useTexture(SKY_BACK_TEXTURE);
 		DrawWall(ms, vec3(0.0, 0.0, -_size / 2.0), vec3(0.0, 1.0, 0.0), 0.);
 	
 		//Draw Ceiling
-		useTexture(5);
+		useTexture(SKY_TOP_TEXTURE);
 		DrawWall(ms, vec3(0.0, _size / 2.0, 0.0), vec3(1.0, 0.0, 0.0), 90.0);
 	}
 	ms->Pop();

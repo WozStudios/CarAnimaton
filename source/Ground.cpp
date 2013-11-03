@@ -1,4 +1,5 @@
 #include "Ground.h"
+#include "..\cse3431Template\Textures.h"
 
 Ground::Ground(double size)
 {
@@ -11,7 +12,7 @@ Ground::Ground(double size)
 
 void Ground::Draw(ModelviewStack* ms)
 {
-	useTexture(7);
+	useTexture(ROAD_MAIN_TEXTURE);
 	useLighting(1);
 	setColour(1.0, 1.0, 1.0);
 
@@ -23,7 +24,7 @@ void Ground::Draw(ModelviewStack* ms)
 	}
 	ms->Pop();
 
-	useTexture(15);
+	useTexture(ROAD_SINGLE_TEXTURE);
 	ms->Push();
 	{
 		ms->Translate(vec3(-_transform.scale.x * 2.0f, _transform.position.y, 0.0f));

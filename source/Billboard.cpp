@@ -50,9 +50,7 @@ void Billboard::Draw(ModelviewStack* ms)
 
 		ms->Rotate(_rotationAngle, vec3(0.0, 1.0, 0.0));
 		ms->Scale(vec3(_transform.scale.x / 2, _transform.scale.y / 2, 1.0));
-
-		//ms->Rotate(-90.0, vec3(1, 0, 0));
-
+		
 		drawSquare(*ms);
 	}
 	ms->Pop();
@@ -61,9 +59,4 @@ void Billboard::Draw(ModelviewStack* ms)
 bool Billboard::CompareDistance(Billboard* a, Billboard* b)
 {
 	return a->GetDistanceFromCamera() > b->GetDistanceFromCamera();
-}
-
-bool Billboard::operator<(const Billboard& rhs)
-{
-	return _distanceFromCamera > rhs._distanceFromCamera;
 }

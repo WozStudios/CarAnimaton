@@ -21,6 +21,7 @@ void Decal::Draw(ModelviewStack* ms)
 	glEnable(GL_BLEND); //Enable alpha blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set the blend function
 
+	useLighting(0);
 	useTexture(_textureID);
 	setColour(1.0f, 1.0f, 1.0f);
 	ms->Push();
@@ -31,4 +32,5 @@ void Decal::Draw(ModelviewStack* ms)
 		drawSquare(*ms);
 	}
 	ms->Pop();
+	useLighting(1);
 }

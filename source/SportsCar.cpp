@@ -1,6 +1,7 @@
 #include "SportsCar.h"
 #include "drawScene.h"
 #include "Utility.h"
+#include "..\cse3431Template\Textures.h"
 
 void SportsCar::Draw(ModelviewStack* ms)
 {
@@ -123,6 +124,15 @@ void SportsCar::Draw(ModelviewStack* ms)
 		DrawWheel(ms, -1, 1);
 		DrawWheel(ms, -1, -1);
 		DrawWheel(ms, 1, 1);
+
+		// Draw Shadow
+		useTexture(CIRCLE_SHADOW_TEXTURE);
+		ms->Push();
+		{
+
+
+		}
+		ms->Pop();
 	}
 	ms->Pop();
 }

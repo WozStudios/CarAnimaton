@@ -3,6 +3,7 @@
 #include "drawScene.h"
 #include "Utility.h"
 #include "Random.h"
+#include "..\cse3431Template\Textures.h"
 
 PowerLinePole::PowerLinePole(vec3 position, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -25,7 +26,7 @@ void PowerLinePole::Draw(ModelviewStack* ms)
 
 	ms->Push();
 	{
-		useTexture(11);
+		useTexture(WOOD_TEXTURE);
 		vec3 colour = vec3(1.0f, 1.0f, 1.0f);
 		setMaterial(colour, colour, colour, 60.0f);
 		useLighting(0);
@@ -39,4 +40,17 @@ void PowerLinePole::Draw(ModelviewStack* ms)
 		useLighting(1);
 	}
 	ms->Pop();
+
+	// Draw shadow
+	useLighting(0);
+	useTexture(CIRCLE_SHADOW_TEXTURE);
+	ms->Push();
+	{
+		ms->Translate(vec3(_transform.position.x, 0.001f, _transform.position.z));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(8.0f, 8.0f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+	useLighting(1);
 }

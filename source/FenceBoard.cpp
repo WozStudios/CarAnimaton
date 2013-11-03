@@ -1,6 +1,7 @@
 #include "FenceBoard.h"
 #include "drawScene.h"
 #include "Utility.h"
+#include "..\cse3431Template\Textures.h"
 
 FenceBoard::FenceBoard(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -23,7 +24,7 @@ void FenceBoard::Draw(ModelviewStack* ms)
 	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
 		return;
 
-	useTexture(11);
+	useTexture(WOOD_TEXTURE);
 	setColour(0.8f, 0.7f, 0.7f);
 	ms->Push();
 	{

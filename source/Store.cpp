@@ -1,5 +1,6 @@
 #include "Store.h"
 #include "drawScene.h"
+#include "..\cse3431Template\Textures.h"
 
 Store::Store()
 {
@@ -10,7 +11,8 @@ Store::Store()
 
 void Store::Draw(ModelviewStack* ms)
 {
-	useTexture(9);
+	useLighting(1);
+	useTexture(BRICKS_TEXTURE);
 	setColour(0.92f, 0.53f, 0.22f);
 	
 	// Draw Building
@@ -46,7 +48,7 @@ void Store::Draw(ModelviewStack* ms)
 		ms->Pop();
 		
 		// Draw Sign
-		useTexture(10);
+		useTexture(STORE_SIGN_TEXTURE);
 		vec3 c(1.0f, 1.0f, 1.0f) ;
 		setMaterial(0.7f * c, c, vec3(1.0f), 60.0f) ;
 		ms->Push();
@@ -164,6 +166,21 @@ void Store::Draw(ModelviewStack* ms)
 			drawCube(*ms);
 		}
 		ms->Pop();
+
 	}
 	ms->Pop();
+
+	// Draw shadow
+	useLighting(0);
+	useTexture(SQUARE_SHADOW_TEXTURE);
+	setColour(1.0f, 1.0f, 1.0f);
+	ms->Push();
+	{
+		ms->Translate(vec3(_transform.position.x, 0.002f, _transform.position.z));
+		ms->Rotate(270.0f, vec3(1.0f, 0.0f, 0.0f));
+		ms->Scale(vec3(165.0f, 165.0f, 1.0f));
+		drawSquare(*ms);
+	}
+	ms->Pop();
+	useLighting(1);
 }

@@ -2,6 +2,7 @@
 #include "MathUtils.h"
 #include "drawScene.h"
 #include "Utility.h"
+#include "..\cse3431Template\Textures.h"
 
 ElectricalBox::ElectricalBox(vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -106,7 +107,7 @@ void ElectricalBox::Draw(ModelviewStack* ms)
 		ms->Pop();
 
 		// Draw warning texture
-		useTexture(14);
+		useTexture(WARNING_SIGN_TEXTURE);
 		//wsetColour(1.0f, 1.0f, 1.0f);
 		ms->Push();
 		{

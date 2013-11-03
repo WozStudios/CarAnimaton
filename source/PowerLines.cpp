@@ -1,7 +1,6 @@
 #include "PowerLines.h"
 #include "MathUtils.h"
 #include "drawScene.h"
-#include "Utility.h"
 
 PowerLines::PowerLines(vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -48,6 +47,7 @@ void PowerLines::Draw(ModelviewStack* ms)
 			// Draw lines
 			if (index != _poles.size() - 1)
 			{
+				useTexture(0);
 				setColour(0.0f, 0.0f, 0.0f);
 				vec3 position = vec3((*i)->GetPosition().x, 45.0f, (*i)->GetPosition().z);
 				DrawLine(ms, position);

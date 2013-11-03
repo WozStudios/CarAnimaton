@@ -194,6 +194,9 @@
     <ClInclude Include="..\source\Fence.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">

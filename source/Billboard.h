@@ -36,7 +36,6 @@ public:
 
 	float GetDistanceFromCamera() { return _distanceFromCamera; }
 
-	bool operator<(const Billboard& rhs);
 	static bool CompareDistance(Billboard* a, Billboard* b);
 };
 

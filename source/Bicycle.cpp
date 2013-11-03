@@ -2,6 +2,7 @@
 #include "drawScene.h"
 #include "MathUtils.h"
 #include "Utility.h"
+#include "..\cse3431Template\Textures.h"
 
 Bicycle::Bicycle(vec3* cameraPosition, vec3* cameraDirection)
 {
@@ -35,7 +36,7 @@ void Bicycle::DrawWheels(ModelviewStack* ms)
 {
 	// Draw inner wheels
 	setColour(1.0f, 1.0f, 1.0f);
-	useTexture(9);
+	useTexture(BRICKS_TEXTURE);
 	ms->Push();
 	{
 		ms->Translate(vec3(4.5f, 3.0f, 0.0f));

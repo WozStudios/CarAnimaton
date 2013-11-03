@@ -140,6 +140,7 @@
     <ClInclude Include="..\source\TrafficLight.h" />
     <ClInclude Include="..\source\Transform.h" />
     <ClInclude Include="..\source\Utility.h" />
+    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\AnimationManager.cpp" />
