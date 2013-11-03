@@ -13,9 +13,10 @@ private:
 	vec3 _position;
 	int _numTrees;
 	vec3* _cameraPosition;
+	vec3* _cameraDirection;
 
 public:
-	ForestGenerator(vec3 position = vec3(), vec3* cameraPosition = NULL, int numTrees = 0);
+	ForestGenerator(vec3 position, vec3* cameraPosition, vec3* cameraDirection);
 
 	vector<Billboard*> GetTrees() { return _trees; }
 

@@ -58,8 +58,8 @@ static glm::mat4 gMVP(1.0f) ;
 // The modeling matrix stack
 static ModelviewStack gMS(MAX_STACK_SIZE) ;
 
-const GLuint gNumTex = 15;
-GLuint gTexIDs[gNumTex] ; // 15 textures
+const GLuint gNumTex = 16;
+GLuint gTexIDs[gNumTex] ; // 16 textures
 
 void loadTextures(void) ;
 
@@ -325,7 +325,7 @@ void loadTextures(void)
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img5(fname_char) ;
    
-    fname = gProjectPath + "media/" + "Road.bmp" ;
+    fname = gProjectPath + "media/" + "RoadSingle.bmp" ;
     strcpy(fname_char, fname.c_str()) ;
     GL_Image2D Img6(fname_char) ;
 	
@@ -361,6 +361,10 @@ void loadTextures(void)
 	fname = gProjectPath + "media/" + "WarningSign.bmp" ;
 	strcpy(fname_char, fname.c_str()) ;
 	GL_Image2D Img14(fname_char) ;
+
+	fname = gProjectPath + "media/" + "Fence.bmp" ;
+	strcpy(fname_char, fname.c_str()) ;
+	GL_Image2D Img16(fname_char) ;
 
 	glGenTextures(gNumTex,gTexIDs) ;
 
@@ -462,6 +466,13 @@ void loadTextures(void)
 		Img14.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		Img14.m_data);
 	setTexture(gShaders.getActiveID(),"texture14", 13, GL_CLAMP_TO_EDGE) ;
+
+	glActiveTexture(GL_TEXTURE0 + 15) ;
+	glBindTexture(GL_TEXTURE_2D,gTexIDs[15]) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Img16.m_width,
+		Img16.m_height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+		Img16.m_data);
+	setTexture(gShaders.getActiveID(),"texture16", 15, GL_CLAMP_TO_EDGE) ;
 }
 
 void drawTemplateScene(float time)

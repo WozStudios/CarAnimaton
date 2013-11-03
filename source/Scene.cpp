@@ -15,6 +15,8 @@
 #include "GasStation.h"
 #include "Metronome.h"
 #include "Bicycle.h"
+#include "Fence.h"
+#include "FenceGenerator.h"
 #include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
@@ -78,6 +80,10 @@ void Scene::Init(sf::Music* soundtrack)
 	_gameObjects.push_back(sportsCar);
 	_gameObjects.push_back(new Store());
 	_gameObjects.push_back(new GasStation());
+	_gameObjects.push_back(new Fence(vec3(0.0f, 0.0f, -255.0f), 0.0f, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new Fence(vec3(0.0f, 0.0f, 255.0f), 180.0f, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new Fence(vec3(-512.0f, 0.0f, 255.0f), 180.0f, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new Fence(vec3(255.0f, 0.0f, 0.0f), 270.0f, cameraPosition, cameraDirection));
 	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
 	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
@@ -85,7 +91,7 @@ void Scene::Init(sf::Music* soundtrack)
 	ElectricalBox* electricalBox = new ElectricalBox(cameraPosition, cameraDirection);
 	_gameObjects.push_back(electricalBox);
 
-	_animationManager.Init(&_camera, smallCar, sportsCar, electricalBox, rightTrafficLight, leftTrafficLight, soundtrack);
+	_animationManager.Init(&_camera, smallCar, sportsCar, rightTrafficLight, leftTrafficLight, electricalBox, soundtrack);
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
 	vector<Decal*> decals = decalGenerator.GetDecals();
@@ -101,12 +107,19 @@ void Scene::Init(sf::Music* soundtrack)
 		_gameObjects.push_back(*i);
 	}
 
-	//ForestGenerator forestGenerator = ForestGenerator(vec3(0.0, 0.0, -256.0), cameraPosition, 64);
-	//vector<Billboard*> trees = forestGenerator.GetTrees();
-	//for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
+	//FenceGenerator fenceGenerator = FenceGenerator(cameraPosition, cameraDirection);
+	//vector<FenceBoard*> fenceboards = fenceGenerator.GetFenceBoards();
+	//for (vector<FenceBoard*>::iterator i = fenceboards.begin(); i != fenceboards.end(); i++)
 	//{
 	//	_gameObjects.push_back(*i);
 	//}
+
+	ForestGenerator forestGenerator = ForestGenerator(vec3(-250.0, 0.0, 128.0), cameraPosition, cameraDirection);
+	 vector<Billboard*> trees = forestGenerator.GetTrees();
+	 for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
+	 {
+		 _trees.push_back(*i);
+	 }
 
 
 	//BuildingGenerator buildingGenerator = BuildingGenerator(vec3(256, 0, -400), 32);
@@ -151,6 +164,12 @@ void Scene::Update(float deltaTime)
 	}
 
 	_camera.Update(deltaTime);
+
+	// Draw trees
+	for (vector<Billboard*>::iterator i = _trees.begin(); i != _trees.end(); i++)
+	{
+		(*i)->Update(deltaTime);
+	}
 }
 
 void Scene::Draw(ModelviewStack* ms)
@@ -166,6 +185,15 @@ void Scene::Draw(ModelviewStack* ms)
 	{
 		if (IDrawable* drawable = dynamic_cast<IDrawable*>(*i))
 			drawable->Draw(ms);
+	}
+
+	// Sort trees based on distance from camera
+	std::sort(_trees.begin(), _trees.end(), Billboard::CompareDistance);
+
+	// Draw trees
+	for (vector<Billboard*>::iterator i = _trees.begin(); i != _trees.end(); i++)
+	{
+		(*i)->Draw(ms);
 	}
 
 	//FrameBuffer::UseFrameBuffer(0);

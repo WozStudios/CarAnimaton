@@ -22,4 +22,13 @@ void Ground::Draw(ModelviewStack* ms)
 		drawCube(*ms);
 	}
 	ms->Pop();
+
+	useTexture(15);
+	ms->Push();
+	{
+		ms->Translate(vec3(-_transform.scale.x * 2.0f, _transform.position.y, 0.0f));
+		ms->Scale(_transform.scale);
+		drawCube(*ms);
+	}
+	ms->Pop();
 }

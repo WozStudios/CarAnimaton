@@ -101,6 +101,9 @@
     <ClInclude Include="..\source\drawScene.h" />
     <ClInclude Include="..\source\DummyCameraTarget.h" />
     <ClInclude Include="..\source\ElectricalBox.h" />
+    <ClInclude Include="..\source\Fence.h" />
+    <ClInclude Include="..\source\FenceGenerator.h" />
+    <ClInclude Include="..\source\FenceBoard.h" />
     <ClInclude Include="..\source\ForestGenerator.h" />
     <ClInclude Include="..\source\FPSCounter.h" />
     <ClInclude Include="..\source\FrameBuffer.h" />
@@ -152,6 +155,9 @@
     <ClCompile Include="..\source\drawScene.cpp" />
     <ClCompile Include="..\source\DummyCameraTarget.cpp" />
     <ClCompile Include="..\source\ElectricalBox.cpp" />
+    <ClCompile Include="..\source\FenceGenerator.cpp" />
+    <ClCompile Include="..\source\FenceBoard.cpp" />
+    <ClCompile Include="..\source\Fence.cpp" />
     <ClCompile Include="..\source\ForestGenerator.cpp" />
     <ClCompile Include="..\source\FrameBuffer.cpp" />
     <ClCompile Include="..\source\FrameSaver.cpp" />

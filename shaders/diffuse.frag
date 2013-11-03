@@ -15,6 +15,7 @@ uniform sampler2D texture12 ;
 uniform sampler2D texture13 ;
 uniform sampler2D texture14 ;
 uniform sampler2D texture15 ;
+uniform sampler2D texture16 ;
 
 uniform float time ;
 uniform int useTex ;
@@ -52,6 +53,7 @@ void main(void)
     vec4 texColour13 = texture(texture13,TexCoord);
     vec4 texColour14 = texture(texture14,TexCoord);
     vec4 texColour15 = texture(texture15,TexCoord);
+    vec4 texColour16 = texture(texture16,TexCoord);
 
     vec4 texColour ;
     
@@ -70,6 +72,7 @@ void main(void)
         case 13: texColour = texColour13 ; break ;
         case 14: texColour = texColour14 ; break ;
         case 15: texColour = texColour15 ; break ;
+        case 16: texColour = texColour16 ; break ;
 
         default: texColour = vec4(1.f) ; break;
     } ;

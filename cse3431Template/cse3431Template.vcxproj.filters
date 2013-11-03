@@ -185,6 +185,15 @@
     <ClInclude Include="..\source\Spark.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\FenceBoard.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\FenceGenerator.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Fence.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Building.cpp">
@@ -299,6 +308,15 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Spark.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\FenceBoard.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\FenceGenerator.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Fence.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>

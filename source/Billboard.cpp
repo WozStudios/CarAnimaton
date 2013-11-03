@@ -1,11 +1,13 @@
 #include "Billboard.h"
 #include "drawScene.h"
 #include "MathUtils.h"
+#include "Utility.h"
 
-Billboard::Billboard(Transform transform, vec3* cameraPosition, int textureID)
+Billboard::Billboard(Transform transform, vec3* cameraPosition, vec3* cameraDirection, int textureID)
 {
 	_transform = transform;
 	_cameraPosition = cameraPosition;
+	_cameraDirection = cameraDirection;
 	_textureID = textureID;
 
 	_normal = vec3(0.0, 0.0, 1.0);
@@ -25,10 +27,15 @@ void Billboard::Update(float time)
 		_rotationAngle = acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
 	else 
 		_rotationAngle = 360.0 - acos(glm::dot(_normal, idealNormal)) * RADIANS_TO_DEGREES;
+
+	_distanceFromCamera = glm::length(_transform.position - *_cameraPosition);
 }
 
 void Billboard::Draw(ModelviewStack* ms)
 {
+	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
+		return;
+
 	useTexture(_textureID);
 	setColour(1.0, 1.0, 1.0);
 
@@ -49,4 +56,14 @@ void Billboard::Draw(ModelviewStack* ms)
 		drawSquare(*ms);
 	}
 	ms->Pop();
+}
+
+bool Billboard::CompareDistance(Billboard* a, Billboard* b)
+{
+	return a->GetDistanceFromCamera() > b->GetDistanceFromCamera();
+}
+
+bool Billboard::operator<(const Billboard& rhs)
+{
+	return _distanceFromCamera > rhs._distanceFromCamera;
 }

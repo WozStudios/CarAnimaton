@@ -7,6 +7,7 @@
 #include "Path.h"
 #include "IGameObject.h"
 #include "FrameBuffer.h"
+#include "Billboard.h"
 #include "AnimationManager.h"
 #include "MatStack.h"
 #include "SFML/Audio.hpp"
@@ -20,6 +21,7 @@ private:
 	Path _firstCarPath;
 	Path _secondCarPath;
 	vector<IGameObject*> _gameObjects;
+	vector<Billboard*> _trees;
 	sf::Music* _soundtrack;
 	FrameBuffer _frameBuffer;
 	AnimationManager _animationManager;
