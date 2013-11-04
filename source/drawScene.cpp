@@ -42,7 +42,7 @@ static Sphere *gSphere ;
 
 static float gCurrentTime = 0.0f;
 static float gLastTime = 0.0f;
-static float gDeltaTime = 0.0f;
+float gDeltaTime = 0.0f;
 static int gCubeCount = 0;
 
 static FPSCounter gFPSCounter;

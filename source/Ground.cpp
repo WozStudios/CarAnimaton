@@ -1,13 +1,13 @@
 #include "Ground.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
-Ground::Ground(double size)
+Ground::Ground(int size)
 {
 	_size = size;
 
-	_transform.position = vec3(0.0, -1.0, 0.0);
-	_transform.rotation = vec3(0.0, 0.0, 0.0);
-	_transform.scale = vec3(_size / 2, 1.0, _size / 2);
+	_transform.position = vec3(0.0f, -1.0f, 0.0f);
+	_transform.rotation = vec3(0.0f, 0.0f, 0.0f);
+	_transform.scale = vec3(_size / 2.0f, 1.0f, _size / 2.0f);
 }
 
 void Ground::Draw(ModelviewStack* ms)

@@ -46,13 +46,13 @@ Scene::~Scene()
 
 void Scene::Init(sf::Music* soundtrack)
 {
-	//_frameBuffer.Init(gWidth, gHeight);
+	_frameBuffer.Init(gWidth, gHeight);
 
 	vec3* cameraPosition = _camera.GetPositionPointer();
 	vec3* cameraDirection = _camera.GetDirectionPointer();
 
 	_gameObjects.push_back(new Skybox(2048.0, cameraPosition));
-	_gameObjects.push_back(new Ground(512.0));
+	_gameObjects.push_back(new Ground(512));
 	//_gameObjects.push_back(new Person());
 	//_gameObjects.push_back(new QuaternionTest());
 
@@ -84,6 +84,7 @@ void Scene::Init(sf::Music* soundtrack)
 	_gameObjects.push_back(new Fence(vec3(0.0f, 0.0f, 255.0f), 180.0f, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new Fence(vec3(-512.0f, 0.0f, 255.0f), 180.0f, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new Fence(vec3(255.0f, 0.0f, 0.0f), 270.0f, cameraPosition, cameraDirection));
+	_gameObjects.push_back(new Fence(vec3(-512.0f, 0.0f, -255.0f), 0.0f, cameraPosition, cameraDirection));
 	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
 	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
@@ -174,9 +175,9 @@ void Scene::Update(float deltaTime)
 
 void Scene::Draw(ModelviewStack* ms)
 {
-	//FrameBuffer::UseFrameBuffer(_frameBuffer.GetId());
-	//gShaders.use(0);
-	//
+	FrameBuffer::UseFrameBuffer(_frameBuffer.GetId());
+	gShaders.use(0);
+	
 	//glEnable(GL_DEPTH_TEST);
 
     ms->SetViewMatrix(_camera.GetPosition(), *_camera.GetTarget(), _camera.GetUpVector());
@@ -196,8 +197,7 @@ void Scene::Draw(ModelviewStack* ms)
 		(*i)->Draw(ms);
 	}
 
-	//FrameBuffer::UseFrameBuffer(0);
-	//gShaders.use(1);
-	//_frameBuffer.Draw();
+	gShaders.use(1);
+	_frameBuffer.Draw();
 
 }

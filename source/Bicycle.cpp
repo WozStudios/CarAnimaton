@@ -2,7 +2,7 @@
 #include "drawScene.h"
 #include "MathUtils.h"
 #include "Utility.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 Bicycle::Bicycle(vec3* cameraPosition, vec3* cameraDirection)
 {

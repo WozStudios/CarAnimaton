@@ -16,7 +16,7 @@ private:
 	Transform _transform;
 	int _size;
 public:
-	Ground(double size);
+	Ground(int size);
 
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }

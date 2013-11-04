@@ -188,13 +188,13 @@
     <ClInclude Include="..\source\FenceBoard.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\FenceGenerator.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\Fence.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Textures.h">
+    <ClInclude Include="..\source\Textures.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\FenceGenerator.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -316,11 +316,11 @@
     <ClCompile Include="..\source\FenceBoard.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\FenceGenerator.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\Fence.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\FenceGenerator.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

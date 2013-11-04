@@ -3,7 +3,7 @@
 #include "drawScene.h"
 #include "Utility.h"
 #include "Random.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 PowerLinePole::PowerLinePole(vec3 position, vec3* cameraPosition, vec3* cameraDirection)
 {

@@ -1,6 +1,6 @@
 #include "GasStation.h"
 #include "drawScene.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 GasStation::GasStation()
 {

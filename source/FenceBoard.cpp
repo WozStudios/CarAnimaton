@@ -1,7 +1,7 @@
 #include "FenceBoard.h"
 #include "drawScene.h"
 #include "Utility.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 FenceBoard::FenceBoard(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection)
 {

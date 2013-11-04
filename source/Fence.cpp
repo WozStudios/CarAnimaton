@@ -1,7 +1,7 @@
 #include "Fence.h"
 #include "Utility.h"
 #include "drawScene.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 Fence::Fence(vec3 position, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection)
 {

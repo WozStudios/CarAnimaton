@@ -2,7 +2,7 @@
 #include "MathUtils.h"
 #include "drawScene.h"
 #include "Utility.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 ElectricalBox::ElectricalBox(vec3* cameraPosition, vec3* cameraDirection)
 {

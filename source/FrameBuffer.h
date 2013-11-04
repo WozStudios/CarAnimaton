@@ -13,6 +13,9 @@ private:
 
 	GLuint _vao;
 
+	float _saturation;
+	float _fade;
+
 public:
 	FrameBuffer() {}
 	~FrameBuffer();
@@ -30,6 +33,9 @@ public:
 
 private:
 	void SetupQuad();
+	void AnimateSaturation();
+	void FadeIn();
+	void FadeOut();
 };
 
 #endif

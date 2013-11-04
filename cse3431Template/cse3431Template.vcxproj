@@ -137,10 +137,10 @@
     <ClInclude Include="..\source\Spark.h" />
     <ClInclude Include="..\source\SportsCar.h" />
     <ClInclude Include="..\source\Store.h" />
+    <ClInclude Include="..\source\Textures.h" />
     <ClInclude Include="..\source\TrafficLight.h" />
     <ClInclude Include="..\source\Transform.h" />
     <ClInclude Include="..\source\Utility.h" />
-    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\AnimationManager.cpp" />

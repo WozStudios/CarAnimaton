@@ -1,5 +1,5 @@
 #include "DecalGenerator.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 DecalGenerator::DecalGenerator(vec3* cameraPosition, vec3* cameraDirection)
 {
