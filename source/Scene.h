@@ -27,7 +27,7 @@ private:
 	AnimationManager _animationManager;
 
 public:
-	Scene();
+	//Scene() {}
 	~Scene();
 	
 	void Init(sf::Music* soundtrack);

@@ -46,7 +46,8 @@ private:
 	quat _orientation;
 
 public:
-	Camera(double distance = 1.0);
+	void Init(double distance);
+	void Destroy();
 	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
@@ -64,12 +65,19 @@ public:
 	
 	vec3* GetPositionPointer() { return &_transform.position; }
 	vec3* GetDirectionPointer() { return &_direction; }
+
+	vec3 GetTargetPosition() { return _dummy.GetPosition(); }
 	
 	//void SetPosition(vec3 position) { _position = position; }
 	void SetTarget(vec3* target) { _dummy.SetPosition(target); }
 	void SetUpVector(vec3 upVector) { _upVector = upVector; }
 
+	void SetAnimating(bool isAnimating) { _dummy.SetAnimating(isAnimating); }
+	void SetAcceleration(float acceleration) {_dummy.SetAcceleration(acceleration); }
+
 	//void SetDummyTarget(DummyCameraTarget* dummy);
+
+	void Draw(ModelviewStack* ms);
 };
 
 #endif

@@ -2,16 +2,16 @@
 #include "drawScene.h"
 #include "MathUtils.h"
 
-Camera::Camera(double distance)
+void Camera::Init(double distance)
 {
 	_distance = distance;
 	_transform.position = vec3(0.0f, 0.0f, distance);
 	_origin = vec3(0.0f, 0.0f, 0.0f);
-	_dummy = DummyCameraTarget(vec3(0.0f, 0.0f, 0.0f));
+	_dummy.Init(vec3(0.0f, 0.0f, 0.0f));
 	//_target = _dummy.GetPositionPointer();
 	_previousTargetPosition = _dummy.GetPosition();
 	_upVector = vec3(0, 1, 0);
-	
+
 	_heightSpeed = 10.0;
 	_zoomSpeed = 10.0;
 	_rotationSpeedX = 0.5;
@@ -22,9 +22,14 @@ Camera::Camera(double distance)
 	_isRotating = false;
 
 	_inputManager = InputManager::GetInstance();
-	
+
 	_counterY = 0.0f;
 	_counterX = M_PI / 8.0f;
+}
+
+void Camera::Destroy()
+{
+	_dummy.Destroy();
 }
 
 void Update2(float deltaTime)
@@ -179,12 +184,18 @@ void Camera::Update(float deltaTime)
 	if (_transform.position.y < 0)
 		_transform.position.y = 0.1f;
 
-	if (_inputManager->WasRightClicked())
-	{
-		std::cout << "Camera Position: (" << _transform.position.x << ", "
-										  << _transform.position.y << ", "
-										  << _transform.position.z << ")\n";
-	}
+	//if (_inputManager->WasRightClicked())
+	//{
+	//	std::cout << "Camera Position: (" << _transform.position.x << ", "
+	//									  << _transform.position.y << ", "
+	//									  << _transform.position.z << ")\n";
+	//}
 	
 	_direction = glm::normalize(_dummy.GetPosition() - _transform.position);
+}
+
+void Camera::Draw(ModelviewStack* ms)
+{
+	_dummy.Draw(ms);
+
 }

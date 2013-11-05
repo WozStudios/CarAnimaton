@@ -21,8 +21,8 @@
 FrameSaver gFrameSaver;
 int gAnimate = 0;
 int gRecording = 0;
-int gWidth = 512;
-int gHeight = 512;
+int gWidth = 500;
+int gHeight = 500;
 float gTime = 0.0;
 
 void instructions(void) ;

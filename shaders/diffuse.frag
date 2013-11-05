@@ -17,6 +17,7 @@ uniform sampler2D texture14 ;
 uniform sampler2D texture15 ;
 uniform sampler2D texture16 ;
 uniform sampler2D texture17 ;
+uniform sampler2D texture18 ;
 
 uniform float time ;
 uniform int useTex ;
@@ -56,6 +57,7 @@ void main(void)
     vec4 texColour15 = texture(texture15,TexCoord);
     vec4 texColour16 = texture(texture16,TexCoord);
     vec4 texColour17 = texture(texture17,TexCoord);
+    vec4 texColour18 = texture(texture18,TexCoord);
 
     vec4 texColour ;
     
@@ -77,6 +79,7 @@ void main(void)
         case 15: texColour = texColour15 ; break ;
         case 16: texColour = texColour16 ; break ;
         case 17: texColour = texColour17 ; break ;
+        case 18: texColour = texColour18 ; break ;
 
         default: texColour = vec4(1.f) ; break;
     } ;
@@ -85,6 +88,11 @@ void main(void)
 	{
 		texColour.a = 1.0 - texColour.b;
 		texColour.b = 0.0;
+	}
+
+	if (useTex == 17)
+	{
+		fragColour = vec4(1.0, 0.0, 0.0, 1.0);
 	}
 
     if( useLighting == 1 ) fragColour = texColour*vec4(AmbientDiffuseIntensity,1.0)+vec4(SpecularIntensity,1.0f) ;

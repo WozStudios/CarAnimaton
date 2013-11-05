@@ -1,7 +1,7 @@
 #include "SportsCar.h"
 #include "drawScene.h"
 #include "Utility.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 void SportsCar::Draw(ModelviewStack* ms)
 {

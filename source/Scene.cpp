@@ -28,12 +28,12 @@
 #include "Path.h"
 #include "Node.h"
 
-Scene::Scene()
-{
-	_camera = Camera(32);
-	//_soundtrack = new sf::Music();
-	//_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
-}
+//Scene::Scene()
+//{
+//	//_soundtrack = new sf::Music();
+//_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
+//}
+
 Scene::~Scene()
 {
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
@@ -41,12 +41,18 @@ Scene::~Scene()
 		delete *i;
 	}
 
+	_firstCarPath.Destroy();
+	_secondCarPath.Destroy();
+	_camera.Destroy();
+
 	//delete _soundtrack;
 }
 
 void Scene::Init(sf::Music* soundtrack)
 {
-	_frameBuffer.Init(gWidth, gHeight);
+	_camera.Init(32);
+
+	//_frameBuffer.Init(gWidth, gHeight);
 
 	vec3* cameraPosition = _camera.GetPositionPointer();
 	vec3* cameraDirection = _camera.GetDirectionPointer();
@@ -92,6 +98,7 @@ void Scene::Init(sf::Music* soundtrack)
 	ElectricalBox* electricalBox = new ElectricalBox(cameraPosition, cameraDirection);
 	_gameObjects.push_back(electricalBox);
 
+	// Initialize Animation Manager
 	_animationManager.Init(&_camera, smallCar, sportsCar, rightTrafficLight, leftTrafficLight, electricalBox, soundtrack);
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
@@ -108,29 +115,12 @@ void Scene::Init(sf::Music* soundtrack)
 		_gameObjects.push_back(*i);
 	}
 
-	//FenceGenerator fenceGenerator = FenceGenerator(cameraPosition, cameraDirection);
-	//vector<FenceBoard*> fenceboards = fenceGenerator.GetFenceBoards();
-	//for (vector<FenceBoard*>::iterator i = fenceboards.begin(); i != fenceboards.end(); i++)
-	//{
-	//	_gameObjects.push_back(*i);
-	//}
-
 	ForestGenerator forestGenerator = ForestGenerator(vec3(-250.0, 0.0, 128.0), cameraPosition, cameraDirection);
 	 vector<Billboard*> trees = forestGenerator.GetTrees();
 	 for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
 	 {
 		 _trees.push_back(*i);
 	 }
-
-
-	//BuildingGenerator buildingGenerator = BuildingGenerator(vec3(256, 0, -400), 32);
-	//vector<Building*> buildings = buildingGenerator.GetBuildings();
-	//for (vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); i++)
-	//{
-	//	_gameObjects.push_back(*i);
-	//}
-
-	//_soundtrack->play();
 }
 
 void Scene::SetupCarPaths()
@@ -157,6 +147,7 @@ void Scene::SetupCarPaths()
 void Scene::Update(float deltaTime)
 {
 	_animationManager.Update(deltaTime);
+	_camera.Update(deltaTime);
 
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
 	{
@@ -164,9 +155,7 @@ void Scene::Update(float deltaTime)
 			updateable->Update(deltaTime);
 	}
 
-	_camera.Update(deltaTime);
-
-	// Draw trees
+	// Update trees
 	for (vector<Billboard*>::iterator i = _trees.begin(); i != _trees.end(); i++)
 	{
 		(*i)->Update(deltaTime);
@@ -175,10 +164,11 @@ void Scene::Update(float deltaTime)
 
 void Scene::Draw(ModelviewStack* ms)
 {
-	FrameBuffer::UseFrameBuffer(_frameBuffer.GetId());
-	gShaders.use(0);
+	//FrameBuffer::UseFrameBuffer(_frameBuffer.GetId());
+	//gShaders.use(0);
 	
 	//glEnable(GL_DEPTH_TEST);
+	_camera.Draw(ms);
 
     ms->SetViewMatrix(_camera.GetPosition(), *_camera.GetTarget(), _camera.GetUpVector());
 
@@ -197,7 +187,7 @@ void Scene::Draw(ModelviewStack* ms)
 		(*i)->Draw(ms);
 	}
 
-	gShaders.use(1);
-	_frameBuffer.Draw();
+	//gShaders.use(1);
+	//_frameBuffer.Draw();
 
 }

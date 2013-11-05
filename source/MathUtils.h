@@ -13,10 +13,9 @@
 #define DEGREES_TO_RADIANS 0.01745327778
 #endif
 
-static void lerp(double x0, double y0, double x1, double y1, double c, double* x, double* y)
+static double lerp(double x0, double x1, double c)
 {
-	*x = (1 - c) * x0 + c * x1;
-	*y = (1 - c) * y0 + c * y1;
+	return (1 - c) * x0 + c * x1;
 }
 
 static double cosInterpolate(double x0, double x1, double c)

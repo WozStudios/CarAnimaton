@@ -40,9 +40,6 @@ void Car::Update(float deltaTime)
 {
 	if (_isAnimating && _points.size() > 0)
 	{
-		double x;
-		double z;
-
 		_carSpeed += _acceleration * deltaTime;
 		_currentC += deltaTime * _carSpeed;
 
@@ -54,16 +51,9 @@ void Car::Update(float deltaTime)
 
 		if (_currentNode < _points.size() - 2)
 		{
-			lerp(_points[_currentNode].x, 
-				_points[_currentNode].z, 
-				_points[_currentNode + 1].x, 
-				_points[_currentNode + 1].z,
-				_currentC,
-				&x, &z);
+			_transform.position.x = (float)lerp(_points[_currentNode].x, _points[_currentNode + 1].x, _currentC);
+			_transform.position.z = (float)lerp(_points[_currentNode].z, _points[_currentNode + 1].z, _currentC);
 
-			_transform.position.x = (float)x;
-			_transform.position.z = (float)z;
-		
 			double c = _currentC;
 			unsigned int node = _currentNode;
 			vec3 heading;
@@ -81,15 +71,8 @@ void Car::Update(float deltaTime)
 
 				if (node < _points.size() - 2)
 				{
-					lerp(_points[_currentNode].x, 
-						_points[_currentNode].z, 
-						_points[node + 1].x, 
-						_points[node + 1].z,
-						c,
-						&x, &z);
-
-					nextPosition.x += (float)x;
-					nextPosition.z += (float)z;
+					nextPosition.x += (float)lerp(_points[_currentNode].x, _points[node + 1].x, c);
+					nextPosition.z += (float)lerp(_points[_currentNode].z, _points[node + 1].z, c);
 				}
 			}
 			nextPosition.x /= 10.0f;

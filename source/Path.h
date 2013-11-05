@@ -20,8 +20,7 @@ private:
 	Transform _transform;
 
 public:
-	Path();
-	~Path();
+	void Destroy();
 
 	vector<IGameObject*> GetNodes() { return _nodes; }
 	vector<vec3> GetPoints() { return _finalPoints; }

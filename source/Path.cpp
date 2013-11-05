@@ -3,12 +3,7 @@
 #include "MathUtils.h"
 #include "Node.h"
 
-Path::Path()
-{
-
-}
-
-Path::~Path()
+void Path::Destroy()
 {
 	for (vector<IGameObject*>::iterator i = _nodes.begin(); i != _nodes.end(); i++)
 	{
@@ -106,9 +101,9 @@ void Path::CalculatePath()
 		}
 	}
 
-	int numFinalPoints = 3000;
-	double currentDistance = 0.0;
-	float stepSize = pathLength / numFinalPoints;
+	float currentDistance = 0.0f;
+	float stepSize = 0.14;
+	int numFinalPoints = pathLength / stepSize;
 
 	int index = 0;
 	_finalPoints.push_back(_points[index]);
@@ -126,15 +121,12 @@ void Path::CalculatePath()
 			index++;
 	}
 
-
-	//double stepSize = pathLength / _points.size();
-
-
 	std::cout << "Total path length: " << pathLength << "\n";
 }
 
 void Path::DrawDebugSpheres(ModelviewStack* ms)
 {
+	useTexture(0);
 	setColour(1.0f, 0.0f, 0.0f);
 	for (vector<IGameObject*>::iterator i = _nodes.begin(); i != _nodes.end(); i++)
 	{

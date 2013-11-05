@@ -5,27 +5,35 @@
 #include "IGameObject.h"
 #include "IUpdateable.h"
 #include "IDrawable.h"
+#include "Path.h"
 
 class DummyCameraTarget : public IGameObject, public IUpdateable, public IDrawable
 {
 private:
 	Transform _transform;
 	vec3 _cameraPosition;
-	InputManager* _inputManager;
-	vec3 _movementVector;
-	float _movementSpeed;
 	vec3* _targetPosition;
 
+	InputManager* _inputManager;
+
+	vec3 _movementVector;
+	float _movementSpeed;
+	float _acceleration;
+
+	Path _path;
+	int _currentNode;
+	float _currentC;
+
+	bool _isAnimating;
+
 public:
-	DummyCameraTarget(vec3 position = vec3());
+	void Init(vec3 position);
+	void Destroy();
 
-	void Update(float deltaTime);
-
-	void Draw(ModelviewStack* ms);
-	
 	vec3 GetPosition() { return _transform.position; }
 	vec3 GetRotation() { return _transform.rotation; }
 	vec3 GetScale() { return _transform.scale; }
+
 	vec3 GetMovementVector() { return _movementVector; }
 	vec3* GetPositionPointer() { return &_transform.position; }
 
@@ -34,8 +42,16 @@ public:
 	void SetRotation(vec3 rotation) { _transform.rotation = rotation; }
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 
+	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; }
+	void SetAcceleration(float acceleration) { _acceleration = acceleration; }
+
+	void Update(float deltaTime);
+	void Draw(ModelviewStack* ms);
+
 	void SetCameraPosition(vec3 cameraPosition) { _cameraPosition = cameraPosition; }
 	
+private:
+	void SetupPath();
 };
 
 #endif

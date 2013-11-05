@@ -10,6 +10,7 @@ FrameBuffer::~FrameBuffer()
 {
 	glDeleteFramebuffers(1, &_id);
 	glDeleteTextures(1, &_textureId);
+	glDeleteRenderbuffers(1, &_depthBufferId);
 }
 
 void FrameBuffer::Init(int width, int height)
@@ -46,6 +47,8 @@ void FrameBuffer::Init(int width, int height)
 
 	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 	useLighting(0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	setMaterial(vec3(0.2f,0.2f,0.2f), vec3(1.f,0.f,0.f),vec3(1.0f,1.0f,1.f), 20.0)  ;
 	setLight(vec4(0.f,0.f,100.f,1.f), vec3(1.0f,1.0f,1.0f), vec3(1.0f,1.0f,1.0f),vec3(1.0f,1.0f,1.0f))  ;
@@ -119,7 +122,7 @@ void FrameBuffer::Draw()
 	if ((int) texUniform >=0)
 		glUniform1i(texUniform, 0) ;
 
-	//AnimateSaturation();
+	AnimateSaturation();
 	GLuint saturationLocation = glGetUniformLocation(gShaders.getActiveID(), "saturation");
 	if ((int)saturationLocation >= 0)
 		glUniform1f(saturationLocation, _saturation);
