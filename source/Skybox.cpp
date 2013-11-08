@@ -1,6 +1,6 @@
 #include "Skybox.h"
 #include "drawScene.h"
-#include "..\cse3431Template\Textures.h"
+#include "Textures.h"
 
 Skybox::Skybox(double size, vec3* cameraPos)
 {

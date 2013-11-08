@@ -4,6 +4,8 @@
 #include "Utility.h"
 #include "Textures.h"
 
+#include "Debug.h"
+
 ElectricalBox::ElectricalBox(vec3* cameraPosition, vec3* cameraDirection)
 {
 	_transform = Transform();
@@ -40,23 +42,21 @@ void ElectricalBox::GenerateSparks()
 	_sparks.push_back(new Spark(_transform.position, vec3(6.0f, 15.0f, -5.0f)));
 }
 
+void ElectricalBox::Destroy()
+{
+	for (list<Spark*>::iterator i = _sparks.begin(); i != _sparks.end(); i++)
+	{
+		delete *i;
+	}
+}
+
 void ElectricalBox::Update(float deltaTime)
 {
 	if (_exploded && _sparks.size() > 0)
 	{
-		for (list<Spark*>::iterator i = _sparks.begin(); i != _sparks.end(); )
+		for (list<Spark*>::iterator i = _sparks.begin(); i != _sparks.end(); i++)
 		{
 			(*i)->Update(deltaTime);
-
-			if (!(*i)->IsAlive())
-			{
-				delete *i;
-				i = _sparks.erase(i);
-			}
-			else
-			{
-				i++;
-			}
 		}
 	}
 }

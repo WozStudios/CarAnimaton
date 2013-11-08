@@ -3,6 +3,8 @@
 #include <string.h>
 #include "image.h"
 
+#include "Debug.h"
+
 unsigned short getShort(FILE *fp) //helper function
 { //BMP format uses little-endian integer types
   // get a 2-byte integer stored in little-endian form

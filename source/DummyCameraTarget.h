@@ -19,6 +19,7 @@ private:
 	vec3 _movementVector;
 	float _movementSpeed;
 	float _acceleration;
+	float _targetSpeed;
 
 	Path _path;
 	int _currentNode;
@@ -43,7 +44,7 @@ public:
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 
 	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; }
-	void SetAcceleration(float acceleration) { _acceleration = acceleration; }
+	void SetAcceleration(float acceleration, float targetSpeed) { _acceleration = acceleration; _targetSpeed = targetSpeed; }
 
 	void Update(float deltaTime);
 	void Draw(ModelviewStack* ms);

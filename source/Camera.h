@@ -27,23 +27,28 @@ private:
 	DummyCameraTarget _dummy;
 
 	double _distance;
+	double _idealDistance;
 	double _heightSpeed;
 	double _zoomSpeed;
-	double _rotationSpeedX;
-	double _rotationSpeedY;
+	float _rotationSpeedX;
+	float _rotationSpeedY;
 
 	double _angle;
 
 	float _counterY;
 	float _counterX;
+	float _idealCounterY;
+	float _idealCounterX;
+	int _leftRight;
 	
 	bool _isRotating;
+	bool _isAnimating;
 
 	InputManager* _inputManager;
 
 	mat4 _orientationMat;
 
-	quat _orientation;
+	bool _isFollowing;
 
 public:
 	void Init(double distance);
@@ -72,12 +77,26 @@ public:
 	void SetTarget(vec3* target) { _dummy.SetPosition(target); }
 	void SetUpVector(vec3 upVector) { _upVector = upVector; }
 
-	void SetAnimating(bool isAnimating) { _dummy.SetAnimating(isAnimating); }
-	void SetAcceleration(float acceleration) {_dummy.SetAcceleration(acceleration); }
+	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; _dummy.SetAnimating(isAnimating); }
+	void SetAcceleration(float acceleration, float targetSpeed) {_dummy.SetAcceleration(acceleration, targetSpeed); }
+	void SetDistance(float distance) { _idealDistance = distance; }
+
+	void SetIdealCounterY(float idealCounterY, int leftRight) { _idealCounterY = idealCounterY; _leftRight = leftRight; }
+	void SetIdealCounterX(float idealCounterX) { _idealCounterX = idealCounterX; }
+
+	void SetRotationSpeedY(float rotationSpeedY) { _rotationSpeedY = rotationSpeedY; }
+	void SetRotationSpeedX(float rotationSpeedX) { _rotationSpeedX = rotationSpeedX; }
+
+	void SetFollowing(bool isFollowing) { _isFollowing = isFollowing; }
 
 	//void SetDummyTarget(DummyCameraTarget* dummy);
 
 	void Draw(ModelviewStack* ms);
+
+	void ResetCounters();
+
+private:
+	void RotateToIdeals(float deltaTime);
 };
 
 #endif

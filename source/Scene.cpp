@@ -10,23 +10,23 @@
 #include "TrafficLight.h"
 #include "Car.h"
 #include "Bird.h"
-#include "BirdGenerator.h"
 #include "Store.h"
 #include "GasStation.h"
 #include "Metronome.h"
 #include "Bicycle.h"
 #include "Fence.h"
 #include "FenceGenerator.h"
-#include "ForestGenerator.h"
 #include "BuildingGenerator.h"
 #include "Building.h"
 #include "QuaternionTest.h"
-#include "PowerLines.h"
-#include "ElectricalBox.h"
 #include "Decal.h"
 #include "DecalGenerator.h"
 #include "Path.h"
 #include "Node.h"
+#include "Dumpster.h"
+#include "Rat.h"
+#include "Debug.h"
+
 
 //Scene::Scene()
 //{
@@ -34,12 +34,18 @@
 //_soundtrack->openFromFile("../media/audio/Soundtrack.ogg");
 //}
 
-Scene::~Scene()
+void Scene::Destroy()
 {
+	_powerLines->Destroy();
+	_electricalBox->Destroy();
+
 	for (vector<IGameObject*>::iterator i = _gameObjects.begin(); i != _gameObjects.end(); i++)
 	{
 		delete *i;
 	}
+
+	//_forestGenerator.Destroy();
+	//_birdGenerator.Destroy();
 
 	_firstCarPath.Destroy();
 	_secondCarPath.Destroy();
@@ -91,36 +97,37 @@ void Scene::Init(sf::Music* soundtrack)
 	_gameObjects.push_back(new Fence(vec3(-512.0f, 0.0f, 255.0f), 180.0f, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new Fence(vec3(255.0f, 0.0f, 0.0f), 270.0f, cameraPosition, cameraDirection));
 	_gameObjects.push_back(new Fence(vec3(-512.0f, 0.0f, -255.0f), 0.0f, cameraPosition, cameraDirection));
-	//_gameObjects.push_back(new Metronome());
 	_gameObjects.push_back(new Bicycle(cameraPosition, cameraDirection));
-	_gameObjects.push_back(new PowerLines(cameraPosition, cameraDirection));
+	_gameObjects.push_back(new Dumpster(cameraPosition, cameraDirection));
 
-	ElectricalBox* electricalBox = new ElectricalBox(cameraPosition, cameraDirection);
-	_gameObjects.push_back(electricalBox);
+	_powerLines = new PowerLines(cameraPosition, cameraDirection);
+	_gameObjects.push_back(_powerLines);
+
+	_electricalBox = new ElectricalBox(cameraPosition, cameraDirection);
+	_gameObjects.push_back(_electricalBox);
+
+	_rats;
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+	_rats.push_back(new Rat(cameraPosition, cameraDirection));
+
+	for (vector<Rat*>::iterator i = _rats.begin(); i != _rats.end(); i++)
+		_gameObjects.push_back(*i);
 
 	// Initialize Animation Manager
-	_animationManager.Init(&_camera, smallCar, sportsCar, rightTrafficLight, leftTrafficLight, electricalBox, soundtrack);
+	_animationManager.Init(&_camera, smallCar, sportsCar, rightTrafficLight, leftTrafficLight, _electricalBox, soundtrack, _rats);
 
 	DecalGenerator decalGenerator = DecalGenerator(cameraPosition, cameraDirection);
 	vector<Decal*> decals = decalGenerator.GetDecals();
 	for (vector<Decal*>::iterator i = decals.begin(); i != decals.end(); i++)
-	{
 		_gameObjects.push_back(*i);
-	}
 
-	BirdGenerator birdGenerator = BirdGenerator(vec3(0.0f, 128.0f, 0.0f), cameraPosition, cameraDirection);
-	vector<Bird*> birds = birdGenerator.GetBirds();
-	for (vector<Bird*>::iterator i = birds.begin(); i != birds.end(); i++)
-	{
-		_gameObjects.push_back(*i);
-	}
+	_birdGenerator.Init(vec3(0.0f, 128.0f, 0.0f), cameraPosition, cameraDirection);
 
-	ForestGenerator forestGenerator = ForestGenerator(vec3(-250.0, 0.0, 128.0), cameraPosition, cameraDirection);
-	 vector<Billboard*> trees = forestGenerator.GetTrees();
-	 for (vector<Billboard*>::iterator i = trees.begin(); i != trees.end(); i++)
-	 {
-		 _trees.push_back(*i);
-	 }
+	_forestGenerator.Init(vec3(-250.0, 0.0, 138.0), cameraPosition, cameraDirection);
 }
 
 void Scene::SetupCarPaths()
@@ -155,10 +162,18 @@ void Scene::Update(float deltaTime)
 			updateable->Update(deltaTime);
 	}
 
-	// Update trees
-	for (vector<Billboard*>::iterator i = _trees.begin(); i != _trees.end(); i++)
+	// Update birds
+	vector<Bird>* birds = _birdGenerator.GetBirds();
+	for (vector<Bird>::iterator i = birds->begin(); i != birds->end(); i++)
 	{
-		(*i)->Update(deltaTime);
+		(i)->Update(deltaTime);
+	}
+
+	// Update trees
+	vector<Billboard>* trees = _forestGenerator.GetTrees();
+	for (vector<Billboard>::iterator i = trees->begin(); i != trees->end(); i++)
+	{
+		(i)->Update(deltaTime);
 	}
 }
 
@@ -178,13 +193,22 @@ void Scene::Draw(ModelviewStack* ms)
 			drawable->Draw(ms);
 	}
 
-	// Sort trees based on distance from camera
-	std::sort(_trees.begin(), _trees.end(), Billboard::CompareDistance);
 
+	vector<Billboard>* trees = _forestGenerator.GetTrees();
+	// Sort trees based on distance from camera
+	std::sort(trees->begin(), trees->end(), Billboard::CompareDistance);
 	// Draw trees
-	for (vector<Billboard*>::iterator i = _trees.begin(); i != _trees.end(); i++)
+	for (vector<Billboard>::iterator i = trees->begin(); i != trees->end(); i++)
 	{
-		(*i)->Draw(ms);
+		(i)->Draw(ms);
+	}
+
+
+	vector<Bird>* birds = _birdGenerator.GetBirds();
+	// Draw birds
+	for (vector<Bird>::iterator i = birds->begin(); i != birds->end(); i++)
+	{
+		(i)->Draw(ms);
 	}
 
 	//gShaders.use(1);

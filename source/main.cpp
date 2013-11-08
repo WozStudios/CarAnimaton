@@ -17,6 +17,11 @@
 
 #include "InputManager.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
+#include "Debug.h"
+
 // global variables -- In practice they would in a singleton
 FrameSaver gFrameSaver;
 int gAnimate = 0;
@@ -200,6 +205,8 @@ int main( void ){
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
     
+	_CrtDumpMemoryLeaks();
+
     exit( EXIT_SUCCESS );
 }
 

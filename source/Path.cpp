@@ -3,6 +3,8 @@
 #include "MathUtils.h"
 #include "Node.h"
 
+#include "Debug.h"
+
 void Path::Destroy()
 {
 	for (vector<IGameObject*>::iterator i = _nodes.begin(); i != _nodes.end(); i++)

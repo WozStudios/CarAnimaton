@@ -16,6 +16,8 @@ void SmallCar::Draw(ModelviewStack* ms)
 		ms->Translate(_transform.position);
 		ms->Mult(mat4_cast(_heading));
 
+		ms->Rotate(_rollAngle, vec3(0.0f, 0.0f, 1.0f));
+
 		// Draw main body
 		ms->Push();
 		{
@@ -226,22 +228,21 @@ void SmallCar::DrawWheel(ModelviewStack* ms, int frontBack, int rightLeft)
 
 void SmallCar::Crash(float deltaTime)
 {
-	if (_crashVelocity.x < 0.0f)
-		_transform.position.x = _crashPosition.x + _crashVelocity.x * _timeSinceCrash;
-	if (_crashVelocity.z > 0.0f)
-		_transform.position.z = _crashPosition.z + _crashVelocity.z * _timeSinceCrash;
+	_transform.position.x = _crashPosition.x + _crashVelocity.x * _timeSinceCrash;
+	_transform.position.z = _crashPosition.z + _crashVelocity.z * _timeSinceCrash;
+	_transform.position.y = _crashPosition.y +
+		_crashVelocity.y * _timeSinceCrash +
+		0.5 * -10.0f * _timeSinceCrash *_timeSinceCrash;
 
-	if (_transform.position.y > 0.0f)
-	{
-		_transform.position.y = _crashPosition.y +
-								_crashVelocity.y * _timeSinceCrash +
-								0.5 * -10.0f * _timeSinceCrash *_timeSinceCrash;
-	}
-	else
-	{
-		_crashVelocity *= 1.1f * deltaTime;
-		
-	}
+	_rollAngle += deltaTime * 100.0f;
+	if (_rollAngle > 360.0f)
+		_rollAngle -= 360.0f;
+
+	//else
+	//{
+	//	_crashVelocity *= 1.1f * deltaTime;
+	//	
+	//}
 
 	_timeSinceCrash += deltaTime;
 }

@@ -3,9 +3,10 @@
 
 #include "IGameObject.h"
 #include "IDrawable.h"
+#include "IUpdateable.h"
 #include "Transform.h"
 
-class TrafficLight : public IGameObject, public IDrawable
+class TrafficLight : public IGameObject, public IDrawable, public IUpdateable
 {
 private:
 	Transform _transform;
@@ -18,6 +19,13 @@ private:
 	bool _isGreen;
 	bool _isRed;
 
+	bool _isAnimating;
+
+	float _flashCounter;
+
+	bool _currentlyGreen;
+	bool _currentlyRed;
+
 public:
 	TrafficLight(int leftRight, int frontBack, float rotationAngle, vec3* cameraPosition, vec3* cameraDirection, bool isGreen);
 	
@@ -29,10 +37,13 @@ public:
 	void SetRotation(vec3 rotation) { _transform.rotation = rotation; }
 	void SetScale(vec3 scale) { _transform.scale = scale; }
 	
+	void Update(float deltaTime);
 	void Draw(ModelviewStack* ms);
 
 	void SetRed(bool isRed) { _isRed = isRed; }
 	void SetGreen(bool isGreen) { _isGreen = isGreen; }
+
+	void SetAnimating(bool isAnimating) { _isAnimating = isAnimating; }
 
 private:
 	void DrawPost(ModelviewStack* ms);

@@ -18,16 +18,58 @@ TrafficLight::TrafficLight(int leftRight, int frontBack, float rotationAngle, ve
 
 	_isGreen = isGreen;
 	_isRed = !_isGreen;
+
+	_currentlyGreen = _isGreen;
+	_currentlyRed = _isRed;
+
+	_flashCounter = 0.0f;
+
+	_isAnimating = false;
+}
+
+void TrafficLight::Update(float deltaTime)
+{
+	if (_isAnimating)
+	{
+		// Flash lights
+		_flashCounter += deltaTime;
+		if (_flashCounter < 0.3f)
+		{
+			_currentlyRed = false;
+			_currentlyGreen = false;
+		}
+		else if (_flashCounter < 0.6f)
+		{
+			_currentlyRed = _isRed;
+			_currentlyGreen = _isGreen;
+		}
+		else if (_flashCounter < 0.9f)
+		{
+			_currentlyRed = false;
+			_currentlyGreen = false;
+		}
+		else if (_flashCounter < 1.2f)
+		{
+			_currentlyRed = _isRed;
+			_currentlyGreen = _isGreen;
+		}
+		else if (_flashCounter < 1.5f)
+		{
+			_currentlyRed = false;
+			_currentlyGreen = false;
+		}
+		else
+		{
+			_currentlyGreen = true;
+		}
+	}
 }
 
 void TrafficLight::Draw(ModelviewStack* ms)
 {
 	vec3 cameraToPosition = _transform.position - *_cameraPosition;
 	//float cameraDistance = glm::length(cameraToPosition);
-
-	if (!Utility::isVisible(_transform.position, *_cameraPosition, *_cameraDirection))
-		return;
-
+	
 	useTexture(0);
 	float grey = 0.7f;
 	setColour(grey, grey, grey);
@@ -108,7 +150,7 @@ void TrafficLight::DrawLights(ModelviewStack* ms)
 		ms->Push();
 		{
 			//Draw Red Light
-			if (_isRed)
+			if (_currentlyRed)
 				DrawLight(ms, 3.0f, vec3(1.0f, 0.0f, 0.0f));
 			else
 				DrawLight(ms, 3.0f, vec3(0.3f, 0.0f, 0.0f));
@@ -117,7 +159,7 @@ void TrafficLight::DrawLights(ModelviewStack* ms)
 			DrawLight(ms, 0.0f, vec3(0.3f, 0.3f, 0.0f));
 
 			//Draw Green Light
-			if (_isGreen)
+			if (_currentlyGreen)
 				DrawLight(ms, -3.0f, vec3(0.0f, 1.0f, 0.0f));
 			else
 				DrawLight(ms, -3.0f, vec3(0.0f, 0.3f, 0.0f));

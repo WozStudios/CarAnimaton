@@ -38,6 +38,7 @@ public:
 	void Draw(ModelviewStack* ms);
 
 	void Explode();
+	void Destroy();
 
 private:
 	void GenerateSparks();

@@ -9,6 +9,8 @@
 
 #include "program.h"
 
+#include "Debug.h"
+
 
 using std::cerr ;
 

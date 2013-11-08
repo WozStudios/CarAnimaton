@@ -2,10 +2,11 @@
 #include "Billboard.h"
 #include "Random.h"
 
-ForestGenerator::ForestGenerator(vec3 position, vec3* cameraPosition, vec3* cameraDirection)
+#include "Debug.h"
+
+void ForestGenerator::Init(vec3 position, vec3* cameraPosition, vec3* cameraDirection)
 {
 	_position = position;
-	//_numTrees = numTrees;
 	_cameraPosition = cameraPosition;
 	_cameraDirection = cameraDirection;
 
@@ -14,7 +15,7 @@ ForestGenerator::ForestGenerator(vec3 position, vec3* cameraPosition, vec3* came
 
 void ForestGenerator::Generate()
 {
-	//int numTrees = sqrt(_numTrees);
+	int numTrees = sqrt(4);
 	
 	for (int j = 2; j >= 0; j--)
 	{
@@ -27,7 +28,11 @@ void ForestGenerator::Generate()
 
 			transform.position = _position + vec3(i * (32 + Random( -4, 4)), 1.0, -j * transform.scale.x);
 
-			_trees.push_back(new Billboard(transform, _cameraPosition, _cameraDirection, 8));
+			_trees.push_back(Billboard(transform, _cameraPosition, _cameraDirection, 8));
 		}
 	}
+}
+
+void ForestGenerator::Destroy()
+{
 }

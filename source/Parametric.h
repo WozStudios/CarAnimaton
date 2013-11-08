@@ -3,19 +3,19 @@
 
 #include <cmath>
 
-void parametric1(float &x, float &y, float t, float width, float height)
+static void parametric1(float &x, float &y, float t, float width, float height)
 {
 	x = width * cos(t);
 	y = height * sin(t);
 }
 
-void parametric2(float &x, float &y, float t, float width, float height)
+static void parametric2(float &x, float &y, float t, float width, float height)
 {
 	x = width * cos(3 * t);
 	y = height * sin(5 * t);
 }
 
-void parametric3(float &x, float &y, float t, float width, float height)
+static void parametric3(float &x, float &y, float t, float width, float height)
 {
 	float c = cos(t);
 	float s = sin(t);

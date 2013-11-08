@@ -56,7 +56,7 @@ void Billboard::Draw(ModelviewStack* ms)
 	ms->Pop();
 }
 
-bool Billboard::CompareDistance(Billboard* a, Billboard* b)
+bool Billboard::CompareDistance(Billboard& a, Billboard& b)
 {
-	return a->GetDistanceFromCamera() > b->GetDistanceFromCamera();
+	return a.GetDistanceFromCamera() > b.GetDistanceFromCamera();
 }

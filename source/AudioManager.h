@@ -3,6 +3,8 @@
 
 #include <SFML/Audio.hpp>
 
+#include "Debug.h"
+
 class AudioManager
 {
 private:

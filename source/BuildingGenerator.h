@@ -15,6 +15,7 @@ private:
 	vector<Building*> _buildings;
 
 public:
+	BuildingGenerator() {}
 	BuildingGenerator(vec3 position, int numBuildings);
 
 	vector<Building*> GetBuildings() { return _buildings; }

@@ -1,6 +1,8 @@
 #include "BuildingGenerator.h"
 #include "Random.h"
 
+#include "Debug.h"
+
 BuildingGenerator::BuildingGenerator(vec3 position, int numBuildings)
 {
 	_position = position;

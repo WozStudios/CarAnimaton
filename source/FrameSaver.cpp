@@ -9,6 +9,10 @@
 
 #include "FrameSaver.h"
 
+#include "Debug.h"
+
+#include "Debug.h"
+
 using namespace std;
 
 FrameSaver::FrameSaver()

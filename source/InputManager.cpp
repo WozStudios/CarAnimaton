@@ -2,6 +2,8 @@
 #include "global.h"
 #include "drawScene.h"
 
+#include "Debug.h"
+
 using std::cout;
 using std::endl;
 

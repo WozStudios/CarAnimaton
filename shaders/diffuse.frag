@@ -19,6 +19,8 @@ uniform sampler2D texture16 ;
 uniform sampler2D texture17 ;
 uniform sampler2D texture18 ;
 
+uniform float fade;
+
 uniform float time ;
 uniform int useTex ;
 uniform int useLighting ;
@@ -100,5 +102,10 @@ void main(void)
  
     if( !gl_FrontFacing )
         fragColour = vec4(0,0.0,0.0,1.0) ;
-
+		
+	vec4 final = fragColour;
+	float alpha = fragColour.a;
+	vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
+	fragColour = mix(black, final, fade);
+	fragColour.a = alpha;
 }

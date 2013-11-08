@@ -26,6 +26,8 @@
 #include "Scene.h"
 #include <SFML\Audio.hpp>
 
+#include "Debug.h"
+
 using glm::vec3 ;
 using glm::vec4 ;
 using glm::mat4 ;
@@ -497,6 +499,8 @@ void loadTextures(void)
 
 void deleteScene()
 {
+	gScene.Destroy();
+
 	delete gSquare;
     delete gCube;
     delete gCylinder;

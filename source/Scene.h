@@ -11,6 +11,10 @@
 #include "AnimationManager.h"
 #include "MatStack.h"
 #include "SFML/Audio.hpp"
+#include "PowerLines.h"
+#include "ForestGenerator.h"
+#include "BirdGenerator.h"
+#include "ElectricalBox.h"
 
 using std::vector;
 
@@ -21,14 +25,18 @@ private:
 	Path _firstCarPath;
 	Path _secondCarPath;
 	vector<IGameObject*> _gameObjects;
-	vector<Billboard*> _trees;
 	sf::Music* _soundtrack;
 	FrameBuffer _frameBuffer;
 	AnimationManager _animationManager;
+	ElectricalBox* _electricalBox;
+	PowerLines* _powerLines;
+	ForestGenerator _forestGenerator;
+	BirdGenerator _birdGenerator;
+	vector<Rat*> _rats;
 
 public:
-	//Scene() {}
-	~Scene();
+	Scene() {}
+	void Destroy();
 	
 	void Init(sf::Music* soundtrack);
 

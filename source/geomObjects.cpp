@@ -28,6 +28,8 @@
 
 #include "MathUtils.h"
 
+#include "Debug.h"
+
 using std::stringstream;
 using std::cout;
 using std::endl;

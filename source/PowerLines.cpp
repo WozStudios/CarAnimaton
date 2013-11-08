@@ -2,6 +2,8 @@
 #include "MathUtils.h"
 #include "drawScene.h"
 
+#include "Debug.h"
+
 PowerLines::PowerLines(vec3* cameraPosition, vec3* cameraDirection)
 {
 	_transform = Transform();
@@ -15,7 +17,7 @@ PowerLines::PowerLines(vec3* cameraPosition, vec3* cameraDirection)
 	SetupPoles();
 }
 
-PowerLines::~PowerLines()
+void PowerLines::Destroy()
 {
 	for (vector<PowerLinePole*>::iterator i = _poles.begin(); i != _poles.end(); i++)
 	{

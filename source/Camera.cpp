@@ -5,17 +5,18 @@
 void Camera::Init(double distance)
 {
 	_distance = distance;
+	_idealDistance = _distance;
 	_transform.position = vec3(0.0f, 0.0f, distance);
 	_origin = vec3(0.0f, 0.0f, 0.0f);
-	_dummy.Init(vec3(0.0f, 0.0f, 0.0f));
+	_dummy.Init(vec3(0.0f, 10.0f, 0.0f));
 	//_target = _dummy.GetPositionPointer();
 	_previousTargetPosition = _dummy.GetPosition();
 	_upVector = vec3(0, 1, 0);
 
 	_heightSpeed = 10.0;
 	_zoomSpeed = 10.0;
-	_rotationSpeedX = 0.5;
-	_rotationSpeedY = 0.5;
+	_rotationSpeedX = 0.05f;
+	_rotationSpeedY = 0.1f;
 
 	_angle = 0.0;
 
@@ -23,8 +24,11 @@ void Camera::Init(double distance)
 
 	_inputManager = InputManager::GetInstance();
 
-	_counterY = 0.0f;
-	_counterX = M_PI / 8.0f;
+	ResetCounters();
+	_leftRight = 1;
+	
+	_isAnimating = false;
+	_isFollowing = true;
 }
 
 void Camera::Destroy()
@@ -150,52 +154,93 @@ void Camera::Update(float deltaTime)
 	//_transform.position += _dummy.GetMovementVector();
 	_previousTargetPosition = target;
 
-	_transform.position = _dummy.GetPosition();
-	
-	//Animate(deltaTime);
+	if (_isFollowing)
+		_transform.position = _dummy.GetPosition();
 
 	if (_inputManager->IsLeftClicked())
 	{
-		_counterY += _inputManager->GetMouseDX() * deltaTime * 2.0;
-		if (_counterY > 2.0 * M_PI)
-			_counterY -= 2.0 * M_PI;
-		if (_counterY < 0.0)
-			_counterY += 2.0 * M_PI;
+		_counterY += _inputManager->GetMouseDX() * deltaTime * 0.5f;
+		_counterX -= _inputManager->GetMouseDY() * deltaTime * 0.5f;
 		
-		//std::cout << "_counterY: " << _counterY << "\n";
-		
-		_counterX -= _inputManager->GetMouseDY() * deltaTime * 2.0;
-		if (_counterX > M_PI / 2)
-			_counterX = M_PI / 2;
-		if (_counterX < -M_PI / 2)
-			_counterX = -M_PI / 2;
 	}
+
+	if (_counterY > 2.0 * M_PI)
+		_counterY -= 2.0 * M_PI;
+	if (_counterY < 0.0)
+		_counterY += 2.0 * M_PI;
+
+	if (_counterX > M_PI / 2)
+		_counterX = M_PI / 2;
+	if (_counterX < -M_PI / 2)
+		_counterX = -M_PI / 2;
 
 	double scroll = _inputManager->GetMouseScroll();
 
 	if (scroll > 0.0)
 		_distance = _inputManager->GetMouseScroll() + 5.0f;
 
-	_transform.position.x += cos(_counterY) * cos(_counterX) * _distance * _rotationSpeedX;
-	_transform.position.y += sin(_counterX) * _distance * _rotationSpeedY;
-	_transform.position.z += sin(_counterY) * cos(_counterX) * _distance * _rotationSpeedX;
+	if (_isFollowing)
+	{
+		_transform.position.x += cos(_counterY) * cos(_counterX) * _distance;
+		_transform.position.y += sin(_counterX) * _distance * _rotationSpeedY;
+		_transform.position.z += sin(_counterY) * cos(_counterX) * _distance;
+	}
 
 	// Keep camera from colliding with ground
 	if (_transform.position.y < 0)
 		_transform.position.y = 0.1f;
 
-	//if (_inputManager->WasRightClicked())
-	//{
-	//	std::cout << "Camera Position: (" << _transform.position.x << ", "
-	//									  << _transform.position.y << ", "
-	//									  << _transform.position.z << ")\n";
-	//}
+	if (_inputManager->WasRightClicked())
+	{
+		//std::cout << "Camera Position: (" << _transform.position.x << ", "
+		//								  << _transform.position.y << ", "
+		//								  << _transform.position.z << ")\n";
+
+		std::cout << "_counterY: " << _counterY << "\n_counterX: " << _counterX << "\n";
+	}
 	
 	_direction = glm::normalize(_dummy.GetPosition() - _transform.position);
+	
+	RotateToIdeals(deltaTime);
+
+	// Animate to correct distance
+	if (abs(_distance - _idealDistance) > 1.0f)
+	{
+		int direction = _idealDistance > _distance ? 1 : -1;
+		_distance += direction * _zoomSpeed * deltaTime;
+	}
 }
 
 void Camera::Draw(ModelviewStack* ms)
 {
-	_dummy.Draw(ms);
+	//_dummy.Draw(ms);
 
+}
+
+void Camera::RotateToIdeals(float deltaTime)
+{
+	float idealDiff = abs(_counterY - _idealCounterY);
+	if (idealDiff > 0.005)
+		_counterY += _leftRight * deltaTime * _rotationSpeedY;
+
+	idealDiff = abs(_counterX - _idealCounterX);
+	if (idealDiff > 0.005)
+	{
+		int upDown;
+		if (_idealCounterX > _counterX)
+			upDown = 1;
+		else
+			upDown = -1;
+
+		_counterX += upDown * deltaTime * _rotationSpeedX;
+	}
+}
+
+void Camera::ResetCounters()
+{
+	_idealCounterY = M_PI;
+	_idealCounterX = -1.6f;
+
+	_counterY = _idealCounterY;
+	_counterX = _idealCounterX;
 }

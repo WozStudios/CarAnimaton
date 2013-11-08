@@ -24,7 +24,7 @@ void Spark::Update(float deltaTime)
 		_velocity.y * _timeSinceCreated +
 		0.5 * -10.0f * _timeSinceCreated *_timeSinceCreated;
 
-	if (_transform.position.y < 0.0f)
+	if (_transform.position.y < -1.0f)
 	{
 		_isAlive = false;
 		return;

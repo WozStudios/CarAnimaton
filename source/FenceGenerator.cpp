@@ -1,5 +1,7 @@
 #include "FenceGenerator.h"
 
+#include "Debug.h"
+
 FenceGenerator::FenceGenerator(vec3* cameraPosition, vec3* cameraDirection)
 {
 	GenerateFenceBoards(cameraPosition, cameraDirection);

@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+#include "Debug.h"
+
 // NOT THE MOST EFFICIENT IMPLEMENTATION
 
 
