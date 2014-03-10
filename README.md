@@ -18,7 +18,6 @@ SFML- audio playback.
 
 Audio tools: Ableton Live, Native Instruments Komplete
 
-|-----------------------------------------------------------|
 
 I've uploaded a rendered video to YouTube:
 http://youtu.be/UTJO5Wc7sfw
@@ -26,26 +25,27 @@ http://youtu.be/UTJO5Wc7sfw
 If you have any questions, please let me know:
 email: woz.studios@gmail.com
 
-|-----------------------------------------------------------|
 
 Controls for navigating the scene:
 ==================================
-| W - Forward
-| A - Strafe Left
-| S - Back
-| D - Strafe Right
-| Q - Down
-| E - Up
-|
-| MouseLeft Click - Rotate Camera (Note: at the moment, 
-|			free rotation doesn't work quite correctly,
-|			due to the way it behaves during the animation)
-|
-| Space(Hold) - Increase camera movement speed by x2
-|
-| P - Begin animation 
-|
-|-----------------------------------------------------------|
+W - Forward <br>
+A - Strafe Left  <br>
+S - Back <br>
+D - Strafe Right <br>
+Q - Down <br>
+E - Up <br>
+<br>
+MouseLeft Click - Rotate Camera (Note: at the moment, 
+			free rotation doesn't work quite correctly,
+			due to the way it behaves during the animation) <br>
+<br>
+Space(Hold) - Increase camera movement speed by x2 <br>
+<br>
+P - Begin animation  <br>
+
+====================
+Project Organization
+====================
 
 I sorted the project into several filters in Visual Studio.  All exisiting code went into the Engine filter.
 There is a filter for interfaces, a filter for GameObjects, and finally a filter called Game, 
@@ -99,14 +99,14 @@ Textures - Holds macros for all textures used.
 
 Utility - Contains an optimization function, isVisible(), that calculates whether an object is within view of the camera.
 
-
-|-----------------------------------------------------------|
+===========
+GameObjects
+===========
 
 I feel as though most of the GameObjects are pretty self-explanatory.  The draw functions are usually 
 commented to describe which part of the object is currently being drawn.
 
-Here a few special ones:
------------------------- 
+Here a few special ones: 
 
 Car - An abstract class inherited by SmallCar and SportsCar.
 
@@ -115,5 +115,3 @@ Billboard - A 2D square that is always facing the camera.  Used for the trees.
 ElectricalBox - In addition to itself, it also creates the sparks used in its explosion.
 
 Skybox - 5 squares that form an inside-out cube, always centered around the camera
-
-|-----------------------------------------------------------|
